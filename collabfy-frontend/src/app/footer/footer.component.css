@@ -1,9 +1,8 @@
 footer {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-  }
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px; /* Add margin to create space between the containers and the footer */
+}
