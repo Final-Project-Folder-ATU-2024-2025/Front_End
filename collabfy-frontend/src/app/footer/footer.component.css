@@ -1,8 +1,9 @@
 footer {
-  background-color: #007bff;
-  color: white;
+  background-color: #8AB8A3; /* A muted greenish-blue from the logo's palette */
+  color: #333; /* Dark color for contrast */
   padding: 10px;
   text-align: center;
   width: 100%;
-  margin-top: 20px; /* Add margin to create space between the containers and the footer */
+  margin-top: 20px;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
 }

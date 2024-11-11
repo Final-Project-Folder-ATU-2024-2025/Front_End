@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Ensure the html and body elements take up the full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure the app-root takes up the full height */
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
