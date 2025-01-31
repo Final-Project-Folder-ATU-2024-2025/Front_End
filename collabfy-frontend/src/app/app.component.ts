@@ -1,20 +1,11 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
-import { routes } from './app.routes';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-root',  // ✅ Ensure this selector is correct
   standalone: true,
-  imports: [RouterModule], // Import RouterModule to recognize router-outlet
-  template: `
-    <router-outlet></router-outlet> <!-- Renders routed components here -->
-  `,
+  imports: [CommonModule, RouterOutlet], // ✅ Enables routing
+  template: `<router-outlet></router-outlet>`, // ✅ Loads components dynamically
 })
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter(routes), // Enables Routing
-    provideHttpClient(), // Enables HTTP Requests
-  ]
-};
+export class AppComponent {}

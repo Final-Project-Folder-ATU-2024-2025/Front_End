@@ -1,17 +1,9 @@
-import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms'; // 🟢 FIXED FORM MODULE
-import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { routes } from './app.routes';
 
-
-export const appConfig = {
+export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
-    provideRouter([]), // 🟢 Add routes when needed
-    provideAnimations(),
-    importProvidersFrom(ReactiveFormsModule), // 🟢 Use correct method for forms
-    importProvidersFrom(HttpClientModule, ReactiveFormsModule), // 🟢 Ensures imports
-  ],
+    provideRouter(routes) // ✅ This enables routing in the app
+  ]
 };

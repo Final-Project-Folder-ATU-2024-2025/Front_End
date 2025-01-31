@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../header/header.component'; 
-import { FooterComponent } from '../footer/footer.component';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-  selector: 'app-create-account',
-  standalone: true, 
+  selector: 'app-create-account-page',
+  standalone: true, // ✅ Ensure this is standalone
   imports: [
     CommonModule,
-    HeaderComponent,  
-    FooterComponent,  
-    ReactiveFormsModule, 
-    HttpClientModule  
+    ReactiveFormsModule,
+    HttpClientModule,
+    HeaderComponent, 
+    FooterComponent
   ],
   templateUrl: './create-account-page.component.html',
-  styleUrls: ['./create-account-page.component.css'], // Styling remains unchanged
+  styleUrls: ['./create-account-page.component.css'],
 })
 export class CreateAccountPageComponent {
   form: FormGroup;
