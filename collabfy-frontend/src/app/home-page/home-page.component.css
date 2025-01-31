@@ -5,7 +5,7 @@
   height: calc(100vh - 80px); /* Adjust height to fill the space between header and footer */
   padding: 20px;
   box-sizing: border-box;
-  background-image: url('/assets/images/background_image.jpg'); /* Set the background image with the correct file extension */
+  background-image: url('/assets/images/background_image.jpeg'); /* Set the background image with the correct file extension */
   background-size: cover; /* Ensure the image covers the entire container */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */

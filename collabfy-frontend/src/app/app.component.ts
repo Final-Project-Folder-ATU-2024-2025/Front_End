@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +11,10 @@ import { RouterModule } from '@angular/router';
     <router-outlet></router-outlet> <!-- Renders routed components here -->
   `,
 })
-export class AppComponent {}
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes), // Enables Routing
+    provideHttpClient(), // Enables HTTP Requests
+  ]
+};
