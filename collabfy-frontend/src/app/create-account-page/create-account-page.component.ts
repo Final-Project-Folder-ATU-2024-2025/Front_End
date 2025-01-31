@@ -7,14 +7,8 @@ import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-create-account-page',
-  standalone: true, // ✅ Ensure this is standalone
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HeaderComponent, 
-    FooterComponent
-  ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderComponent, FooterComponent],
   templateUrl: './create-account-page.component.html',
   styleUrls: ['./create-account-page.component.css'],
 })
@@ -48,7 +42,7 @@ export class CreateAccountPageComponent {
         email,
         password
       }).subscribe({
-        next: (response: any) => {
+        next: () => {
           alert('Account created successfully!');
           this.form.reset();
         },

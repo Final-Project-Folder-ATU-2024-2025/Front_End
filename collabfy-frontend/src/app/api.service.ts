@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://127.0.0.1:5000/api/tasks'; // Flask API endpoint
+  private apiUrl = 'http://127.0.0.1:5000/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getTasks(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  createUser(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create-user`, userData);
   }
 }
