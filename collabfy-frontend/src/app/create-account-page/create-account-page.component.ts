@@ -8,7 +8,7 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-create-account-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FooterComponent, HeaderComponent],
   templateUrl: './create-account-page.component.html',
   styleUrls: ['./create-account-page.component.css'],
 })
