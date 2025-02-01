@@ -5,6 +5,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  margin: 0; /* Remove any extra margin */
 }
 
 .logo-container {
@@ -14,7 +16,8 @@ header {
 
 .logo {
   height: 100px; 
-  margin-right: 10px; /* Add some space between the logo and the text */
+  margin-right: 10px; /* Space between logo and text */
+  max-width: 100%; /* Ensure the logo scales responsively */
 }
 
 h1 {
