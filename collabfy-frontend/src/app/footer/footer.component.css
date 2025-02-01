@@ -1,9 +1,9 @@
 footer {
-  background-color: #8AB8A3; /* A muted greenish-blue from the logo's palette */
-  color: #333; /* Dark color for contrast */
+  background-color: #8AB8A3;
+  color: #333;
   padding: 10px;
   text-align: center;
   width: 100%;
-  margin-top: 20px;
-  flex-shrink: 0; /* Prevent the footer from shrinking */
+  margin-top: 0; /* Remove the gap */
+  flex-shrink: 0;
 }
