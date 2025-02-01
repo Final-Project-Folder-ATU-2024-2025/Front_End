@@ -1,22 +1,30 @@
+/* create-account-page.component.css */
+/* Styling for the Create Account page container and form */
+
 .create-account-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  flex: 1;  /* Expand to fill available vertical space */
   padding: 20px;
+  width: 100%;
   box-sizing: border-box;
   background-image: url('/assets/images/background_image.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  overflow-x: hidden;  /* Prevent horizontal scrolling */
 }
 
 .form-container {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);  /* Semi-transparent white background */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;  /* Constrain the form width on larger screens */
+  margin: 0 auto;
 }
 
 .form-group {

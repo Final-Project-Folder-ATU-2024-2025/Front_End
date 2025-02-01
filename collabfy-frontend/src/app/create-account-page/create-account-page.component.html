@@ -1,35 +1,46 @@
+<!-- create-account-page.component.html -->
+<!-- This template displays the header, a form for account creation, and the footer. -->
 <app-header></app-header>
+
 <div class="create-account-container">
   <div class="form-container">
     <h2>Create Account</h2>
-    <!-- Bind the form group and handle form submission -->
+    <!-- Bind the reactive form to the form element and handle submission with onSubmit() -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- First Name Field -->
       <div class="form-group">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" formControlName="firstName" required>
       </div>
+      <!-- Surname Field -->
       <div class="form-group">
         <label for="surname">Surname</label>
         <input type="text" id="surname" formControlName="surname" required>
       </div>
+      <!-- Telephone Field -->
       <div class="form-group">
         <label for="telephone">Telephone</label>
         <input type="text" id="telephone" formControlName="telephone" required>
       </div>
+      <!-- Email Field -->
       <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
+      <!-- Password Field -->
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" required>
       </div>
+      <!-- Confirm Password Field -->
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
       </div>
+      <!-- Submit Button -->
       <button type="submit">Create Account</button>
     </form>
   </div>
 </div>
+
 <app-footer></app-footer>
