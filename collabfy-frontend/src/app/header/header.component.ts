@@ -1,3 +1,4 @@
+// header.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -5,8 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule],
-  template: `<header><h1>Collabfy</h1></header>`,
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  templateUrl: './header.component.html',  // Using external HTML template
+  styleUrls: ['./header.component.css'],     // Using external CSS styles
 })
 export class HeaderComponent {}

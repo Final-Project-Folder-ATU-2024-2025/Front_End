@@ -1,3 +1,6 @@
+/* header.component.css */
+
+/* Header styling */
 header {
   background-color: #1b2ba0; /* A muted greenish-blue from the logo's palette */
   color: #333; /* Dark color for contrast */
@@ -9,26 +12,35 @@ header {
   margin: 0; /* Remove any extra margin */
 }
 
+/* Container for the logo */
 .logo-container {
   display: flex;
   align-items: center;
 }
 
+/* Logo image styling */
+/* Updated to make the logo circular */
 .logo {
-  height: 100px; 
-  margin-right: 10px; /* Space between logo and text */
-  max-width: 100%; /* Ensure the logo scales responsively */
+  height: 100px;                /* Fixed height */
+  width: 100px;                 /* Fixed width to ensure a square shape */
+  margin-right: 10px;           /* Space between logo and text */
+  max-width: 100%;              /* Responsive scaling */
+  object-fit: cover;            /* Ensure the image covers the container without distortion */
+  border-radius: 50%;           /* Makes the square image circular */
 }
 
+/* Header text styling */
 h1 {
   margin: 0;
 }
 
+/* Container for authentication links */
 .auth-links {
   display: flex;
   gap: 20px;
 }
 
+/* Authentication links styling */
 .auth-links a {
   color: white;
   text-decoration: none;
