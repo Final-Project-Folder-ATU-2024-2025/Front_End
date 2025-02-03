@@ -24,12 +24,18 @@
           'scale(' + (isAnimating ? 0.8 : 1) + ')'
       }"
     >
-      <!-- Each slide takes 100% width and height of the slider container -->
+      <!-- Each slide occupies 100% width and height of the slider container -->
       <div class="slide" *ngFor="let option of options">
-        <!-- The card container displays the option text.
-             It is sized to nearly fill the slide while leaving a 25px gap on all sides. -->
+        <!-- Card container: if the option is "Create a New Project", show a stretched background image with overlaid text; otherwise, show the text -->
         <div class="container">
-          {{ option }}
+          <ng-container *ngIf="option === 'Create a New Project'; else textContent">
+            <div class="project-card">
+              <div class="image-overlay">Create a New Project</div>
+            </div>
+          </ng-container>
+          <ng-template #textContent>
+            {{ option }}
+          </ng-template>
         </div>
       </div>
     </div>
