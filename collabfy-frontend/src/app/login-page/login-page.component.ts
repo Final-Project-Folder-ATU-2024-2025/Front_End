@@ -1,60 +1,62 @@
-// login-page.component.ts
+// src/app/login-page/login-page.component.ts
+// This component handles user login.
+// It uses a reactive form for login validation and calls the backend's login endpoint.
+// The public header is used here so that only the logo is displayed on the login page.
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { Router } from '@angular/router';
+// Import the public header component for use on this page.
+import { HeaderPublicComponent } from '../header-public/header-public.component';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  // Import necessary modules and shared components.
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  // Define a reactive form for login.
   form: FormGroup;
 
+  // Inject FormBuilder, HttpClient, and Router for form handling and navigation.
   constructor(
-    private fb: FormBuilder,    // For building the reactive form.
-    private http: HttpClient,   // For making HTTP requests.
-    private router: Router      // For navigating after login.
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
   ) {
-    // Initialize the form with two controls: email and password.
+    // Initialize the login form with email and password fields.
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],         // Email field with validation.
-      password: ['', [Validators.required, Validators.minLength(6)]]    // Password field with validation.
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  // onSubmit() is called when the login form is submitted.
+  // Called when the login form is submitted.
   onSubmit() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
       
-      // In a real application, you would call your backend's login endpoint.
-      // Replace the URL with your actual authentication endpoint.
+      // Call the backend's login endpoint.
       this.http.post('http://127.0.0.1:5000/api/login', { email, password })
         .subscribe({
           next: () => {
-            // On a successful login, show an alert and navigate to the Home page.
+            // On successful login, display a message and navigate to the Home page.
             alert('Logged in successfully!');
-            this.router.navigate(['/']);  // Redirect to the Home page.
+            this.router.navigate(['/']);
           },
           error: (error) => {
-            // If an error occurs, display an error message.
+            // Display an error message if login fails.
             alert('Error logging in: ' + (error.error?.message || error.message));
           }
         });
     }
   }
 
-  // goToCreateAccount() navigates to the Create Account page when the button is clicked.
+  // Navigates to the Create Account page when the button is clicked.
   goToCreateAccount() {
     this.router.navigate(['/create-account']);
   }
