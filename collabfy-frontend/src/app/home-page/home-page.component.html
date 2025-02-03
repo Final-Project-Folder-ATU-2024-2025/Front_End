@@ -1,11 +1,19 @@
+<!-- home-page.component.html -->
+<!-- This template displays the header, a slider that shows one option at a time with navigation arrows, and the footer. -->
 <app-header></app-header>
 
 <div class="home-container">
-  <div class="content">
-    <div class="container">Create a New Project</div>
-    <div class="container">My Projects</div>
-    <div class="container">Project Deadlines</div>
-    <div class="container">Notifications</div>
+  <div class="slider">
+    <!-- Left Arrow Button: Calls prev() to show the previous option -->
+    <button class="arrow left-arrow" (click)="prev()">&#9664;</button>
+
+    <!-- Container displaying the current option -->
+    <div class="container">
+      {{ options[currentIndex] }}
+    </div>
+
+    <!-- Right Arrow Button: Calls next() to show the next option -->
+    <button class="arrow right-arrow" (click)="next()">&#9654;</button>
   </div>
 </div>
 
