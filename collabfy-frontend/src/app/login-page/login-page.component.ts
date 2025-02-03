@@ -1,14 +1,13 @@
 // src/app/login-page/login-page.component.ts
 // This component handles user login using a reactive form and calls the backend's login endpoint.
 // After a successful login, it stores the token, firstName, and surname in localStorage.
-// The public header is used on this page (so it shows only the logo).
+// The public header is used on this page so that only the logo is displayed.
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FooterComponent } from '../footer/footer.component';
 import { Router } from '@angular/router';
-// Import the public header component for use on this page.
 import { HeaderPublicComponent } from '../header-public/header-public.component';
 
 @Component({
@@ -42,18 +41,16 @@ export class LoginPageComponent {
       this.http.post('http://127.0.0.1:5000/api/login', { email, password })
         .subscribe({
           next: (response: any) => {
-            // Save the token and user data (firstName and surname) to localStorage.
-            // Make sure your backend returns these properties.
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('firstName', response.firstName);
-            localStorage.setItem('surname', response.surname);
+            // For testing purposes, we set dummy values.
+            // In your production code, replace these with response.firstName and response.surname.
+            localStorage.setItem('token', response.token || 'dummy-token');
+            localStorage.setItem('firstName', response.firstName || 'John');
+            localStorage.setItem('surname', response.surname || 'Doe');
             
             alert('Logged in successfully!');
-            // Navigate to the Home page (or any other authenticated page).
             this.router.navigate(['/']);
           },
           error: (error) => {
-            // Display an error message if login fails.
             alert('Error logging in: ' + (error.error?.message || error.message));
           }
         });

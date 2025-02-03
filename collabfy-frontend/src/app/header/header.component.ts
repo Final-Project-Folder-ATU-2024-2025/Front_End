@@ -1,7 +1,7 @@
 // src/app/header/header.component.ts
 // This header component is used on authenticated pages.
 // It displays the logo on the left, a "Log Out" button on the right,
-// and below the Log Out button (or beside it), an emoji icon with the user's first name and surname.
+// and below the button, it displays an emoji icon along with the user's first name and surname.
 // It retrieves these values from localStorage.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // Retrieve the user's first name and surname from localStorage.
-    // If nothing is stored, these will remain empty.
+    // If nothing is stored, these remain empty.
     this.userName = localStorage.getItem('firstName') || '';
     this.userSurname = localStorage.getItem('surname') || '';
   }
