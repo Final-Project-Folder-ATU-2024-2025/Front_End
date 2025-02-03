@@ -1,15 +1,10 @@
-/* home-page.component.css */
-
-/* Home container:
-   - Arranged in a column so that the slider and pagination dots stack vertically.
-   - Fills the available viewport (excluding header and footer), leaving a 25px gap at the top and bottom.
-*/
+/* src/app/home-page/home-page.component.css */
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 80px); /* Adjust if header and footer height differ */
-  padding: 25px 0; /* 25px gap at the top and bottom */
+  height: calc(100vh - 80px);
+  padding: 25px 0;
   box-sizing: border-box;
   background-image: url('/assets/images/background_image.jpeg');
   background-size: cover;
@@ -17,10 +12,6 @@
   background-repeat: no-repeat;
 }
 
-/* Slider container:
-   - Fills most of the vertical space.
-   - Positioned relative for arrow positioning.
-*/
 .slider-container {
   flex: 1;
   width: 80%;
@@ -28,16 +19,12 @@
   overflow: hidden;
 }
 
-/* Slider wrapper:
-   - A flex container that transitions smoothly when moving between slides.
-*/
 .slider-wrapper {
   display: flex;
   transition: transform 0.5s ease;
   height: 100%;
 }
 
-/* Each slide occupies 100% of the slider container's width and height */
 .slide {
   flex: 0 0 100%;
   display: flex;
@@ -46,14 +33,10 @@
   height: 100%;
 }
 
-/* Card container:
-   - Sized to nearly fill the slide while leaving a 25px gap on all sides.
-   - Uses calc() to subtract 50px from both width and height to account for the left/right and top/bottom margins.
-*/
 .container {
   width: calc(100% - 50px);
   height: calc(100% - 50px);
-  margin: 25px; /* 25px gap between this card and the slide edges (and hence between consecutive cards) */
+  margin: 25px;
   padding: 20px;
   border: 2px solid #050505;
   background-color: rgba(255, 255, 255, 0.8);
@@ -62,30 +45,73 @@
   position: relative;
 }
 
-/* Styling for the "Create a New Project" card */
 .project-card {
   width: 100%;
   height: 100%;
   background-image: url('/assets/images/idea_lamp.jpg');
-  background-size: 100% 100%;  /* Stretches the image to fill the container */
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;
 }
 
-/* Overlay text on top of the project image */
 .image-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
-  color: #000; /* Adjust color as needed for contrast */
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+  color: #000;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Navigation arrow buttons:
-   - Absolutely positioned within the slider container.
-*/
+/* Connections card styling */
+.connections-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.connection-create,
+.connection-count {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #050505;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+/* Styling for connection-create */
+.connection-create h3,
+.connection-count h3 {
+  margin-top: 0;
+}
+
+.connection-create input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Styling for search results */
+.search-results {
+  margin-top: 10px;
+  text-align: left;
+}
+.search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.search-results li {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+/* Navigation arrow buttons */
 .arrow {
   position: absolute;
   top: 50%;
@@ -107,9 +133,7 @@
   right: 10px;
 }
 
-/* Pagination dots:
-   - Displayed directly beneath the slider container with a 25px gap.
-*/
+/* Pagination dots */
 .pagination {
   margin-top: 25px;
   display: flex;
@@ -117,7 +141,6 @@
   align-items: center;
 }
 
-/* Each pagination dot (transparent ball) */
 .dot {
   width: 12px;
   height: 12px;
@@ -128,7 +151,6 @@
   transition: background-color 0.3s ease;
 }
 
-/* Active dot: filled with color to indicate the current slide */
 .dot.active {
   background-color: #007bff;
 }

@@ -1,23 +1,25 @@
-// home-page.component.ts
+// src/app/home-page/home-page.component.ts
 // This component displays one option (card) at a time from an array of options.
 // It provides left/right arrow navigation with an animated transition (translateX, translateY, and scale).
-// Pagination dots (transparent balls) are displayed directly beneath the card.
-// The card is sized to nearly fill the vertical space between the header and footer (with a 25px gap).
-
+// When the "Connections" option is active, it shows two inner squares:
+//   - One with a search bar to create a new connection.
+//   - One that displays the number of persons in your connections list.
+// The searchConnections() method calls the backend's /api/search-users endpoint.
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  // Array of options to display as cards
   options = [
     'Create a New Project',
     'My Projects',
@@ -26,34 +28,50 @@ export class HomePageComponent {
     'Connections'
   ];
 
-  // Index of the currently displayed option
   currentIndex: number = 0;
-
-  // Flag to trigger the animation effect (scaling and vertical translation)
   isAnimating: boolean = false;
-
-  // Indicates the navigation direction ('next' or 'prev') to set vertical translation accordingly
   direction: 'next' | 'prev' = 'next';
 
-  // Navigate to the next option with an animation effect
+  // For connections functionality:
+  connectionsCount: number = 3; // dummy value; in real app, fetch actual count
+  searchQuery: string = '';
+  searchResults: any[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  searchConnections(): void {
+    if (!this.searchQuery.trim()) {
+      this.searchResults = [];
+      return;
+    }
+    // Call backend endpoint to search for users matching the search query
+    this.http.post('http://127.0.0.1:5000/api/search-users', { query: this.searchQuery })
+      .subscribe({
+        next: (response: any) => {
+          this.searchResults = response.results || [];
+          console.log('Search results:', this.searchResults);
+        },
+        error: (error) => {
+          console.error('Error searching connections:', error);
+        }
+      });
+  }
+
   next() {
-    this.direction = 'next'; // Set animation direction to "next"
-    this.isAnimating = true; // Trigger the animation effect
+    this.direction = 'next';
+    this.isAnimating = true;
     setTimeout(() => {
-      // After 500ms (animation duration), update the current index
       this.currentIndex = (this.currentIndex + 1) % this.options.length;
-      this.isAnimating = false; // Reset animation flag to restore normal scale/position
+      this.isAnimating = false;
     }, 500);
   }
 
-  // Navigate to the previous option with an animation effect
   previous() {
-    this.direction = 'prev'; // Set animation direction to "prev"
-    this.isAnimating = true; // Trigger the animation effect
+    this.direction = 'prev';
+    this.isAnimating = true;
     setTimeout(() => {
-      // Update the index (wrap around if necessary)
       this.currentIndex = (this.currentIndex - 1 + this.options.length) % this.options.length;
-      this.isAnimating = false; // Reset animation flag
+      this.isAnimating = false;
     }, 500);
   }
 }

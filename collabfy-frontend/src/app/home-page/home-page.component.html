@@ -1,20 +1,10 @@
-<!-- home-page.component.html -->
-<!--
-  This template displays the header, the main home area, and the footer.
-  The main area includes:
-    • A slider container that shows one card (option) at a time.
-    • Left/right arrow buttons for navigation.
-    • A pagination section (transparent balls) positioned directly beneath the card.
--->
+<!-- src/app/home-page/home-page.component.html -->
 <app-header></app-header>
 
 <div class="home-container">
-  <!-- Slider container: holds the animated card and navigation arrows -->
   <div class="slider-container">
-    <!-- Left navigation arrow -->
     <button class="arrow left-arrow" (click)="previous()">&#9664;</button>
     
-    <!-- Slider wrapper: moves horizontally based on currentIndex and applies vertical translation and scaling when animating -->
     <div
       class="slider-wrapper"
       [ngStyle]="{
@@ -24,27 +14,47 @@
           'scale(' + (isAnimating ? 0.8 : 1) + ')'
       }"
     >
-      <!-- Each slide occupies 100% width and height of the slider container -->
       <div class="slide" *ngFor="let option of options">
-        <!-- Card container: if the option is "Create a New Project", show a stretched background image with overlaid text; otherwise, show the text -->
         <div class="container">
-          <ng-container *ngIf="option === 'Create a New Project'; else textContent">
-            <div class="project-card">
-              <div class="image-overlay">Create a New Project</div>
+          <ng-container *ngIf="option === 'Connections'; else defaultContent">
+            <div class="connections-wrapper">
+              <div class="connection-create">
+                <h3>Create a New Connection:</h3>
+                <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
+                <button (click)="searchConnections()">Search</button>
+                <!-- Display search results under the search bar -->
+                <div class="search-results" *ngIf="searchResults.length">
+                  <h4>Results:</h4>
+                  <ul>
+                    <li *ngFor="let user of searchResults">
+                      {{ user.firstName }} {{ user.surname }} - {{ user.email }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="connection-count">
+                <h3>Your Connections:</h3>
+                <p>{{ connectionsCount }}</p>
+              </div>
             </div>
           </ng-container>
-          <ng-template #textContent>
-            {{ option }}
+          <ng-template #defaultContent>
+            <ng-container *ngIf="option === 'Create a New Project'; else textContent">
+              <div class="project-card">
+                <div class="image-overlay">Create a New Project</div>
+              </div>
+            </ng-container>
+            <ng-template #textContent>
+              {{ option }}
+            </ng-template>
           </ng-template>
         </div>
       </div>
     </div>
     
-    <!-- Right navigation arrow -->
     <button class="arrow right-arrow" (click)="next()">&#9654;</button>
   </div>
 
-  <!-- Pagination dots: positioned directly beneath the slider container with a 25px gap -->
   <div class="pagination">
     <div
       class="dot"
