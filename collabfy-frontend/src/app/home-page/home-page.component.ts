@@ -2,6 +2,7 @@
 // This component displays one option (card) at a time from an array of options.
 // It provides left/right arrow navigation with an animated transition (translateX, translateY, and scale).
 // Pagination dots (transparent balls) are displayed directly beneath the card.
+// The card is sized to nearly fill the vertical space between the header and footer (with a 25px gap).
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
