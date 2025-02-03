@@ -76,4 +76,10 @@ export class CreateAccountPageComponent {
       },
     });
   }
+
+  // goToLogin() method to navigate back to the Login page when the "Back to Login" button is clicked.
+  goToLogin() {
+    console.log('Navigating back to Login page');
+    this.router.navigate(['/login']);
+  }
 }
