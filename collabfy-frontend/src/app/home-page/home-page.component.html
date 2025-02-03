@@ -1,32 +1,51 @@
 <!-- home-page.component.html -->
+<!--
+  This template displays the header, the main home area, and the footer.
+  The main area includes:
+    • A slider container that shows one card (option) at a time.
+    • Left/right arrow buttons for navigation.
+    • A pagination section (transparent balls) positioned directly beneath the card.
+-->
 <app-header></app-header>
 
 <div class="home-container">
-  <!-- Left arrow button for navigating to the previous option -->
-  <button class="arrow left-arrow" (click)="previous()">&#9664;</button>
-
-  <!-- Slider container that masks overflow -->
+  <!-- Slider container: holds the animated card and navigation arrows -->
   <div class="slider-container">
-    <!-- 
-      The slider-wrapper is a flex container that shifts horizontally.
-      Its transform is set by both the current index and the animation flag.
-      When isAnimating is true, the card scales down to 0.8; otherwise, it remains at scale 1.
-    -->
+    <!-- Left navigation arrow -->
+    <button class="arrow left-arrow" (click)="previous()">&#9664;</button>
+    
+    <!-- Slider wrapper: moves horizontally based on currentIndex and applies vertical translation and scaling when animating -->
     <div
       class="slider-wrapper"
       [ngStyle]="{
-        'transform': 'translateX(-' + currentIndex * 100 + '%) scale(' + (isAnimating ? 0.8 : 1) + ')'
+        'transform': 
+          'translateX(-' + currentIndex * 100 + '%) ' +
+          (isAnimating ? (direction === 'next' ? 'translateY(10px)' : 'translateY(-10px)') : 'translateY(0)') + ' ' +
+          'scale(' + (isAnimating ? 0.8 : 1) + ')'
       }"
     >
-      <!-- Generate each card (option) using *ngFor -->
-      <div class="container" *ngFor="let option of options">
-        {{ option }}
+      <!-- Each slide takes 100% width and height of the slider container -->
+      <div class="slide" *ngFor="let option of options">
+        <!-- The card container displays the option text.
+             It is sized to nearly fill the slide while leaving a 25px gap on all sides. -->
+        <div class="container">
+          {{ option }}
+        </div>
       </div>
     </div>
+    
+    <!-- Right navigation arrow -->
+    <button class="arrow right-arrow" (click)="next()">&#9654;</button>
   </div>
 
-  <!-- Right arrow button for navigating to the next option -->
-  <button class="arrow right-arrow" (click)="next()">&#9654;</button>
+  <!-- Pagination dots: positioned directly beneath the slider container with a 25px gap -->
+  <div class="pagination">
+    <div
+      class="dot"
+      *ngFor="let option of options; let i = index"
+      [class.active]="i === currentIndex"
+    ></div>
+  </div>
 </div>
 
 <app-footer></app-footer>

@@ -1,47 +1,69 @@
 /* home-page.component.css */
 
-/* The home container fills the space between header and footer and shows the background */
+/* Home container:
+   - Arranged in a column so that the slider and pagination dots stack vertically.
+   - Fills the available viewport (excluding header and footer), leaving a 25px gap at the top and bottom.
+*/
 .home-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: calc(100vh - 80px); /* Adjust height between header and footer */
-  padding: 20px;
+  height: calc(100vh - 80px); /* Adjust if header and footer height differ */
+  padding: 25px 0; /* 25px gap at the top and bottom */
   box-sizing: border-box;
-  background-image: url('/assets/images/background_image.jpeg'); /* Background image */
+  background-image: url('/assets/images/background_image.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative; /* For positioning the arrows absolutely */
 }
 
-/* Container that masks overflow so only one card is visible */
+/* Slider container:
+   - Fills most of the vertical space.
+   - Positioned relative for arrow positioning.
+*/
 .slider-container {
+  flex: 1;
+  width: 80%;
+  position: relative;
   overflow: hidden;
-  width: 80%; /* Adjust width to leave space for navigation arrows */
 }
 
-/* The wrapper for all cards; a flex container that will be shifted horizontally */
+/* Slider wrapper:
+   - A flex container that transitions smoothly when moving between slides.
+*/
 .slider-wrapper {
   display: flex;
-  transition: transform 0.5s ease; /* Smooth transition for both translate and scale */
+  transition: transform 0.5s ease;
+  height: 100%;
 }
 
-/* Each card (option) style */
-.container {
-  min-width: 100%; /* Each card occupies the full width of the slider container */
+/* Each slide occupies 100% of the slider container's width and height */
+.slide {
+  flex: 0 0 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+}
+
+/* Card container:
+   - Sized to nearly fill the slide while leaving a 25px gap on all sides.
+   - Uses calc() to subtract 50px from both width and height to account for the left/right and top/bottom margins.
+*/
+.container {
+  width: calc(100% - 50px);
+  height: calc(100% - 50px);
+  margin: 25px; /* 25px gap between this card and the slide edges (and hence between consecutive cards) */
   padding: 20px;
   border: 2px solid #050505;
   background-color: rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
-  /* Optional: add perspective for a subtle 3D feel */
-  transform: perspective(1000px);
+  text-align: center;
 }
 
-/* Styles for navigation arrow buttons */
+/* Navigation arrow buttons:
+   - Absolutely positioned within the slider container.
+*/
 .arrow {
   position: absolute;
   top: 50%;
@@ -61,4 +83,30 @@
 
 .right-arrow {
   right: 10px;
+}
+
+/* Pagination dots:
+   - Displayed directly beneath the slider container with a 25px gap.
+*/
+.pagination {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Each pagination dot (transparent ball) */
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 5px;
+  background-color: transparent;
+  border: 2px solid #007bff;
+  transition: background-color 0.3s ease;
+}
+
+/* Active dot: filled with color to indicate the current slide */
+.dot.active {
+  background-color: #007bff;
 }
