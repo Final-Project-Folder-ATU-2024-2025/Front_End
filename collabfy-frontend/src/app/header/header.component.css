@@ -1,15 +1,15 @@
-/* header.component.css */
+/* src/app/header/header.component.css */
 
-/* Header styling */
+/* Overall header styling */
 header {
-  background-color: #1b2ba0; /* A muted greenish-blue from the logo's palette */
-  color: #333; /* Dark color for contrast */
+  background-color: #1b2ba0; /* A muted color from the logo's palette */
+  color: #333;               /* Dark color for contrast */
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 0; /* Remove any extra margin */
+  margin: 0;                 /* Remove extra margin */
 }
 
 /* Container for the logo */
@@ -18,30 +18,31 @@ header {
   align-items: center;
 }
 
-/* Logo image styling */
-/* Updated to make the logo circular */
+/* Logo styling: circular image */
 .logo {
-  height: 100px;                /* Fixed height */
-  width: 100px;                 /* Fixed width to ensure a square shape */
-  margin-right: 10px;           /* Space between logo and text */
-  max-width: 100%;              /* Responsive scaling */
-  object-fit: cover;            /* Ensure the image covers the container without distortion */
-  border-radius: 50%;           /* Makes the square image circular */
+  height: 100px;
+  margin-right: 10px;        /* Space between the logo and text */
+  max-width: 100%;
+  border-radius: 50%;        /* Make the logo circular */
 }
 
-/* Header text styling */
-h1 {
-  margin: 0;
-}
-
-/* Container for authentication links */
+/* Container for the authentication links */
 .auth-links {
   display: flex;
   gap: 20px;
 }
 
-/* Authentication links styling */
-.auth-links a {
+/* Styling for the Log Out button */
+.auth-links button {
   color: white;
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+/* Hover effect for the Log Out button */
+.auth-links button:hover {
+  opacity: 0.8;
 }
