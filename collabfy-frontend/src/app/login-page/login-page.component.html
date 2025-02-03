@@ -1,12 +1,11 @@
 <!-- login-page.component.html -->
-<!-- This template displays the header, the login form, and the footer. -->
 
 <app-header></app-header>
 
 <div class="login-container">
   <div class="form-container">
     <h2>Log In</h2>
-    <!-- Bind the reactive form and handle submission with onSubmit() -->
+    <!-- Reactive form for login with onSubmit() handling the submission -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Email Field -->
       <div class="form-group">
@@ -18,9 +17,11 @@
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" required>
       </div>
-      <!-- Submit Button -->
+      <!-- Log In Button -->
       <button type="submit">Log In</button>
     </form>
+    <!-- Button to navigate to Create Account page with same style as the Log In button -->
+    <button type="button" (click)="goToCreateAccount()">Create Account</button>
   </div>
 </div>
 

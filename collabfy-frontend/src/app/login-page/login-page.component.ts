@@ -1,7 +1,4 @@
 // login-page.component.ts
-// This component implements the Login page where a user can enter their email and password.
-// It uses a reactive form for validation, shows the header and footer for consistency,
-// and navigates to the Home page upon a successful login.
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,7 +32,7 @@ export class LoginPageComponent {
     });
   }
 
-  // onSubmit() is called when the form is submitted.
+  // onSubmit() is called when the login form is submitted.
   onSubmit() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
@@ -55,5 +52,10 @@ export class LoginPageComponent {
           }
         });
     }
+  }
+
+  // goToCreateAccount() navigates to the Create Account page when the button is clicked.
+  goToCreateAccount() {
+    this.router.navigate(['/create-account']);
   }
 }
