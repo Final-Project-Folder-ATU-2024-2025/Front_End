@@ -1,20 +1,32 @@
 <!-- home-page.component.html -->
-<!-- This template displays the header, a slider that shows one option at a time with navigation arrows, and the footer. -->
 <app-header></app-header>
 
 <div class="home-container">
-  <div class="slider">
-    <!-- Left Arrow Button: Calls prev() to show the previous option -->
-    <button class="arrow left-arrow" (click)="prev()">&#9664;</button>
+  <!-- Left arrow button for navigating to the previous option -->
+  <button class="arrow left-arrow" (click)="previous()">&#9664;</button>
 
-    <!-- Container displaying the current option -->
-    <div class="container">
-      {{ options[currentIndex] }}
+  <!-- Slider container that masks overflow -->
+  <div class="slider-container">
+    <!-- 
+      The slider-wrapper is a flex container that shifts horizontally.
+      Its transform is set by both the current index and the animation flag.
+      When isAnimating is true, the card scales down to 0.8; otherwise, it remains at scale 1.
+    -->
+    <div
+      class="slider-wrapper"
+      [ngStyle]="{
+        'transform': 'translateX(-' + currentIndex * 100 + '%) scale(' + (isAnimating ? 0.8 : 1) + ')'
+      }"
+    >
+      <!-- Generate each card (option) using *ngFor -->
+      <div class="container" *ngFor="let option of options">
+        {{ option }}
+      </div>
     </div>
-
-    <!-- Right Arrow Button: Calls next() to show the next option -->
-    <button class="arrow right-arrow" (click)="next()">&#9654;</button>
   </div>
+
+  <!-- Right arrow button for navigating to the next option -->
+  <button class="arrow right-arrow" (click)="next()">&#9654;</button>
 </div>
 
 <app-footer></app-footer>
