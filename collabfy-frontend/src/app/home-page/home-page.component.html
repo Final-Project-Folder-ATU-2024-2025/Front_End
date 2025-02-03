@@ -16,13 +16,18 @@
     >
       <div class="slide" *ngFor="let option of options">
         <div class="container">
+          <!-- Special content for the "Connections" slide -->
           <ng-container *ngIf="option === 'Connections'; else defaultContent">
-            <div class="connections-wrapper">
+            <!-- Title at the top -->
+            <h2 class="connections-title">Connections</h2>
+            <!-- Inner area with two squares -->
+            <div class="connections-inner">
+              <!-- Left inner square: search bar -->
               <div class="connection-create">
                 <h3>Create a New Connection:</h3>
                 <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
                 <button (click)="searchConnections()">Search</button>
-                <!-- Display search results under the search bar -->
+                <!-- Search results appear under the search bar -->
                 <div class="search-results" *ngIf="searchResults.length">
                   <h4>Results:</h4>
                   <ul>
@@ -32,12 +37,14 @@
                   </ul>
                 </div>
               </div>
+              <!-- Right inner square: connections count -->
               <div class="connection-count">
                 <h3>Your Connections:</h3>
                 <p>{{ connectionsCount }}</p>
               </div>
             </div>
           </ng-container>
+          <!-- Default content for other options -->
           <ng-template #defaultContent>
             <ng-container *ngIf="option === 'Create a New Project'; else textContent">
               <div class="project-card">
@@ -56,11 +63,7 @@
   </div>
 
   <div class="pagination">
-    <div
-      class="dot"
-      *ngFor="let option of options; let i = index"
-      [class.active]="i === currentIndex"
-    ></div>
+    <div class="dot" *ngFor="let option of options; let i = index" [class.active]="i === currentIndex"></div>
   </div>
 </div>
 

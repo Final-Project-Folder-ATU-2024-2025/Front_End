@@ -1,10 +1,9 @@
 // src/app/home-page/home-page.component.ts
 // This component displays one option (card) at a time from an array of options.
-// It provides left/right arrow navigation with an animated transition (translateX, translateY, and scale).
+// It provides left/right arrow navigation with an animated transition.
 // When the "Connections" option is active, it shows two inner squares:
-//   - One with a search bar to create a new connection.
-//   - One that displays the number of persons in your connections list.
-// The searchConnections() method calls the backend's /api/search-users endpoint.
+//  - One for creating a new connection (search bar with results).
+//  - One that displays the number of persons in your connections list.
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -20,6 +19,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
+  // Options for the slider
   options = [
     'Create a New Project',
     'My Projects',
@@ -28,23 +28,25 @@ export class HomePageComponent {
     'Connections'
   ];
 
+  // Slider state
   currentIndex: number = 0;
   isAnimating: boolean = false;
   direction: 'next' | 'prev' = 'next';
 
-  // For connections functionality:
-  connectionsCount: number = 3; // dummy value; in real app, fetch actual count
+  // Connections-specific properties
+  connectionsCount: number = 3; // Dummy value; replace with actual count as needed
   searchQuery: string = '';
   searchResults: any[] = [];
 
   constructor(private http: HttpClient) {}
 
+  // Called when the "Search" button is pressed in the Connections slide.
   searchConnections(): void {
     if (!this.searchQuery.trim()) {
       this.searchResults = [];
       return;
     }
-    // Call backend endpoint to search for users matching the search query
+    // Call the backend endpoint to search for users.
     this.http.post('http://127.0.0.1:5000/api/search-users', { query: this.searchQuery })
       .subscribe({
         next: (response: any) => {
@@ -57,6 +59,7 @@ export class HomePageComponent {
       });
   }
 
+  // Navigation methods (unchanged)
   next() {
     this.direction = 'next';
     this.isAnimating = true;
