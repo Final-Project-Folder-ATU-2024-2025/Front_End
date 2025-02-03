@@ -64,14 +64,20 @@
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Connections card styling */
-.connections-wrapper {
+/* Connections slide styling */
+.connections-title {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.connections-inner {
   display: flex;
-  flex-direction: row;
+  flex: 1;
   gap: 20px;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
+  padding-top: 20px;    /* Padding below the title */
+  padding-bottom: 20px;
+  /* Optional: add left/right padding if needed */
 }
 
 .connection-create,
@@ -81,12 +87,14 @@
   border: 1px solid #050505;
   background-color: #fff;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-/* Styling for connection-create */
 .connection-create h3,
 .connection-count h3 {
-  margin-top: 0;
+  margin: 0 0 10px 0;
 }
 
 .connection-create input[type="text"] {
@@ -96,7 +104,7 @@
   box-sizing: border-box;
 }
 
-/* Styling for search results */
+/* Search results styling */
 .search-results {
   margin-top: 10px;
   text-align: left;
@@ -124,11 +132,9 @@
   z-index: 10;
   padding: 10px;
 }
-
 .left-arrow {
   left: 10px;
 }
-
 .right-arrow {
   right: 10px;
 }
@@ -140,7 +146,6 @@
   justify-content: center;
   align-items: center;
 }
-
 .dot {
   width: 12px;
   height: 12px;
@@ -150,7 +155,6 @@
   border: 2px solid #007bff;
   transition: background-color 0.3s ease;
 }
-
 .dot.active {
   background-color: #007bff;
 }
