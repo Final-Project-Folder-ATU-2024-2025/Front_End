@@ -1,6 +1,8 @@
 // src/app/header/header.component.ts
 // This header component is used on authenticated pages.
-// It displays the logo on the left and a "Log Out" button on the right.
+// It displays the logo on the left, a "Log Out" button on the right,
+// and below the Log Out button (or beside it), an emoji icon with the user's first name and surname.
+// It retrieves these values from localStorage.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -13,22 +15,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  // (For this header, we no longer need to conditionally show login/create account links.)
-  // We always want the Log Out button to appear on authenticated pages.
-  isAuthenticated = true; // We assume that on authenticated pages, the user is logged in.
+  isAuthenticated = true;
+  userName: string = '';
+  userSurname: string = '';
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Optionally, you could check the auth status here.
-    // For now, we assume this header is only used on pages where the user is logged in.
+    // Retrieve the user's first name and surname from localStorage.
+    // If nothing is stored, these will remain empty.
+    this.userName = localStorage.getItem('firstName') || '';
+    this.userSurname = localStorage.getItem('surname') || '';
   }
 
-  // logout() handles logging the user out.
+  // Handles logging out the user.
   logout(): void {
-    // Remove the token (or perform other logout operations)
     localStorage.removeItem('token');
-    // Navigate to the login page.
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('surname');
+    this.isAuthenticated = false;
     this.router.navigate(['/login']);
   }
 }

@@ -9,7 +9,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 0;                 /* Remove extra margin */
+  margin: 0;               /* Remove extra margin */
 }
 
 /* Container for the logo */
@@ -21,15 +21,17 @@ header {
 /* Logo styling: circular image */
 .logo {
   height: 100px;
-  margin-right: 10px;        /* Space between the logo and text */
+  margin-right: 10px;      /* Space between the logo and text */
   max-width: 100%;
-  border-radius: 50%;        /* Make the logo circular */
+  border-radius: 50%;      /* Make the logo circular */
 }
 
-/* Container for the authentication links */
+/* Container for authentication links */
 .auth-links {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
 }
 
 /* Styling for the Log Out button */
@@ -45,4 +47,23 @@ header {
 /* Hover effect for the Log Out button */
 .auth-links button:hover {
   opacity: 0.8;
+}
+
+/* User info block: displays the user's name and emoji icon */
+.user-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: white;
+}
+
+/* Styling for the user icon (emoji) */
+.user-icon {
+  margin-right: 5px;
+  font-size: 1.2rem;
+}
+
+/* Optional: style for the user name text */
+.user-name {
+  font-weight: bold;
 }

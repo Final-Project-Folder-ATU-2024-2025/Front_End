@@ -1,8 +1,7 @@
 // src/app/login-page/login-page.component.ts
-// This component handles user login.
-// It uses a reactive form for login validation and calls the backend's login endpoint.
-// The public header is used here so that only the logo is displayed on the login page.
-
+// This component handles user login using a reactive form and calls the backend's login endpoint.
+// After a successful login, it stores the token, firstName, and surname in localStorage.
+// The public header is used on this page (so it shows only the logo).
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +21,6 @@ import { HeaderPublicComponent } from '../header-public/header-public.component'
 export class LoginPageComponent {
   form: FormGroup;
 
-  // Inject FormBuilder, HttpClient, and Router for form handling and navigation.
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -43,9 +41,15 @@ export class LoginPageComponent {
       // Call the backend's login endpoint.
       this.http.post('http://127.0.0.1:5000/api/login', { email, password })
         .subscribe({
-          next: () => {
-            // On successful login, display a message and navigate to the Home page.
+          next: (response: any) => {
+            // Save the token and user data (firstName and surname) to localStorage.
+            // Make sure your backend returns these properties.
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('firstName', response.firstName);
+            localStorage.setItem('surname', response.surname);
+            
             alert('Logged in successfully!');
+            // Navigate to the Home page (or any other authenticated page).
             this.router.navigate(['/']);
           },
           error: (error) => {
