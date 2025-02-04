@@ -1,7 +1,7 @@
 // src/app/home-page/home-page.component.ts
 // This component displays a slider with options including Notifications and Connections.
 // The Notifications slide fetches and displays notifications for the logged‑in user.
-// The Connections slide allows searching for users and toggling connection requests.
+// The Connections slide allows searching for users, toggling connection requests, and shows your current connections.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -30,10 +30,11 @@ export class HomePageComponent implements OnInit {
   direction: 'next' | 'prev' = 'next';
 
   // Connections-specific properties
-  connectionsCount: number = 0; // Initially zero connections.
+  connectionsCount: number = 0;
   searchQuery: string = '';
   searchResults: any[] = [];
   pendingRequests: { [email: string]: boolean } = {};
+  connections: any[] = [];
 
   // Notifications-specific properties
   notifications: any[] = [];
@@ -45,6 +46,10 @@ export class HomePageComponent implements OnInit {
     // If the initial slide is Notifications, fetch notifications.
     if (this.options[this.currentIndex] === 'Notifications') {
       this.fetchNotifications();
+    }
+    // If the initial slide is Connections, fetch connections.
+    if (this.options[this.currentIndex] === 'Connections') {
+      this.fetchConnections();
     }
   }
 
@@ -66,8 +71,8 @@ export class HomePageComponent implements OnInit {
   }
 
   toggleConnection(user: any): void {
-    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current user UID
-    const toUserId = user.uid; // Your user documents must have a "uid" field.
+    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current UID
+    const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
       this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
         .subscribe({
@@ -112,8 +117,27 @@ export class HomePageComponent implements OnInit {
       });
   }
 
+  fetchConnections(): void {
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      console.error("User not logged in.");
+      return;
+    }
+    this.http.post('http://127.0.0.1:5000/api/user-connections', { userId: uid })
+      .subscribe({
+        next: (response: any) => {
+          this.connections = response.connections || [];
+          this.connectionsCount = this.connections.length;
+          console.log("Connections:", this.connections);
+        },
+        error: (error) => {
+          console.error("Error fetching connections:", error);
+        }
+      });
+  }
+
   acceptNotification(notif: any): void {
-    // Call the backend to mark the connection request as accepted.
+    // Mark the connection request as accepted.
     this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
       requestId: notif.connectionRequestId,
       action: "accepted"
@@ -121,6 +145,8 @@ export class HomePageComponent implements OnInit {
       next: (response: any) => {
         console.log("Connection request accepted:", response);
         this.dismissNotification(notif);
+        // Refresh connections after acceptance.
+        this.fetchConnections();
       },
       error: (error) => {
         console.error("Error accepting connection request:", error);
@@ -129,7 +155,7 @@ export class HomePageComponent implements OnInit {
   }
 
   rejectNotification(notif: any): void {
-    // Call the backend to mark the connection request as rejected.
+    // Mark the connection request as rejected.
     this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
       requestId: notif.connectionRequestId,
       action: "rejected"
@@ -155,8 +181,11 @@ export class HomePageComponent implements OnInit {
     setTimeout(() => {
       this.currentIndex = (this.currentIndex + 1) % this.options.length;
       this.isAnimating = false;
-      if (this.options[this.currentIndex] === 'Notifications' && !this.notificationsLoaded) {
+      if (this.options[this.currentIndex] === 'Notifications') {
         this.fetchNotifications();
+      }
+      if (this.options[this.currentIndex] === 'Connections') {
+        this.fetchConnections();
       }
     }, 500);
   }
@@ -167,8 +196,11 @@ export class HomePageComponent implements OnInit {
     setTimeout(() => {
       this.currentIndex = (this.currentIndex - 1 + this.options.length) % this.options.length;
       this.isAnimating = false;
-      if (this.options[this.currentIndex] === 'Notifications' && !this.notificationsLoaded) {
+      if (this.options[this.currentIndex] === 'Notifications') {
         this.fetchNotifications();
+      }
+      if (this.options[this.currentIndex] === 'Connections') {
+        this.fetchConnections();
       }
     }, 500);
   }

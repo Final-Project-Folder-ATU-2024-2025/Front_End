@@ -41,7 +41,7 @@
                       <button (click)="acceptNotification(notif)">Accept</button>
                       <button (click)="rejectNotification(notif)">Reject</button>
                     </div>
-                    <div class="notification-actions" *ngIf="notif.type === 'connection'">
+                    <div class="notification-actions" *ngIf="notif.type === 'response' || notif.type === 'connection'">
                       <button (click)="dismissNotification(notif)">Dismiss</button>
                     </div>
                   </li>
@@ -81,14 +81,29 @@
                     </ul>
                   </div>
                 </div>
-                <!-- Right square: Display connections count -->
+                <!-- Right square: Display your connections -->
                 <div class="connection-count">
                   <h3>Your Connections:</h3>
-                  <p>{{ connectionsCount }}</p>
+                  <ul *ngIf="connections && connections.length > 0">
+                    <li *ngFor="let conn of connections">
+                      <div class="result-line">
+                        <span class="result-icon">👤</span> {{ conn.firstName }} {{ conn.surname }}
+                      </div>
+                      <div class="result-line">
+                        <span class="result-icon">✉️</span> {{ conn.email }}
+                      </div>
+                      <div class="result-line">
+                        <span class="result-icon">📞</span> {{ conn.telephone }}
+                      </div>
+                    </li>
+                  </ul>
+                  <div *ngIf="!connections || connections.length === 0">
+                    You have no connections.
+                  </div>
                 </div>
               </div>
             </ng-container>
-            <!-- Default: Display the option text -->
+            <!-- Default: Simply display the option text -->
             <ng-container *ngSwitchDefault>
               {{ option }}
             </ng-container>
