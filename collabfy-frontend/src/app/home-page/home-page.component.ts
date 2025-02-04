@@ -113,15 +113,35 @@ export class HomePageComponent implements OnInit {
   }
 
   acceptNotification(notif: any): void {
-    console.log("Accept notification", notif);
-    // Implement your backend accept logic if needed.
-    this.dismissNotification(notif);
+    // Call the backend to mark the connection request as accepted.
+    this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
+      requestId: notif.connectionRequestId,
+      action: "accepted"
+    }).subscribe({
+      next: (response: any) => {
+        console.log("Connection request accepted:", response);
+        this.dismissNotification(notif);
+      },
+      error: (error) => {
+        console.error("Error accepting connection request:", error);
+      }
+    });
   }
 
   rejectNotification(notif: any): void {
-    console.log("Reject notification", notif);
-    // Implement your backend reject logic if needed.
-    this.dismissNotification(notif);
+    // Call the backend to mark the connection request as rejected.
+    this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
+      requestId: notif.connectionRequestId,
+      action: "rejected"
+    }).subscribe({
+      next: (response: any) => {
+        console.log("Connection request rejected:", response);
+        this.dismissNotification(notif);
+      },
+      error: (error) => {
+        console.error("Error rejecting connection request:", error);
+      }
+    });
   }
 
   dismissNotification(notif: any): void {
