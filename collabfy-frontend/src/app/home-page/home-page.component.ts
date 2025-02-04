@@ -1,8 +1,8 @@
 // src/app/home-page/home-page.component.ts
 // This component displays one option (card) at a time from an array of options.
-// It provides left/right arrow navigation with an animated transition (translateX, translateY, and scale).
+// It provides left/right arrow navigation with animated transitions.
 // When the "Connections" option is active, it shows two inner squares:
-//   - One with a search bar to create a new connection.
+//   - One with a search bar to create a new connection (with search results).
 //   - One that displays the number of persons in your connections list.
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,6 +19,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
+  // Slider options
   options = [
     'Create a New Project',
     'My Projects',
@@ -31,14 +32,15 @@ export class HomePageComponent {
   isAnimating: boolean = false;
   direction: 'next' | 'prev' = 'next';
 
-  // For connections functionality:
-  // Change the dummy value to 0 because no connections have been added yet.
+  // Connections-specific properties
+  // Set dummy connectionsCount to 0 (no connections yet)
   connectionsCount: number = 0;
   searchQuery: string = '';
   searchResults: any[] = [];
 
   constructor(private http: HttpClient) {}
 
+  // Called when the "Search" button is pressed in the Connections slide.
   searchConnections(): void {
     if (!this.searchQuery.trim()) {
       this.searchResults = [];
@@ -56,6 +58,7 @@ export class HomePageComponent {
       });
   }
 
+  // Navigation methods (unchanged)
   next() {
     this.direction = 'next';
     this.isAnimating = true;

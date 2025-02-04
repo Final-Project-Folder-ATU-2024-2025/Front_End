@@ -75,7 +75,7 @@
   display: flex;
   flex: 1;
   gap: 20px;
-  padding-top: 20px;    /* Padding below the title */
+  padding-top: 20px;
   padding-bottom: 20px;
   /* Optional: add left/right padding if needed */
 }
@@ -92,6 +92,7 @@
   justify-content: flex-start;
 }
 
+/* Styling for connection-create header */
 .connection-create h3,
 .connection-count h3 {
   margin: 0 0 10px 0;
@@ -104,7 +105,7 @@
   box-sizing: border-box;
 }
 
-/* Search results styling */
+/* Styling for search results */
 .search-results {
   margin-top: 10px;
   text-align: left;
@@ -115,8 +116,16 @@
   margin: 0;
 }
 .search-results li {
-  border-bottom: 1px solid #ccc;
-  padding: 5px 0;
+  margin-bottom: 10px;
+}
+.result-item {
+  margin-bottom: 10px;
+}
+.result-line {
+  display: block;
+}
+.result-icon {
+  margin-right: 5px;
 }
 
 /* Navigation arrow buttons */
