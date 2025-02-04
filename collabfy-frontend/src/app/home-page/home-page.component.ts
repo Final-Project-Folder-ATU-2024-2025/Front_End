@@ -43,11 +43,9 @@ export class HomePageComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    // If the initial slide is Notifications, fetch notifications.
     if (this.options[this.currentIndex] === 'Notifications') {
       this.fetchNotifications();
     }
-    // If the initial slide is Connections, fetch connections.
     if (this.options[this.currentIndex] === 'Connections') {
       this.fetchConnections();
     }
@@ -71,7 +69,7 @@ export class HomePageComponent implements OnInit {
   }
 
   toggleConnection(user: any): void {
-    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current UID
+    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual UID
     const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
       this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
@@ -137,7 +135,6 @@ export class HomePageComponent implements OnInit {
   }
 
   acceptNotification(notif: any): void {
-    // Mark the connection request as accepted.
     this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
       requestId: notif.connectionRequestId,
       action: "accepted"
@@ -145,7 +142,6 @@ export class HomePageComponent implements OnInit {
       next: (response: any) => {
         console.log("Connection request accepted:", response);
         this.dismissNotification(notif);
-        // Refresh connections after acceptance.
         this.fetchConnections();
       },
       error: (error) => {
@@ -155,7 +151,6 @@ export class HomePageComponent implements OnInit {
   }
 
   rejectNotification(notif: any): void {
-    // Mark the connection request as rejected.
     this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
       requestId: notif.connectionRequestId,
       action: "rejected"
@@ -171,8 +166,25 @@ export class HomePageComponent implements OnInit {
   }
 
   dismissNotification(notif: any): void {
-    // Remove the notification locally.
-    this.notifications = this.notifications.filter(n => n.id !== notif.id);
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      console.error("User not logged in.");
+      return;
+    }
+    // Call the backend to delete the notification from Firestore.
+    this.http.post('http://127.0.0.1:5000/api/dismiss-notification', {
+      userId: uid,
+      notificationId: notif.id
+    }).subscribe({
+      next: (response: any) => {
+        console.log("Notification dismissed:", response);
+        // Remove the notification locally.
+        this.notifications = this.notifications.filter(n => n.id !== notif.id);
+      },
+      error: (error) => {
+        console.error("Error dismissing notification:", error);
+      }
+    });
   }
 
   next() {
