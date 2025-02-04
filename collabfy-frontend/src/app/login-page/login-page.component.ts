@@ -1,7 +1,6 @@
 // src/app/login-page/login-page.component.ts
 // This component handles user login using a reactive form and calls the backend's login endpoint.
-// After a successful login, it stores the token, firstName, and surname in localStorage.
-// The public header is used on this page so that only the logo is displayed.
+// After a successful login, it stores the token, firstName, surname, and uid in localStorage.
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -25,28 +24,26 @@ export class LoginPageComponent {
     private http: HttpClient,
     private router: Router
   ) {
-    // Initialize the login form with email and password fields.
+    // Initialize the login form with email and password.
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  // Called when the login form is submitted.
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.valid) {
       const { email, password } = this.form.value;
       
-      // Call the backend's login endpoint.
+      // Call the login endpoint.
       this.http.post('http://127.0.0.1:5000/api/login', { email, password })
         .subscribe({
           next: (response: any) => {
-            // For testing purposes, we set dummy values.
-            // In your production code, replace these with response.firstName and response.surname.
+            // Store token, firstName, surname, and uid in localStorage.
             localStorage.setItem('token', response.token || 'dummy-token');
             localStorage.setItem('firstName', response.firstName || 'John');
             localStorage.setItem('surname', response.surname || 'Doe');
-            
+            localStorage.setItem('uid', response.uid || 'user1');
             alert('Logged in successfully!');
             this.router.navigate(['/']);
           },
@@ -57,8 +54,7 @@ export class LoginPageComponent {
     }
   }
 
-  // Navigates to the Create Account page when the button is clicked.
-  goToCreateAccount() {
+  goToCreateAccount(): void {
     this.router.navigate(['/create-account']);
   }
 }

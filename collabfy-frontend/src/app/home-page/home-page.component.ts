@@ -1,10 +1,8 @@
 // src/app/home-page/home-page.component.ts
-// This component displays one option (card) at a time from an array of options.
-// It provides left/right arrow navigation with animated transitions.
-// When the "Connections" option is active, it shows two inner squares:
-//   - One with a search bar to create a new connection (with search results).
-//   - One that displays the number of persons in your connections list.
-import { Component } from '@angular/core';
+// This component displays a slider with options including Notifications and Connections.
+// The Notifications slide fetches and displays notifications for the logged‑in user.
+// The Connections slide allows searching for users and toggling connection requests.
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -18,8 +16,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-export class HomePageComponent {
-  // Slider options
+export class HomePageComponent implements OnInit {
   options = [
     'Create a New Project',
     'My Projects',
@@ -33,14 +30,24 @@ export class HomePageComponent {
   direction: 'next' | 'prev' = 'next';
 
   // Connections-specific properties
-  // Set dummy connectionsCount to 0 (no connections yet)
-  connectionsCount: number = 0;
+  connectionsCount: number = 0; // Initially zero connections.
   searchQuery: string = '';
   searchResults: any[] = [];
+  pendingRequests: { [email: string]: boolean } = {};
+
+  // Notifications-specific properties
+  notifications: any[] = [];
+  notificationsLoaded: boolean = false;
 
   constructor(private http: HttpClient) {}
 
-  // Called when the "Search" button is pressed in the Connections slide.
+  ngOnInit(): void {
+    // If the initial slide is Notifications, fetch notifications.
+    if (this.options[this.currentIndex] === 'Notifications') {
+      this.fetchNotifications();
+    }
+  }
+
   searchConnections(): void {
     if (!this.searchQuery.trim()) {
       this.searchResults = [];
@@ -58,13 +65,79 @@ export class HomePageComponent {
       });
   }
 
-  // Navigation methods (unchanged)
+  toggleConnection(user: any): void {
+    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current user UID
+    const toUserId = user.uid; // Your user documents must have a "uid" field.
+    if (!this.pendingRequests[user.email]) {
+      this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
+        .subscribe({
+          next: (response: any) => {
+            console.log('Connection request sent:', response);
+            this.pendingRequests[user.email] = true;
+          },
+          error: (error) => {
+            console.error('Error sending connection request:', error);
+          }
+        });
+    } else {
+      this.http.post('http://127.0.0.1:5000/api/cancel-connection-request', { fromUserId, toUserId })
+        .subscribe({
+          next: (response: any) => {
+            console.log('Connection request cancelled:', response);
+            this.pendingRequests[user.email] = false;
+          },
+          error: (error) => {
+            console.error('Error cancelling connection request:', error);
+          }
+        });
+    }
+  }
+
+  fetchNotifications(): void {
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      console.error("User not logged in.");
+      return;
+    }
+    this.http.post('http://127.0.0.1:5000/api/notifications', { userId: uid })
+      .subscribe({
+        next: (response: any) => {
+          this.notifications = response.notifications || [];
+          this.notificationsLoaded = true;
+          console.log('Notifications:', this.notifications);
+        },
+        error: (error) => {
+          console.error("Error fetching notifications:", error);
+        }
+      });
+  }
+
+  acceptNotification(notif: any): void {
+    console.log("Accept notification", notif);
+    // Implement your backend accept logic if needed.
+    this.dismissNotification(notif);
+  }
+
+  rejectNotification(notif: any): void {
+    console.log("Reject notification", notif);
+    // Implement your backend reject logic if needed.
+    this.dismissNotification(notif);
+  }
+
+  dismissNotification(notif: any): void {
+    // Remove the notification locally.
+    this.notifications = this.notifications.filter(n => n.id !== notif.id);
+  }
+
   next() {
     this.direction = 'next';
     this.isAnimating = true;
     setTimeout(() => {
       this.currentIndex = (this.currentIndex + 1) % this.options.length;
       this.isAnimating = false;
+      if (this.options[this.currentIndex] === 'Notifications' && !this.notificationsLoaded) {
+        this.fetchNotifications();
+      }
     }, 500);
   }
 
@@ -74,6 +147,9 @@ export class HomePageComponent {
     setTimeout(() => {
       this.currentIndex = (this.currentIndex - 1 + this.options.length) % this.options.length;
       this.isAnimating = false;
+      if (this.options[this.currentIndex] === 'Notifications' && !this.notificationsLoaded) {
+        this.fetchNotifications();
+      }
     }, 500);
   }
 }

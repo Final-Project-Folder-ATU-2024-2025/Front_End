@@ -1,73 +1,105 @@
-<!-- src/app/home-page/home-page.component.html -->
 <app-header></app-header>
-
 <div class="home-container">
   <div class="slider-container">
     <button class="arrow left-arrow" (click)="previous()">&#9664;</button>
-    
-    <div
-      class="slider-wrapper"
-      [ngStyle]="{
-        'transform': 
-          'translateX(-' + currentIndex * 100 + '%) ' +
-          (isAnimating ? (direction === 'next' ? 'translateY(10px)' : 'translateY(-10px)') : 'translateY(0)') + ' ' +
-          'scale(' + (isAnimating ? 0.8 : 1) + ')'
-      }"
-    >
+    <div class="slider-wrapper"
+         [ngStyle]="{
+           'transform': 'translateX(-' + currentIndex * 100 + '%) ' +
+                        (isAnimating ? (direction === 'next' ? 'translateY(10px)' : 'translateY(-10px)') : 'translateY(0)') + ' ' +
+                        'scale(' + (isAnimating ? 0.8 : 1) + ')'
+         }">
       <div class="slide" *ngFor="let option of options">
         <div class="container">
-          <!-- Special content for the "Connections" slide -->
-          <ng-container *ngIf="option === 'Connections'; else defaultContent">
-            <!-- Title at the top of the Connections card -->
-            <h2 class="connections-title">Connections</h2>
-            <!-- Inner area containing two squares -->
-            <div class="connections-inner">
-              <!-- Left inner square: Search for new connection -->
-              <div class="connection-create">
-                <h3>Create a New Connection:</h3>
-                <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
-                <button (click)="searchConnections()">Search</button>
-                <!-- Display search results in the required format -->
-                <div class="search-results" *ngIf="searchResults.length">
-                  <ul>
-                    <li *ngFor="let user of searchResults">
-                      <div class="result-item">
-                        <div class="result-line"><span class="result-icon">👤</span>{{ user.firstName }} {{ user.surname }}</div>
-                        <div class="result-line"><span class="result-icon">✉️</span>{{ user.email }}</div>
-                        <div class="result-line"><span class="result-icon">📞</span>{{ user.telephone || user.business_phone || '' }}</div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <!-- Right inner square: Display connections count -->
-              <div class="connection-count">
-                <h3>Your Connections:</h3>
-                <p>{{ connectionsCount }}</p>
-              </div>
-            </div>
-          </ng-container>
-          <!-- Default content for other slides -->
-          <ng-template #defaultContent>
-            <ng-container *ngIf="option === 'Create a New Project'; else textContent">
+          <ng-container [ngSwitch]="option">
+            <!-- "Create a New Project" slide -->
+            <ng-container *ngSwitchCase="'Create a New Project'">
               <div class="project-card">
                 <div class="image-overlay">Create a New Project</div>
               </div>
             </ng-container>
-            <ng-template #textContent>
+            <!-- "Notifications" slide -->
+            <ng-container *ngSwitchCase="'Notifications'">
+              <h2 class="notifications-title">Notifications</h2>
+              <div class="notifications-inner">
+                <div *ngIf="!notificationsLoaded">Loading notifications...</div>
+                <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
+                <ul *ngIf="notificationsLoaded && notifications.length > 0">
+                  <li *ngFor="let notif of notifications" class="notification-item">
+                    <div class="notification-line">
+                      <span class="notification-icon">👤</span>
+                      {{ notif.fromUser.firstName }} {{ notif.fromUser.surname }}
+                    </div>
+                    <div class="notification-line">
+                      <span class="notification-icon">✉️</span>
+                      {{ notif.fromUser.email }}
+                    </div>
+                    <div class="notification-line">
+                      <span class="notification-icon">📞</span>
+                      {{ notif.fromUser.telephone }}
+                    </div>
+                    <div class="notification-actions" *ngIf="notif.type === 'request'">
+                      <button (click)="acceptNotification(notif)">Accept</button>
+                      <button (click)="rejectNotification(notif)">Reject</button>
+                    </div>
+                    <div class="notification-actions" *ngIf="notif.type === 'connection'">
+                      <button (click)="dismissNotification(notif)">Dismiss</button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+            <!-- "Connections" slide -->
+            <ng-container *ngSwitchCase="'Connections'">
+              <h2 class="connections-title">Connections</h2>
+              <div class="connections-inner">
+                <!-- Left square: Create new connection -->
+                <div class="connection-create">
+                  <h3>Create a New Connection:</h3>
+                  <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
+                  <button (click)="searchConnections()">Search</button>
+                  <div class="search-results" *ngIf="searchResults.length">
+                    <ul>
+                      <li *ngFor="let user of searchResults">
+                        <div class="result-item">
+                          <div class="result-line">
+                            <span class="result-icon">👤</span>
+                            {{ user.firstName }} {{ user.surname }}
+                          </div>
+                          <div class="result-line">
+                            <span class="result-icon">✉️</span>
+                            {{ user.email }}
+                          </div>
+                          <div class="result-line">
+                            <span class="result-icon">📞</span>
+                            {{ user.telephone || user.business_phone || '' }}
+                          </div>
+                          <button (click)="toggleConnection(user)">
+                            {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Right square: Display connections count -->
+                <div class="connection-count">
+                  <h3>Your Connections:</h3>
+                  <p>{{ connectionsCount }}</p>
+                </div>
+              </div>
+            </ng-container>
+            <!-- Default: Display the option text -->
+            <ng-container *ngSwitchDefault>
               {{ option }}
-            </ng-template>
-          </ng-template>
+            </ng-container>
+          </ng-container>
         </div>
       </div>
     </div>
-    
     <button class="arrow right-arrow" (click)="next()">&#9654;</button>
   </div>
-
   <div class="pagination">
     <div class="dot" *ngFor="let option of options; let i = index" [class.active]="i === currentIndex"></div>
   </div>
 </div>
-
 <app-footer></app-footer>

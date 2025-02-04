@@ -1,27 +1,19 @@
-<!-- src/app/login-page/login-page.component.html -->
 <app-header-public></app-header-public>
-
 <div class="login-container">
   <div class="form-container">
     <h2>Log In</h2>
-    <!-- Reactive form for login -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!-- Email Field -->
       <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
-      <!-- Password Field -->
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" required>
       </div>
-      <!-- Log In Button -->
       <button type="submit">Log In</button>
     </form>
-    <!-- Button to navigate to Create Account page -->
     <button type="button" (click)="goToCreateAccount()">Create Account</button>
   </div>
 </div>
-
 <app-footer></app-footer>

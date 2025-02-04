@@ -1,4 +1,3 @@
-/* src/app/home-page/home-page.component.css */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -49,6 +48,7 @@
   width: 100%;
   height: 100%;
   background-image: url('/assets/images/idea_lamp.jpg');
+  /* Preserve your original image styling */
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;
@@ -77,9 +77,34 @@
   gap: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  /* Optional: add left/right padding if needed */
 }
 
+/* Notifications slide styling */
+.notifications-title {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.notifications-inner {
+  padding: 10px;
+  text-align: left;
+}
+
+.notification-item {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+.notification-line {
+  display: block;
+}
+
+.notification-icon {
+  margin-right: 5px;
+}
+
+/* Connections inner squares */
 .connection-create,
 .connection-count {
   flex: 1;
@@ -92,7 +117,6 @@
   justify-content: flex-start;
 }
 
-/* Styling for connection-create header */
 .connection-create h3,
 .connection-count h3 {
   margin: 0 0 10px 0;
@@ -105,7 +129,7 @@
   box-sizing: border-box;
 }
 
-/* Styling for search results */
+/* Search results styling */
 .search-results {
   margin-top: 10px;
   text-align: left;
@@ -148,7 +172,7 @@
   right: 10px;
 }
 
-/* Pagination */
+/* Pagination dots */
 .pagination {
   margin-top: 25px;
   display: flex;
