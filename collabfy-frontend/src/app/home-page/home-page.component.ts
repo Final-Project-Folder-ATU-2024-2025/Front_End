@@ -1,7 +1,8 @@
 // src/app/home-page/home-page.component.ts
 // This component displays a slider with options including Notifications and Connections.
 // The Notifications slide fetches and displays notifications for the logged‑in user.
-// The Connections slide allows searching for users, toggling connection requests, and shows your current connections.
+// The Connections slide allows searching for users, toggling connection requests,
+// shows your current connections, and now lets you disconnect from a connection.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -69,7 +70,7 @@ export class HomePageComponent implements OnInit {
   }
 
   toggleConnection(user: any): void {
-    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual UID
+    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current UID
     const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
       this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
@@ -171,18 +172,38 @@ export class HomePageComponent implements OnInit {
       console.error("User not logged in.");
       return;
     }
-    // Call the backend to delete the notification from Firestore.
     this.http.post('http://127.0.0.1:5000/api/dismiss-notification', {
       userId: uid,
       notificationId: notif.id
     }).subscribe({
       next: (response: any) => {
         console.log("Notification dismissed:", response);
-        // Remove the notification locally.
         this.notifications = this.notifications.filter(n => n.id !== notif.id);
       },
       error: (error) => {
         console.error("Error dismissing notification:", error);
+      }
+    });
+  }
+
+  disconnectConnection(conn: any): void {
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      console.error("User not logged in.");
+      return;
+    }
+    // Call the backend disconnect endpoint with the current user and the connection to remove.
+    this.http.post('http://127.0.0.1:5000/api/disconnect', {
+      userId: uid,
+      disconnectUserId: conn.uid
+    }).subscribe({
+      next: (response: any) => {
+        console.log("Disconnected successfully:", response);
+        // Refresh connections list.
+        this.fetchConnections();
+      },
+      error: (error) => {
+        console.error("Error disconnecting:", error);
       }
     });
   }
