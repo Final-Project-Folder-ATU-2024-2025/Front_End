@@ -86,20 +86,24 @@
                   <h3>Your Connections:</h3>
                   <ul *ngIf="connections && connections.length > 0">
                     <li *ngFor="let conn of connections">
-                      <div class="result-line">
-                        <span class="result-icon">👤</span>
-                        {{ conn.firstName }} {{ conn.surname }}
+                      <div class="connection-details">
+                        <div class="result-line">
+                          <span class="result-icon">👤</span>
+                          {{ conn.firstName }} {{ conn.surname }}
+                        </div>
+                        <div class="result-line">
+                          <span class="result-icon">✉️</span>
+                          {{ conn.email }}
+                        </div>
+                        <div class="result-line">
+                          <span class="result-icon">📞</span>
+                          {{ conn.telephone }}
+                        </div>
+                        <!-- Red disconnect button -->
+                        <button class="disconnect-button" (click)="disconnectConnection(conn)">
+                          Disconnect
+                        </button>
                       </div>
-                      <div class="result-line">
-                        <span class="result-icon">✉️</span>
-                        {{ conn.email }}
-                      </div>
-                      <div class="result-line">
-                        <span class="result-icon">📞</span>
-                        {{ conn.telephone }}
-                      </div>
-                      <!-- Disconnect button -->
-                      <button (click)="disconnectConnection(conn)">Disconnect</button>
                     </li>
                   </ul>
                   <div *ngIf="!connections || connections.length === 0">
