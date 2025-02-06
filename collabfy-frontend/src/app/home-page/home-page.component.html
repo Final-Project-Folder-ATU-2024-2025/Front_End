@@ -17,6 +17,7 @@
                 <div class="image-overlay">Create a New Project</div>
               </div>
             </ng-container>
+
             <!-- "Notifications" slide -->
             <ng-container *ngSwitchCase="'Notifications'">
               <h2 class="notifications-title">Notifications</h2>
@@ -25,6 +26,17 @@
                 <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
                 <ul *ngIf="notificationsLoaded && notifications.length > 0">
                   <li *ngFor="let notif of notifications" class="notification-item">
+                    
+                    <!-- Display a message based on notification type -->
+                    <div class="notification-line" *ngIf="notif.type === 'request'">
+                      <strong>The following user wants to Connect to you:</strong>
+                    </div>
+                    <div class="notification-line" *ngIf="notif.type === 'response'">
+                      <strong>The following user accepted your Connection request:</strong>
+                    </div>
+                    <!-- (Optionally, if you have a "rejected" type, you can add another condition) -->
+                    
+                    <!-- Display the sender's details -->
                     <div class="notification-line">
                       <span class="notification-icon">👤</span>
                       {{ notif.fromUser.firstName }} {{ notif.fromUser.surname }}
@@ -37,17 +49,23 @@
                       <span class="notification-icon">📞</span>
                       {{ notif.fromUser.telephone }}
                     </div>
+                    
+                    <!-- Action buttons for request notifications -->
                     <div class="notification-actions" *ngIf="notif.type === 'request'">
                       <button class="accept-button" (click)="acceptNotification(notif)">Accept</button>
                       <button class="reject-button" (click)="rejectNotification(notif)">Reject</button>
                     </div>
+                    
+                    <!-- For response (or connection) notifications, show a Dismiss button -->
                     <div class="notification-actions" *ngIf="notif.type === 'response' || notif.type === 'connection'">
                       <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
                     </div>
+                    
                   </li>
                 </ul>
               </div>
             </ng-container>
+
             <!-- "Connections" slide -->
             <ng-container *ngSwitchCase="'Connections'">
               <h2 class="connections-title">Connections</h2>
@@ -56,7 +74,7 @@
                 <div class="connection-create">
                   <h3>Create a New Connection:</h3>
                   <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
-                  <button (click)="searchConnections()">Search</button>
+                  <button class="accept-button" (click)="searchConnections()">Search</button>
                   <div class="search-results" *ngIf="searchResults.length">
                     <ul>
                       <li *ngFor="let user of searchResults">
@@ -73,7 +91,11 @@
                             <span class="result-icon">📞</span>
                             {{ user.telephone || user.business_phone || '' }}
                           </div>
-                          <button (click)="toggleConnection(user)">
+                          <!-- Use conditional button styling:
+                               if pending then show Cancel using 'reject-button' (red)
+                               otherwise show Connect using 'accept-button' (green) -->
+                          <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
+                                  (click)="toggleConnection(user)">
                             {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
                           </button>
                         </div>
@@ -98,7 +120,7 @@
                         <span class="result-icon">📞</span>
                         {{ conn.telephone }}
                       </div>
-                      <!-- Red disconnect button -->
+                      <!-- Red Disconnect button -->
                       <button class="disconnect-button" (click)="disconnectConnection(conn)">Disconnect</button>
                     </li>
                   </ul>
@@ -108,6 +130,7 @@
                 </div>
               </div>
             </ng-container>
+
             <!-- Default: Simply display the option text -->
             <ng-container *ngSwitchDefault>
               {{ option }}
