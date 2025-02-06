@@ -38,11 +38,11 @@
                       {{ notif.fromUser.telephone }}
                     </div>
                     <div class="notification-actions" *ngIf="notif.type === 'request'">
-                      <button (click)="acceptNotification(notif)">Accept</button>
-                      <button (click)="rejectNotification(notif)">Reject</button>
+                      <button class="accept-button" (click)="acceptNotification(notif)">Accept</button>
+                      <button class="reject-button" (click)="rejectNotification(notif)">Reject</button>
                     </div>
                     <div class="notification-actions" *ngIf="notif.type === 'response' || notif.type === 'connection'">
-                      <button (click)="dismissNotification(notif)">Dismiss</button>
+                      <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
                     </div>
                   </li>
                 </ul>
@@ -86,24 +86,20 @@
                   <h3>Your Connections:</h3>
                   <ul *ngIf="connections && connections.length > 0">
                     <li *ngFor="let conn of connections">
-                      <div class="connection-details">
-                        <div class="result-line">
-                          <span class="result-icon">👤</span>
-                          {{ conn.firstName }} {{ conn.surname }}
-                        </div>
-                        <div class="result-line">
-                          <span class="result-icon">✉️</span>
-                          {{ conn.email }}
-                        </div>
-                        <div class="result-line">
-                          <span class="result-icon">📞</span>
-                          {{ conn.telephone }}
-                        </div>
-                        <!-- Red disconnect button -->
-                        <button class="disconnect-button" (click)="disconnectConnection(conn)">
-                          Disconnect
-                        </button>
+                      <div class="result-line">
+                        <span class="result-icon">👤</span>
+                        {{ conn.firstName }} {{ conn.surname }}
                       </div>
+                      <div class="result-line">
+                        <span class="result-icon">✉️</span>
+                        {{ conn.email }}
+                      </div>
+                      <div class="result-line">
+                        <span class="result-icon">📞</span>
+                        {{ conn.telephone }}
+                      </div>
+                      <!-- Red disconnect button -->
+                      <button class="disconnect-button" (click)="disconnectConnection(conn)">Disconnect</button>
                     </li>
                   </ul>
                   <div *ngIf="!connections || connections.length === 0">

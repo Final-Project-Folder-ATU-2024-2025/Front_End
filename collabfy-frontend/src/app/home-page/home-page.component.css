@@ -1,3 +1,4 @@
+/* Overall page styling */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -133,26 +134,21 @@
   margin-top: 10px;
   text-align: left;
 }
-
 .search-results ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .search-results li {
   margin-bottom: 10px;
 }
-
 .result-item {
   margin-bottom: 10px;
 }
-
 .result-line {
   display: block;
   text-align: left;
 }
-
 .result-icon {
   margin-right: 5px;
 }
@@ -170,11 +166,9 @@
   z-index: 10;
   padding: 10px;
 }
-
 .left-arrow {
   left: 10px;
 }
-
 .right-arrow {
   right: 10px;
 }
@@ -186,7 +180,6 @@
   justify-content: center;
   align-items: center;
 }
-
 .dot {
   width: 12px;
   height: 12px;
@@ -196,18 +189,14 @@
   border: 2px solid #007bff;
   transition: background-color 0.3s ease;
 }
-
 .dot.active {
   background-color: #007bff;
 }
 
-/* New CSS for "Your Connections" section */
-.connection-details {
-  text-align: left;
-}
-
-.disconnect-button {
-  background-color: #d9534f; /* Red background */
+/* New CSS for the Accept, Reject, and Disconnect buttons */
+/* Accept button: green */
+.accept-button {
+  background-color: #5cb85c;
   color: white;
   border: none;
   border-radius: 4px;
@@ -216,7 +205,38 @@
   margin-top: 5px;
   font-size: 0.9rem;
 }
+.accept-button:hover {
+  background-color: #4cae4c;
+}
 
+/* Reject button: red */
+.reject-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+.reject-button:hover {
+  background-color: #c9302c;
+}
+
+/* Disconnect button (red) - already defined */
+.disconnect-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  display: block;
+  text-align: left;
+}
 .disconnect-button:hover {
   background-color: #c9302c;
 }

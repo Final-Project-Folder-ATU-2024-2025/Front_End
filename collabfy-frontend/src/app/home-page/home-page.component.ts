@@ -1,8 +1,3 @@
-// src/app/home-page/home-page.component.ts
-// This component displays a slider with options including Notifications and Connections.
-// The Notifications slide fetches and displays notifications for the logged‑in user.
-// The Connections slide allows searching for users, toggling connection requests,
-// shows your current connections, and now lets you disconnect from a connection.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -192,14 +187,12 @@ export class HomePageComponent implements OnInit {
       console.error("User not logged in.");
       return;
     }
-    // Call the backend disconnect endpoint with the current user and the connection to remove.
     this.http.post('http://127.0.0.1:5000/api/disconnect', {
       userId: uid,
       disconnectUserId: conn.uid
     }).subscribe({
       next: (response: any) => {
         console.log("Disconnected successfully:", response);
-        // Refresh connections list.
         this.fetchConnections();
       },
       error: (error) => {
