@@ -17,10 +17,10 @@
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
-  background-image: url('/assets/images/background_image.jpeg'); /* Consistent background image */
-  background-size: cover;
+  /* background-image: url('/assets/images/background_image.jpeg'); /* Consistent background image */
+ /* background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 

@@ -6,10 +6,10 @@
   height: calc(100vh - 80px);
   padding: 25px 0;
   box-sizing: border-box;
-  background-image: url('/assets/images/background_image.jpeg');
+/* background-image: url('/assets/images/background_image.jpeg'); 
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat;*/
 }
 
 .slider-container {
@@ -186,11 +186,11 @@
   border-radius: 50%;
   margin: 0 5px;
   background-color: transparent;
-  border: 2px solid #007bff;
+  border: 2px solid #6d92b9;
   transition: background-color 0.3s ease;
 }
 .dot.active {
-  background-color: #007bff;
+  background-color: #6d92b9;
 }
 
 /* New CSS for the Accept, Reject, and Disconnect buttons */
