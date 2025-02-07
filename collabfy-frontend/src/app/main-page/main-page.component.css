@@ -35,8 +35,13 @@
   }
   
   /* Image styling */
-  .image {
+  .image1 {
     max-width: 100%;
     height: auto;
+    /* Larger rounding on top-left and bottom-right, smaller on the others */
+    border-top-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
   }
   
