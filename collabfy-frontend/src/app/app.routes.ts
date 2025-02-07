@@ -5,9 +5,11 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { CreateAccountPageComponent } from './create-account-page/create-account-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';  // Import the Login page component
 import { CreateProjectPageComponent } from './create-project-page/create-project-page.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 export const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: '', component: MainPageComponent },  // Change home page to MainPageComponent
+  { path: 'home-page', component: HomePageComponent },
   { path: 'create-account', component: CreateAccountPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'create-project-page', component: CreateProjectPageComponent }  // New Login route

@@ -2,26 +2,25 @@
 
 /* Overall header styling for public pages */
 header {
-    background-color: #1b2ba0; /* A muted color from the logo's palette */
-    color: #333;               /* Dark color for contrast */
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin: 0;                 /* Remove extra margin */
-  }
-  
-  /* Container for the logo */
-  .logo-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Logo styling: circular image */
-  .logo {
-    height: 100px;
-    margin-right: 10px;        /* Space between the logo and any adjacent content */
-    max-width: 100%;
-    border-radius: 50%;        /* Make the logo circular */
-  }
-  
+  background-color: #313030; /* Light gray background */
+  color: #333;             /* Dark text for contrast */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;               /* Remove extra margin */
+}
+
+/* Container for the logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo styling: circular image */
+.logo {
+  height: 100px;
+  margin-right: 10px;      /* Space between the logo and any adjacent content */
+  max-width: 100%;
+  border-radius: 50%;      /* Make the logo circular */
+}

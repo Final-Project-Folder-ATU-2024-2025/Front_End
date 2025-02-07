@@ -45,7 +45,7 @@ export class LoginPageComponent {
             localStorage.setItem('surname', response.surname || 'Doe');
             localStorage.setItem('uid', response.uid || 'user1');
             alert('Logged in successfully!');
-            this.router.navigate(['/']);
+            this.router.navigate(['/home-page']);
           },
           error: (error) => {
             alert('Error logging in: ' + (error.error?.message || error.message));
