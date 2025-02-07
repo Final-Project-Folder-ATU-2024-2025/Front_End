@@ -1,9 +1,15 @@
+// src/app/home-page/home-page.component.ts
+// This component displays a slider with options including Notifications and Connections.
+// The Notifications slide fetches and displays notifications for the logged‑in user.
+// The Connections slide allows searching for users, toggling connection requests,
+// shows your current connections, and now lets you disconnect from a connection.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -36,7 +42,7 @@ export class HomePageComponent implements OnInit {
   notifications: any[] = [];
   notificationsLoaded: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     if (this.options[this.currentIndex] === 'Notifications') {
@@ -45,6 +51,11 @@ export class HomePageComponent implements OnInit {
     if (this.options[this.currentIndex] === 'Connections') {
       this.fetchConnections();
     }
+  }
+
+  // Navigate to the Create Project page when the user clicks the Create New Project card.
+  goToCreateProject(): void {
+    this.router.navigate(['/create-project-page']);
   }
 
   searchConnections(): void {

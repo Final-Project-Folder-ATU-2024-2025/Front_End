@@ -1,3 +1,4 @@
+<!-- src/app/home-page/home-page.component.html -->
 <app-header></app-header>
 <div class="home-container">
   <div class="slider-container">
@@ -13,7 +14,8 @@
           <ng-container [ngSwitch]="option">
             <!-- "Create a New Project" slide -->
             <ng-container *ngSwitchCase="'Create a New Project'">
-              <div class="project-card">
+              <!-- The entire card is clickable to redirect -->
+              <div class="project-card" (click)="goToCreateProject()">
                 <div class="image-overlay">Create a New Project</div>
               </div>
             </ng-container>
@@ -26,7 +28,6 @@
                 <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
                 <ul *ngIf="notificationsLoaded && notifications.length > 0">
                   <li *ngFor="let notif of notifications" class="notification-item">
-                    
                     <!-- Display a message based on notification type -->
                     <div class="notification-line" *ngIf="notif.type === 'request'">
                       <strong>The following user wants to Connect to you:</strong>
@@ -34,9 +35,7 @@
                     <div class="notification-line" *ngIf="notif.type === 'response'">
                       <strong>The following user accepted your Connection request:</strong>
                     </div>
-                    <!-- (Optionally, if you have a "rejected" type, you can add another condition) -->
-                    
-                    <!-- Display the sender's details -->
+                    <!-- Sender's details -->
                     <div class="notification-line">
                       <span class="notification-icon">👤</span>
                       {{ notif.fromUser.firstName }} {{ notif.fromUser.surname }}
@@ -49,18 +48,15 @@
                       <span class="notification-icon">📞</span>
                       {{ notif.fromUser.telephone }}
                     </div>
-                    
                     <!-- Action buttons for request notifications -->
                     <div class="notification-actions" *ngIf="notif.type === 'request'">
                       <button class="accept-button" (click)="acceptNotification(notif)">Accept</button>
                       <button class="reject-button" (click)="rejectNotification(notif)">Reject</button>
                     </div>
-                    
                     <!-- For response (or connection) notifications, show a Dismiss button -->
                     <div class="notification-actions" *ngIf="notif.type === 'response' || notif.type === 'connection'">
                       <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
                     </div>
-                    
                   </li>
                 </ul>
               </div>
@@ -91,9 +87,7 @@
                             <span class="result-icon">📞</span>
                             {{ user.telephone || user.business_phone || '' }}
                           </div>
-                          <!-- Use conditional button styling:
-                               if pending then show Cancel using 'reject-button' (red)
-                               otherwise show Connect using 'accept-button' (green) -->
+                          <!-- Conditional button styling: if pending, use 'reject-button' (red) for Cancel; otherwise 'accept-button' (green) for Connect -->
                           <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
                                   (click)="toggleConnection(user)">
                             {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}

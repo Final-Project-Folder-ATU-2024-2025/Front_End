@@ -6,10 +6,6 @@
   height: calc(100vh - 80px);
   padding: 25px 0;
   box-sizing: border-box;
-/* background-image: url('/assets/images/background_image.jpeg'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;*/
 }
 
 .slider-container {
