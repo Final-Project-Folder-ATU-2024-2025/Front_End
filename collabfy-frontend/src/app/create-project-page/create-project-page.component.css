@@ -1,7 +1,21 @@
 /* src/app/create-project-page/create-project-page.component.css */
-.create-project-container {
+
+/* 
+  Use the :host selector to make the entire component a flex container 
+  that fills the viewport. This forces the footer to always stick to the bottom.
+*/
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* The container holding the page’s main content should expand to fill available space */
+  .create-project-container {
+    flex: 1;               /* Takes up all remaining space between header and footer */
     padding: 20px;
     text-align: center;
     margin: 20px;
   }
+  
   
