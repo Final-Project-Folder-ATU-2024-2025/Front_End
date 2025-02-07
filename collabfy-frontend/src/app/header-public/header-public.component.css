@@ -1,14 +1,12 @@
-/* src/app/header-public/header-public.component.css */
-
 /* Overall header styling for public pages */
 header {
   background-color: #313030; /* Light gray background */
-  color: #333;             /* Dark text for contrast */
+  color: #333;               /* Dark color for contrast */
   padding: 10px;
   display: flex;
   align-items: center;
   width: 100%;
-  margin: 0;               /* Remove extra margin */
+  margin: 0;                 /* Remove extra margin */
 }
 
 /* Container for the logo */
@@ -20,7 +18,29 @@ header {
 /* Logo styling: circular image */
 .logo {
   height: 100px;
-  margin-right: 10px;      /* Space between the logo and any adjacent content */
+  margin-right: 10px;        /* Space between the logo and any adjacent content */
   max-width: 100%;
-  border-radius: 50%;      /* Make the logo circular */
+  border-radius: 50%;        /* Make the logo circular */
+}
+
+/* Container for the Join Us button – push it to the right */
+.join-us-container {
+  margin-left: auto;
+}
+
+/* Join Us button styling */
+.join-us-button {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.join-us-button:hover {
+  background-color: white;
+  color: #313030;
 }
