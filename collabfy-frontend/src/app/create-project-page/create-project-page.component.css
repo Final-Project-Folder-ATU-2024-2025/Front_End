@@ -1,21 +1,59 @@
 /* src/app/create-project-page/create-project-page.component.css */
 
-/* 
-  Use the :host selector to make the entire component a flex container 
-  that fills the viewport. This forces the footer to always stick to the bottom.
-*/
+/* Ensure the entire component fills the viewport and the footer remains at the bottom */
 :host {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
   
-  /* The container holding the page’s main content should expand to fill available space */
+  /* Main content container */
   .create-project-container {
-    flex: 1;               /* Takes up all remaining space between header and footer */
+    flex: 1;
     padding: 20px;
-    text-align: center;
     margin: 20px;
+    text-align: left;
   }
   
+  /* Style form elements */
+  form div {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .task-row {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 8px 12px;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #4cae4c;
+  }
   

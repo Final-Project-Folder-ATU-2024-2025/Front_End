@@ -2,7 +2,36 @@
 <app-header></app-header>
 <div class="create-project-container">
   <h2>Create a New Project</h2>
-  <!-- Add your project creation form or additional content here -->
-  <p>This is the Create Project page. Build your project form here.</p>
+  <form (ngSubmit)="createProject()">
+    <div>
+      <label for="projectName">Project Name:</label>
+      <input type="text" id="projectName" [(ngModel)]="projectName" name="projectName" required />
+    </div>
+    <div>
+      <label for="description">Project Description:</label>
+      <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
+    </div>
+    <div>
+      <label for="deadline">Project Deadline:</label>
+      <input type="date" id="deadline" [(ngModel)]="deadline" name="deadline" required />
+    </div>
+    <div>
+      <h3>Tasks</h3>
+      <div *ngFor="let task of tasks; let i = index" class="task-row">
+        <label>Task {{ i + 1 }}</label>
+        <div>
+          <input type="text" placeholder="Task Name" [(ngModel)]="tasks[i].taskName" name="taskName{{i}}" required />
+        </div>
+        <div>
+          <textarea placeholder="Task Description" [(ngModel)]="tasks[i].taskDescription" name="taskDescription{{i}}" required></textarea>
+        </div>
+        <button type="button" (click)="removeTask(i)" *ngIf="tasks.length > 1">Remove Task</button>
+      </div>
+      <button type="button" (click)="addTask()">Add Task</button>
+    </div>
+    <div>
+      <button type="submit">Create Project</button>
+    </div>
+  </form>
 </div>
 <app-footer></app-footer>
