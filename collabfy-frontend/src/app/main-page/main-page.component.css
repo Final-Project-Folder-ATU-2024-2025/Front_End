@@ -1,0 +1,42 @@
+/* Ensure the main content area fills most of the viewport (subtract header/footer heights if needed) */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    min-height: calc(100vh - 140px); /* adjust this value if your header/footer heights differ */
+  }
+  
+  /* Left section: text content */
+  .left-section {
+    flex: 1;
+    text-align: left;
+    padding-right: 20px;
+  }
+  
+  /* Right section: image */
+  .right-section {
+    flex: 1;
+    text-align: right;
+    padding-left: 20px;
+  }
+  
+  /* Big title styling */
+  .title {
+    font-size: 48px;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  /* Subtitle styling */
+  .subtitle {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  /* Image styling */
+  .image {
+    max-width: 100%;
+    height: auto;
+  }
+  
