@@ -1,8 +1,4 @@
 // src/app/home-page/home-page.component.ts
-// This component displays a slider with options including Notifications and Connections.
-// The Notifications slide fetches and displays notifications for the logged‑in user.
-// The Connections slide allows searching for users, toggling connection requests,
-// shows your current connections, and now lets you disconnect from a connection.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -42,18 +38,26 @@ export class HomePageComponent implements OnInit {
   notifications: any[] = [];
   notificationsLoaded: boolean = false;
 
+  // New properties for projects and deadlines
+  myProjects: any[] = [];
+  projectDeadlines: any[] = [];
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+    // When the page loads, fetch data for the current slider option
     if (this.options[this.currentIndex] === 'Notifications') {
       this.fetchNotifications();
-    }
-    if (this.options[this.currentIndex] === 'Connections') {
+    } else if (this.options[this.currentIndex] === 'Connections') {
       this.fetchConnections();
+    } else if (this.options[this.currentIndex] === 'My Projects') {
+      this.fetchMyProjects();
+    } else if (this.options[this.currentIndex] === 'Project Deadlines') {
+      this.fetchProjectDeadlines();
     }
   }
 
-  // Navigate to the Create Project page when the user clicks the Create New Project card.
+  // Navigate to Create Project page
   goToCreateProject(): void {
     this.router.navigate(['/create-project-page']);
   }
@@ -76,7 +80,7 @@ export class HomePageComponent implements OnInit {
   }
 
   toggleConnection(user: any): void {
-    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current UID
+    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual UID
     const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
       this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
@@ -137,6 +141,42 @@ export class HomePageComponent implements OnInit {
         },
         error: (error) => {
           console.error("Error fetching connections:", error);
+        }
+      });
+  }
+
+  fetchMyProjects(): void {
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      console.error("User not logged in.");
+      return;
+    }
+    this.http.post('http://127.0.0.1:5000/api/my-projects', { userId: uid })
+      .subscribe({
+        next: (response: any) => {
+          this.myProjects = response.projects || [];
+          console.log("My Projects:", this.myProjects);
+        },
+        error: (error) => {
+          console.error("Error fetching my projects:", error);
+        }
+      });
+  }
+
+  fetchProjectDeadlines(): void {
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      console.error("User not logged in.");
+      return;
+    }
+    this.http.post('http://127.0.0.1:5000/api/project-deadlines', { userId: uid })
+      .subscribe({
+        next: (response: any) => {
+          this.projectDeadlines = response.deadlines || [];
+          console.log("Project Deadlines:", this.projectDeadlines);
+        },
+        error: (error) => {
+          console.error("Error fetching project deadlines:", error);
         }
       });
   }
@@ -220,9 +260,12 @@ export class HomePageComponent implements OnInit {
       this.isAnimating = false;
       if (this.options[this.currentIndex] === 'Notifications') {
         this.fetchNotifications();
-      }
-      if (this.options[this.currentIndex] === 'Connections') {
+      } else if (this.options[this.currentIndex] === 'Connections') {
         this.fetchConnections();
+      } else if (this.options[this.currentIndex] === 'My Projects') {
+        this.fetchMyProjects();
+      } else if (this.options[this.currentIndex] === 'Project Deadlines') {
+        this.fetchProjectDeadlines();
       }
     }, 500);
   }
@@ -235,9 +278,12 @@ export class HomePageComponent implements OnInit {
       this.isAnimating = false;
       if (this.options[this.currentIndex] === 'Notifications') {
         this.fetchNotifications();
-      }
-      if (this.options[this.currentIndex] === 'Connections') {
+      } else if (this.options[this.currentIndex] === 'Connections') {
         this.fetchConnections();
+      } else if (this.options[this.currentIndex] === 'My Projects') {
+        this.fetchMyProjects();
+      } else if (this.options[this.currentIndex] === 'Project Deadlines') {
+        this.fetchProjectDeadlines();
       }
     }, 500);
   }

@@ -1,4 +1,3 @@
-<!-- src/app/home-page/home-page.component.html -->
 <app-header></app-header>
 <div class="home-container">
   <div class="slider-container">
@@ -17,6 +16,44 @@
               <!-- The entire card is clickable to redirect -->
               <div class="project-card" (click)="goToCreateProject()">
                 <div class="image-overlay">Create a New Project</div>
+              </div>
+            </ng-container>
+
+            <!-- "My Projects" slide -->
+            <ng-container *ngSwitchCase="'My Projects'">
+              <h2 class="notifications-title">My Projects</h2>
+              <div class="notifications-inner">
+                <div *ngIf="!myProjects || myProjects.length === 0">
+                  You have no projects.
+                </div>
+                <ul *ngIf="myProjects && myProjects.length > 0">
+                  <li *ngFor="let project of myProjects" class="notification-item">
+                    <div class="notification-line">
+                      <strong>Project Name:</strong> {{ project.projectName }}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+
+            <!-- "Project Deadlines" slide -->
+            <ng-container *ngSwitchCase="'Project Deadlines'">
+              <h2 class="notifications-title">Project Deadlines</h2>
+              <div class="notifications-inner">
+                <div *ngIf="!projectDeadlines || projectDeadlines.length === 0">
+                  No project deadlines.
+                </div>
+                <ul *ngIf="projectDeadlines && projectDeadlines.length > 0">
+                  <li *ngFor="let pd of projectDeadlines" class="notification-item">
+                    <div class="notification-line">
+                      <strong>{{ pd.projectName }}</strong>
+                    </div>
+                    <div class="notification-line">
+                      <strong>Deadline:</strong>
+                      {{ pd.deadline ? (pd.deadline | date:'mediumDate') : 'N/A' }}
+                    </div>
+                  </li>
+                </ul>
               </div>
             </ng-container>
 
@@ -87,7 +124,7 @@
                             <span class="result-icon">📞</span>
                             {{ user.telephone || user.business_phone || '' }}
                           </div>
-                          <!-- Conditional button styling: if pending, use 'reject-button' (red) for Cancel; otherwise 'accept-button' (green) for Connect -->
+                          <!-- Conditional button styling: if pending then show Cancel (red) otherwise Connect (green) -->
                           <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
                                   (click)="toggleConnection(user)">
                             {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
