@@ -63,4 +63,8 @@ export class CreateProjectPageComponent {
         }
       });
   }
+  goToHomePage() {
+    console.log('Navigating back to Home Page');
+    this.router.navigate(['/']);
+  }
 }
