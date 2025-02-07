@@ -4,7 +4,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    min-height: calc(100vh - 140px); /* adjust this value if your header/footer heights differ */
+    min-height: calc(100vh - 140px); /* Adjust this value if your header/footer heights differ */
+    width: 100%;
+  }
+  
+  /* Add extra spacing between the two main sections */
+  .journey-section {
+    margin-top: 40px;
   }
   
   /* Left section: text content */
@@ -43,8 +49,19 @@
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
   }
+
+  .image2 {
+    display: block;
+    width: 100%;
+    max-width: 500px; 
+    height: auto;
+    border-top-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
   
-  /* New CSS for the Join button */
+  /* Join button styling (orange) */
   .join-button {
     background-color: rgb(242, 93, 60);
     color: white;
@@ -58,5 +75,9 @@
   
   .join-button:hover {
     background-color: rgb(243, 140, 15);
+  }
+
+  .journey-section .right-section {
+    text-align: left; /* Override the default right alignment so the text appears left-aligned */
   }
   
