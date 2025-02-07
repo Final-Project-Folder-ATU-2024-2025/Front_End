@@ -11,6 +11,7 @@
       <div class="slide" *ngFor="let option of options">
         <div class="container">
           <ng-container [ngSwitch]="option">
+
             <!-- "Create a New Project" slide -->
             <ng-container *ngSwitchCase="'Create a New Project'">
               <!-- The entire card is clickable to redirect -->
@@ -30,6 +31,26 @@
                   <li *ngFor="let project of myProjects" class="notification-item">
                     <div class="notification-line">
                       <strong>Project Name:</strong> {{ project.projectName }}
+                    </div>
+                    <div class="notification-line">
+                      <strong>Description:</strong> {{ project.description }}
+                    </div>
+                    <div class="notification-line">
+                      <strong>Deadline:</strong>
+                      {{ project.deadline ? (project.deadline | date:'mediumDate') : 'N/A' }}
+                    </div>
+                    <div *ngIf="project.tasks && project.tasks.length > 0">
+                      <strong>Tasks:</strong>
+                      <ul>
+                        <li *ngFor="let task of project.tasks">
+                          <div class="notification-line">
+                            <strong>Task Name:</strong> {{ task.taskName }}
+                          </div>
+                          <div class="notification-line">
+                            <strong>Task Description:</strong> {{ task.taskDescription }}
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </li>
                 </ul>
