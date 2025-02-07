@@ -4,6 +4,24 @@ footer {
   padding: 10px;
   text-align: center;
   width: 100%;
-  margin: 0; /* Remove margin-top so it touches the content */
+  margin: 0; /* Remove extra margin so it touches the content */
   flex-shrink: 0;
+}
+
+.github-link {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
+  fill: white;
+  text-decoration: none;
+}
+
+.github-link svg {
+  width: 100%;
+  height: 100%;
+}
+
+.github-link:hover svg {
+  fill: #ccc;
 }
