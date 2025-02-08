@@ -26,6 +26,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
+  margin-left: 90px;
   margin-right: 20px;
 }
 
@@ -34,7 +35,7 @@
   flex: 1;
   padding: 20px;
   text-align: left;
-  margin-left: 90px;  /* Added margin to push this container to the right */
+  margin-left: 0px;  /* Added margin to push this container to the right */
 }
 
 .info-title {
