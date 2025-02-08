@@ -4,8 +4,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    min-height: calc(100vh - 140px); /* Adjust this value if your header/footer heights differ */
+    min-height: calc(100vh - 140px); /* Adjust if header/footer sizes differ */
     width: 100%;
+    gap: 40px; /* Consistent spacing between image and text */
   }
   
   /* Add extra spacing between the two main sections */
@@ -41,21 +42,10 @@
   }
   
   /* Image styling with asymmetrical rounding */
-  .image1 {
+  .image1,
+  .image2 {
     max-width: 100%;
     height: auto;
-    border-top-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-
-  .image2 {
-    display: block;
-    width: 100%;
-    max-width: 450px; 
-    height: auto;
-    max-width: 	100;
     border-top-left-radius: 15px;
     border-bottom-right-radius: 15px;
     border-top-right-radius: 60px;
@@ -76,9 +66,5 @@
   
   .join-button:hover {
     background-color: rgb(243, 140, 15);
-  }
-
-  .journey-section .right-section {
-    text-align: left; /* Override the default right alignment so the text appears left-aligned */
   }
   
