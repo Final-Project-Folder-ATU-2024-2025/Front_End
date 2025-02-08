@@ -1,25 +1,24 @@
+/* Ensure the page occupies the full viewport height */
 :host {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* Layout container: two columns (form on left, info on right) */
 .login-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   flex: 1;
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
- /* background-image: url('/assets/images/background_image.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;*/
   overflow-x: hidden;
 }
 
+/* Form container (left side) */
 .form-container {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
@@ -27,27 +26,53 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
-  margin: 0 auto;
+  margin-right: 20px;
 }
 
+/* Info container (right side) */
+.info-container {
+  flex: 1;
+  padding: 20px;
+  text-align: left;
+}
+
+.info-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.info-subtitle {
+  font-size: 18px;
+  color: #555;
+}
+
+/* Spacing for each form group */
 .form-group {
   margin-bottom: 15px;
 }
 
+/* Label styling */
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
+/* Input field styling: use full width */
 .form-group input {
   width: 100%;
-  padding: 8px;
+  padding: 6px;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
+/* Button styling for the Login button – same as your Sign Up button style */
 button {
+  width: 100%;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: rgb(242, 93, 60);
   color: white;
   border: none;
   border-radius: 4px;
@@ -56,5 +81,10 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: rgb(243, 140, 15);
+}
+
+/* (Optional) Hide any create-account button if present */
+.create-account-button {
+  display: none;
 }

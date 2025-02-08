@@ -1,6 +1,3 @@
-// src/app/login-page/login-page.component.ts
-// This component handles user login using a reactive form and calls the backend's login endpoint.
-// After a successful login, it stores the token, firstName, surname, and uid in localStorage.
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -52,9 +49,5 @@ export class LoginPageComponent {
           }
         });
     }
-  }
-
-  goToCreateAccount(): void {
-    this.router.navigate(['/create-account']);
   }
 }

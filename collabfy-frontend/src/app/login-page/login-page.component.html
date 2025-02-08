@@ -1,5 +1,7 @@
 <app-header-public></app-header-public>
+
 <div class="login-container">
+  <!-- Left: Login form container -->
   <div class="form-container">
     <h2>Log In</h2>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -13,7 +15,15 @@
       </div>
       <button type="submit">Log In</button>
     </form>
-    <button type="button" (click)="goToCreateAccount()">Create Account</button>
+  </div>
+
+  <!-- Right: Info text -->
+  <div class="info-container">
+    <h2 class="info-title">Welcome Back</h2>
+    <p class="info-subtitle">
+      Log in to access your account and continue collaborating.
+    </p>
   </div>
 </div>
+
 <app-footer></app-footer>
