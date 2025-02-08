@@ -1,15 +1,9 @@
-// src/app/create-account-page/create-account-page.component.ts
-// This component handles account creation. After a successful account creation,
-// it redirects the user to the Login page.
-// It uses the public header component so that only the logo is displayed on this page.
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FooterComponent } from '../footer/footer.component';
 import { Router } from '@angular/router';
-// Import the public header component
 import { HeaderPublicComponent } from '../header-public/header-public.component';
 
 @Component({
@@ -81,11 +75,5 @@ export class CreateAccountPageComponent {
         alert('Error creating account: ' + (error.error?.message || error.message));
       },
     });
-  }
-
-  // Navigates back to the Login page when the "Back to Login" button is clicked.
-  goToLogin() {
-    console.log('Navigating back to Login page');
-    this.router.navigate(['/login']);
   }
 }
