@@ -1,19 +1,25 @@
 <app-header-public></app-header-public>
 
 <div class="create-account-container">
-  <!-- Info section on the left -->
+  <!-- Left info section -->
   <div class="info-container">
     <p class="info-small">Collaborate Effectively</p>
     <h2 class="info-large">Empower Your Projects</h2>
     <p class="info-description">
       Harness the power of teamwork with our tools designed to streamline collaboration and boost productivity.
     </p>
+    <!-- Three images arranged side by side -->
+    <div class="images-container">
+      <img src="/assets/images/creatacc_img1.jpg" alt="Create Account Image 1">
+      <img src="/assets/images/creatacc_img2.jpg" alt="Create Account Image 2">
+      <img src="/assets/images/creatacc_img3.jpg" alt="Create Account Image 3">
+    </div>
   </div>
 
-  <!-- Form container on the right -->
+  <!-- Right form section -->
   <div class="form-container">
     <h2>Create Account</h2>
-    <!-- Bind the reactive form to the form element and handle submission with onSubmit() -->
+    <!-- Bind the reactive form and handle submission with onSubmit() -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- First Name Field -->
       <div class="form-group">
