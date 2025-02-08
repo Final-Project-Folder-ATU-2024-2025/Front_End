@@ -1,7 +1,7 @@
 <app-header-public></app-header-public>
 
-<div class="login-container">
-  <!-- Left: Login form container -->
+<div class="login-page-container">
+  <!-- Left side: Login form -->
   <div class="form-container">
     <h2>Log In</h2>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -17,11 +17,12 @@
     </form>
   </div>
 
-  <!-- Right: Info text container (shifted right by margin-left) -->
+  <!-- Right side: Informational text -->
   <div class="info-container">
-    <h2 class="info-title">Welcome Back</h2>
-    <p class="info-subtitle">
-      Log in to access your account and continue collaborating.
+    <p class="info-small">Collaborate Seamlessly</p>
+    <h2 class="info-large">Fuel Your Innovations</h2>
+    <p class="info-description">
+      Welcome Back – Log in to reconnect with your team and power forward together.
     </p>
   </div>
 </div>

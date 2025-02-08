@@ -5,8 +5,8 @@
   min-height: 100vh;
 }
 
-/* Layout container: two columns (form on left, info on right) */
-.login-container {
+/* Container that splits the page into two columns */
+.login-page-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -26,28 +26,34 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
-  margin-left: 90px;
   margin-right: 20px;
 }
 
-/* Info container (right side) – shifted a bit further to the right */
+/* Info container (right side) */
 .info-container {
   flex: 1;
   padding: 20px;
   text-align: left;
-  margin-left: 0px;  /* Added margin to push this container to the right */
+  margin-left: 40px; /* Slight right shift so text isn’t flush to the edge */
 }
 
-.info-title {
+/* Info text styling */
+.info-small {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
+}
+
+.info-large {
   font-size: 32px;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+  margin: 10px 0;
 }
 
-.info-subtitle {
-  font-size: 18px;
-  color: #555;
+.info-description {
+  font-size: 20px;
+  color: #333;
+  margin: 10px 0;
 }
 
 /* Spacing for each form group */
@@ -62,7 +68,7 @@
   font-weight: bold;
 }
 
-/* Input field styling: use full width */
+/* Input field styling: use full width of the container */
 .form-group input {
   width: 100%;
   padding: 6px;
@@ -70,7 +76,7 @@
   font-size: 14px;
 }
 
-/* Button styling for the Login button – same as your Sign Up button style */
+/* Button styling for the Login button – make it the same width as inputs */
 button {
   width: 100%;
   padding: 10px 20px;
@@ -85,3 +91,4 @@ button {
 button:hover {
   background-color: rgb(243, 140, 15);
 }
+
