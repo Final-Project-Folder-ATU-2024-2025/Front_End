@@ -53,12 +53,13 @@
   .image2 {
     display: block;
     width: 100%;
-    max-width: 500px; 
+    max-width: 450px; 
     height: auto;
-    border-top-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    max-width: 	100;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 60px;
+    border-bottom-left-radius: 60px;
   }
   
   /* Join button styling (orange) */
