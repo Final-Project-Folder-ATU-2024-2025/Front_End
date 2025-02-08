@@ -29,11 +29,12 @@
   margin-right: 20px;
 }
 
-/* Info container (right side) */
+/* Info container (right side) – shifted a bit further to the right */
 .info-container {
   flex: 1;
   padding: 20px;
   text-align: left;
+  margin-left: 90px;  /* Added margin to push this container to the right */
 }
 
 .info-title {
@@ -82,9 +83,4 @@ button {
 
 button:hover {
   background-color: rgb(243, 140, 15);
-}
-
-/* (Optional) Hide any create-account button if present */
-.create-account-button {
-  display: none;
 }
