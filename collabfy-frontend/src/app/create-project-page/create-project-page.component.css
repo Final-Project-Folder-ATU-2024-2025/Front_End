@@ -32,7 +32,7 @@
   margin: 5px 0 0 0;
 }
 
-/* Info Sections container for objectives, milestones, and team */
+/* Info Sections container for objectives, milestones, tracking, and team */
 .info-sections {
   display: flex;
   flex-direction: row;
@@ -93,6 +93,32 @@
   margin: 0;
 }
 
+/* New: Keep Track Section */
+.tracking-section {
+  text-align: center;
+}
+
+.tracking-symbol {
+  margin-bottom: 5px;
+}
+
+.tracking-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+}
+
+.tracking-title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 0 5px 0;
+}
+
+.tracking-description {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
 /* Assemble Team Section */
 .team-section {
   text-align: center;
@@ -101,13 +127,12 @@
 .team-icon-container {
   position: relative;
   display: inline-block;
-  width: 1.5em;  /* Matches the target and flag icons */
+  width: 1.5em;  /* Matches the other icon sizes */
   height: 1.5em;
   margin-bottom: 5px;
 }
 
-/* (The following styles were used for layered icons. They are kept intact to preserve functionality,
-   even though we now use a single FontAwesome icon.) */
+/* (Layered icon styles preserved for legacy purposes) */
 .team-icon-container .icon {
   position: absolute;
   font-size: 1.5em;
