@@ -34,17 +34,24 @@
   margin: 5px 0 0 0;
 }
 
-/* New Objectives Section */
+/* Combined info sections container: objectives and milestones side by side */
+.info-sections {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+/* Define Objectives Section (already existing) */
 .objectives-section {
   text-align: center;
-  margin-bottom: 30px;  /* Space below the objectives section */
 }
 
 .target-symbol {
   margin-bottom: 5px;
 }
 
-/* Style the inline SVG icon so its size conforms to the text width */
 .target-icon {
   width: 1.5em;
   height: 1.5em;
@@ -53,11 +60,37 @@
 
 .objectives-title {
   font-weight: bold;
-  font-size: 2rem;     /* Adjust as desired */
+  font-size: 2rem;
   margin: 0 0 5px 0;
 }
 
 .objectives-description {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* Set Milestones Section */
+.milestones-section {
+  text-align: center;
+}
+
+.flag-symbol {
+  margin-bottom: 5px;
+}
+
+.flag-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+}
+
+.milestones-title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 0 5px 0;
+}
+
+.milestones-description {
   font-size: 1.25rem;
   margin: 0;
 }
