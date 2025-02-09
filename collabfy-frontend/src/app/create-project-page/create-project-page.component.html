@@ -1,13 +1,15 @@
 <!-- src/app/create-project-page/create-project-page.component.html -->
 <app-header></app-header>
 <div class="create-project-container">
-  <!-- Existing header section for the page title and subtitle -->
+  <!-- Header section for page title and subtitle -->
   <div class="project-hub-header">
     <h1>Project Creation Hub</h1>
-    <p>Initiate new projects effortlessly. Define your objectives, set milestones, and assemble your team with ease.</p>
+    <p>
+      Initiate new projects effortlessly. Define your objectives, set milestones, and assemble your team with ease.
+    </p>
   </div>
   
-  <!-- New combined info sections (objectives and milestones) -->
+  <!-- Info Sections container: three blocks side by side -->
   <div class="info-sections">
     <!-- Define Objectives Section -->
     <div class="objectives-section">
@@ -29,7 +31,7 @@
       <div class="flag-symbol">
         <svg viewBox="0 0 100 60" class="flag-icon" xmlns="http://www.w3.org/2000/svg">
           <rect width="100" height="60" fill="white" stroke="black" stroke-width="5"/>
-          <!-- Two alternating rectangles to simulate a checkered pattern -->
+          <!-- Two alternating rectangles to simulate a checkered flag -->
           <rect x="0" y="0" width="50" height="30" fill="black"/>
           <rect x="50" y="30" width="50" height="30" fill="black"/>
         </svg>
@@ -39,9 +41,22 @@
         Plan and track key milestones to measure progress and maintain momentum throughout the project lifecycle.
       </p>
     </div>
+    
+    <!-- Assemble Team Section using three 👤 icons -->
+    <div class="team-section">
+      <div class="team-icon-container">
+        <span class="icon back-left">👤</span>
+        <span class="icon back-right">👤</span>
+        <span class="icon front">👤</span>
+      </div>
+      <h2 class="team-title">Assemble Team</h2>
+      <p class="team-description">
+        Select the right team members with the necessary skills to drive your project to success.
+      </p>
+    </div>
   </div>
   
-  <!-- The form section for creating a project -->
+  <!-- Project creation form -->
   <form (ngSubmit)="createProject()">
     <div>
       <label for="projectName">Project Name:</label>

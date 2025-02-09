@@ -34,7 +34,7 @@
   margin: 5px 0 0 0;
 }
 
-/* Combined info sections container: objectives and milestones side by side */
+/* Info Sections container for objectives, milestones, and team */
 .info-sections {
   display: flex;
   flex-direction: row;
@@ -43,7 +43,7 @@
   margin-bottom: 30px;
 }
 
-/* Define Objectives Section (already existing) */
+/* Define Objectives Section */
 .objectives-section {
   text-align: center;
 }
@@ -91,6 +91,58 @@
 }
 
 .milestones-description {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* Assemble Team Section */
+.team-section {
+  text-align: center;
+}
+
+.team-icon-container {
+  position: relative;
+  display: inline-block;
+  width: 1.5em;  /* Matches the target and flag icons */
+  height: 1.5em;
+  margin-bottom: 5px;
+}
+
+.team-icon-container .icon {
+  position: absolute;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  display: block;
+}
+
+.icon.front {
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.icon.back-left {
+  left: -0.2em;
+  top: 0;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.icon.back-right {
+  right: -0.2em;
+  top: 0;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.team-title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0 0 5px 0;
+}
+
+.team-description {
   font-size: 1.25rem;
   margin: 0;
 }
