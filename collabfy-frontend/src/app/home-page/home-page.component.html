@@ -1,3 +1,4 @@
+<!-- src/app/home-page/home-page.component.html -->
 <app-header></app-header>
 
 <!-- Mission Section -->
@@ -53,13 +54,6 @@
       <div class="slide" *ngFor="let option of options">
         <div class="container">
           <ng-container [ngSwitch]="option">
-
-            <!-- "Create a New Project" slide -->
-            <ng-container *ngSwitchCase="'Create a New Project'">
-              <div class="project-card" (click)="goToCreateProject()">
-                <div class="image-overlay">Create a New Project</div>
-              </div>
-            </ng-container>
 
             <!-- "My Projects" slide -->
             <ng-container *ngSwitchCase="'My Projects'">

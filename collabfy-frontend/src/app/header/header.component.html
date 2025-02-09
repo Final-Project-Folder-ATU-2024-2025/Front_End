@@ -2,15 +2,16 @@
 <!--
   This template displays:
   - The logo on the left.
-  - On the right, a "Log Out" button.
-  - Below the button, an emoji icon (👤) and the user's first name and surname,
-    but only if at least one of these values is non-empty.
+  - On the right, a "Create project" button, a "Log Out" button,
+    and below the buttons, an emoji icon with the user's first name and surname.
 -->
 <header>
   <div class="logo-container">
     <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
   </div>
   <div class="auth-links">
+    <!-- Create Project button -->
+    <button class="create-project-button" (click)="goToCreateProject()">Create project</button>
     <!-- Log Out button -->
     <button (click)="logout()">Log Out</button>
     <!-- User info: shown only if userName or userSurname is not empty -->

@@ -1,7 +1,7 @@
 // src/app/home-page/home-page.component.ts
-// This component displays a slider with options including Notifications, Connections, 
-// My Projects, and Project Deadlines. It fetches projects, connections, and notifications 
-// for the logged‑in user. No functionality has been removed.
+// This component displays a slider with options including My Projects, Project Deadlines,
+// Notifications, and Connections. It fetches projects, connections, and notifications 
+// for the logged‑in user. (The Create a New Project slide has been removed.)
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -18,8 +18,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
+  // Removed "Create a New Project" from the options array.
   options = [
-    'Create a New Project',
     'My Projects',
     'Project Deadlines',
     'Notifications',
@@ -55,11 +55,6 @@ export class HomePageComponent implements OnInit {
     } else if (currentOption === 'Project Deadlines') {
       this.fetchProjectDeadlines();
     }
-  }
-
-  // Navigate to the Create Project page when the user clicks the Create New Project card.
-  goToCreateProject(): void {
-    this.router.navigate(['/create-project-page']);
   }
 
   searchConnections(): void {
