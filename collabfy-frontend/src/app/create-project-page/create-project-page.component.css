@@ -15,22 +15,51 @@
   text-align: left;
 }
 
-/* New header section for the page title and subtitle */
+/* Header section for the page title and subtitle */
 .project-hub-header {
   text-align: center;
+  margin-top: 40px;   /* Space from the app header */
   margin-bottom: 20px;
 }
 
 .project-hub-header h1 {
   font-weight: bold;
   margin: 0;
-  font-size: 3rem;  /* Increased font size for the main title */
+  font-size: 3rem;
 }
 
 .project-hub-header p {
   font-weight: normal;
-  font-size: 1.5rem; /* Increased font size for the subtitle */
+  font-size: 1.5rem;
   margin: 5px 0 0 0;
+}
+
+/* New Objectives Section */
+.objectives-section {
+  text-align: center;
+  margin-bottom: 30px;  /* Space below the objectives section */
+}
+
+.target-symbol {
+  margin-bottom: 5px;
+}
+
+/* Style the inline SVG icon so its size conforms to the text width */
+.target-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+}
+
+.objectives-title {
+  font-weight: bold;
+  font-size: 2rem;     /* Adjust as desired */
+  margin: 0 0 5px 0;
+}
+
+.objectives-description {
+  font-size: 1.25rem;
+  margin: 0;
 }
 
 /* Style form elements */

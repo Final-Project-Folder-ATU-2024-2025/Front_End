@@ -1,12 +1,27 @@
 <!-- src/app/create-project-page/create-project-page.component.html -->
 <app-header></app-header>
 <div class="create-project-container">
-  <!-- New header section at the top middle of the page -->
+  <!-- Existing header section for the page title and subtitle -->
   <div class="project-hub-header">
     <h1>Project Creation Hub</h1>
     <p>Initiate new projects effortlessly. Define your objectives, set milestones, and assemble your team with ease.</p>
   </div>
-
+  
+  <!-- New Objectives Section with inline SVG target icon -->
+  <div class="objectives-section">
+    <div class="target-symbol">
+      <svg viewBox="0 0 100 100" class="target-icon" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="none"/>
+        <circle cx="50" cy="50" r="25" stroke="black" stroke-width="10" fill="none"/>
+        <circle cx="50" cy="50" r="10" stroke="black" stroke-width="10" fill="none"/>
+      </svg>
+    </div>
+    <h2 class="objectives-title">Define Objectives</h2>
+    <p class="objectives-description">
+      Clearly outline your project goals to ensure all team members are aligned and focused.
+    </p>
+  </div>
+  
   <!-- The form section for creating a project -->
   <form (ngSubmit)="createProject()">
     <div>
