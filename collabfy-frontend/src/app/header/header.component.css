@@ -10,7 +10,7 @@ header {
   justify-content: space-between; /* Logo at left and auth-links at right */
   width: 100%;
   margin: 0;               /* Remove extra margin */
-  position: relative;      /* Needed for absolute positioning of the Create Project button */
+  position: relative;      /* Needed for absolute positioning of the button */
 }
 
 /* Logo container and styling */
@@ -26,8 +26,9 @@ header {
   border-radius: 50%;      /* Make the logo circular */
 }
 
-/* Create Project button: absolutely positioned in the center horizontally.
-   The vertical alignment is kept similar to the other items via top: 50% and translateY. */
+/* Create Project button (or Home button) styling:
+   Absolutely positioned in the center horizontally.
+   The underline effect is handled via the pseudo-element and animations below. */
 .create-project-button {
   position: absolute;
   left: 50%;
@@ -40,11 +41,56 @@ header {
   color: white;
 }
 
-.create-project-button:hover {
-  opacity: 0.8;
+/* Pseudo-element for the animated underline.
+   Initially hidden via transform: scaleX(0). */
+.create-project-button::after {
+  content: "";
+  position: absolute;
+  bottom: -5px; /* Adjust as needed for spacing under the text */
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: white;
+  transform: scaleX(0);
 }
 
-/* Auth-links container: remains unchanged from previous styling */
+/* When the button has the 'underline-grow' class, run the keyframes animation
+   that makes the underline grow from the left. */
+.create-project-button.underline-grow::after {
+  animation: underlineGrow 0.2s forwards;
+}
+
+/* When the button has the 'underline-shrink' class, run the keyframes animation
+   that makes the underline retract (disappear from left to right). */
+.create-project-button.underline-shrink::after {
+  animation: underlineShrink 0.2s forwards;
+}
+
+/* Keyframes for growing the underline (appearing from left to right) */
+@keyframes underlineGrow {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Keyframes for shrinking the underline (disappearing from left to right) */
+@keyframes underlineShrink {
+  from {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  to {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+}
+
+/* Auth-links container styling remains unchanged */
 .auth-links {
   display: flex;
   flex-direction: column;

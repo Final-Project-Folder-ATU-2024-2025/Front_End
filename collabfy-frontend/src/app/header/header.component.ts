@@ -1,11 +1,7 @@
 // src/app/header/header.component.ts
-// This header component is used on authenticated pages.
-// It displays the logo on the left, a "Log Out" button on the right,
-// and below the button, it displays an emoji icon along with the user's first name and surname.
-// A new "Create project" button has been added which navigates to the Create Project page.
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -19,18 +15,50 @@ export class HeaderComponent implements OnInit {
   userName: string = '';
   userSurname: string = '';
 
+  // Track the current underline animation state for the button.
+  createProjectUnderlineState: 'none' | 'grow' | 'shrink' = 'none';
+
+  // Property to hold the current route (URL) so that we can toggle button text/behavior.
+  currentRoute: string = '';
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     // Retrieve the user's first name and surname from localStorage.
-    // If nothing is stored, these remain empty.
     this.userName = localStorage.getItem('firstName') || '';
     this.userSurname = localStorage.getItem('surname') || '';
+
+    // Initialize the current route and subscribe to navigation events.
+    this.currentRoute = this.router.url;
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
   }
 
-  // Navigates to the Create Project page.
-  goToCreateProject(): void {
-    this.router.navigate(['/create-project-page']);
+  // When the button is clicked, navigate based on the current route.
+  // If on the create project page, navigate to home; otherwise, navigate to create project.
+  onCreateProjectButtonClick(): void {
+    if (this.currentRoute === '/create-project-page') {
+      this.router.navigate(['/home-page']);
+    } else {
+      this.router.navigate(['/create-project-page']);
+    }
+  }
+
+  // When the mouse enters the button, trigger the underline-grow animation.
+  onMouseEnterCreateProject(): void {
+    this.createProjectUnderlineState = 'grow';
+  }
+
+  // When the mouse leaves the button, trigger the underline-shrink animation.
+  // After the animation completes, reset the state to 'none'.
+  onMouseLeaveCreateProject(): void {
+    this.createProjectUnderlineState = 'shrink';
+    setTimeout(() => {
+      this.createProjectUnderlineState = 'none';
+    }, 200); // Duration matches the animation duration (200ms)
   }
 
   // Handles logging out the user.

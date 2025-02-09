@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-create-project-page',
   standalone: true,
   imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-  templateUrl: './create-project-page.component.html',
+  templateUrl: './create-project-page.component.html',  // CORRECT: uses its own template
   styleUrls: ['./create-project-page.component.css']
 })
 export class CreateProjectPageComponent {
@@ -56,15 +56,16 @@ export class CreateProjectPageComponent {
         next: (response: any) => {
           alert('Project created successfully!');
           // Optionally redirect to home or project list page
-          this.router.navigate(['/']);
+          this.router.navigate(['/home-page']);
         },
         error: (error) => {
           alert('Error creating project: ' + (error.error?.error || error.message));
         }
       });
   }
-  goToHomePage() {
-    console.log('Navigating back to Home Page');
+
+  // Navigate back to the Home page
+  goToHomePage(): void {
     this.router.navigate(['/home-page']);
   }
 }

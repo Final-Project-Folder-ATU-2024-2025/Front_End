@@ -4,9 +4,19 @@
     <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
   </div>
   
-  <!-- Create Project button is inserted here.
-       It will be centered horizontally via CSS (absolute positioning) -->
-  <button class="create-project-button" (click)="goToCreateProject()">Create project</button>
+  <!-- The button is centered via absolute positioning.
+       Its text and click behavior toggle based on the current route.
+       Mouse enter/leave events trigger the underline animations. -->
+  <button class="create-project-button"
+          (click)="onCreateProjectButtonClick()"
+          (mouseenter)="onMouseEnterCreateProject()"
+          (mouseleave)="onMouseLeaveCreateProject()"
+          [ngClass]="{
+            'underline-grow': createProjectUnderlineState === 'grow',
+            'underline-shrink': createProjectUnderlineState === 'shrink'
+          }">
+    {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
+  </button>
   
   <div class="auth-links">
     <button (click)="logout()">Log Out</button>
