@@ -1,7 +1,13 @@
 <!-- src/app/create-project-page/create-project-page.component.html -->
 <app-header></app-header>
 <div class="create-project-container">
-  <h2>Create a New Project</h2>
+  <!-- New header section at the top middle of the page -->
+  <div class="project-hub-header">
+    <h1>Project Creation Hub</h1>
+    <p>Initiate new projects effortlessly. Define your objectives, set milestones, and assemble your team with ease.</p>
+  </div>
+
+  <!-- The form section for creating a project -->
   <form (ngSubmit)="createProject()">
     <div>
       <label for="projectName">Project Name:</label>

@@ -2,58 +2,74 @@
 
 /* Ensure the entire component fills the viewport and the footer remains at the bottom */
 :host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* Main content container */
-  .create-project-container {
-    flex: 1;
-    padding: 20px;
-    margin: 20px;
-    text-align: left;
-  }
-  
-  /* Style form elements */
-  form div {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="date"],
-  textarea {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  .task-row {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    padding: 8px 12px;
-    margin-top: 5px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"] {
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #4cae4c;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content container */
+.create-project-container {
+  flex: 1;
+  padding: 20px;
+  margin: 20px;
+  text-align: left;
+}
+
+/* New header section for the page title and subtitle */
+.project-hub-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.project-hub-header h1 {
+  font-weight: bold;
+  margin: 0;
+}
+
+.project-hub-header p {
+  font-weight: normal;
+  font-size: 1rem; /* Smaller than h1 */
+  margin: 5px 0 0 0;
+}
+
+/* Style form elements */
+form div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.task-row {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+button[type="submit"]:hover {
+  background-color: #4cae4c;
+}
