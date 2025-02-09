@@ -25,11 +25,17 @@
               "src/assets",
               {
                 "glob": "**/*",
+                "input": "node_modules/@fortawesome/fontawesome-free/webfonts",
+                "output": "webfonts"
+              },
+              {
+                "glob": "**/*",
                 "input": "src/images",
                 "output": "/assets/images"
               }
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -86,11 +92,17 @@
               "src/assets",
               {
                 "glob": "**/*",
+                "input": "node_modules/@fortawesome/fontawesome-free/webfonts",
+                "output": "webfonts"
+              },
+              {
+                "glob": "**/*",
                 "input": "src/images",
                 "output": "/assets/images"
               }
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": []

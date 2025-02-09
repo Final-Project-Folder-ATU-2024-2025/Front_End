@@ -1,5 +1,3 @@
-/* src/app/create-project-page/create-project-page.component.css */
-
 /* Ensure the entire component fills the viewport and the footer remains at the bottom */
 :host {
   display: flex;
@@ -108,6 +106,8 @@
   margin-bottom: 5px;
 }
 
+/* (The following styles were used for layered icons. They are kept intact to preserve functionality,
+   even though we now use a single FontAwesome icon.) */
 .team-icon-container .icon {
   position: absolute;
   font-size: 1.5em;

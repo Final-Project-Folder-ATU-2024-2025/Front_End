@@ -1,4 +1,3 @@
-// src/app/create-project-page/create-project-page.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -11,7 +10,7 @@ import { Router } from '@angular/router';
   selector: 'app-create-project-page',
   standalone: true,
   imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-  templateUrl: './create-project-page.component.html',  // CORRECT: uses its own template
+  templateUrl: './create-project-page.component.html',  // Uses its own template
   styleUrls: ['./create-project-page.component.css']
 })
 export class CreateProjectPageComponent {
