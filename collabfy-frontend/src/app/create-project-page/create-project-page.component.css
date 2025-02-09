@@ -32,6 +32,17 @@
   margin: 5px 0 0 0;
 }
 
+/* White container wrapping the info sections, expanding full width horizontally */
+.info-container {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
 /* Info Sections container for objectives, milestones, tracking, and team */
 .info-sections {
   display: flex;
@@ -93,7 +104,7 @@
   margin: 0;
 }
 
-/* New: Keep Track Section */
+/* Keep Track Section */
 .tracking-section {
   text-align: center;
 }
@@ -132,7 +143,7 @@
   margin-bottom: 5px;
 }
 
-/* (Layered icon styles preserved for legacy purposes) */
+/* Legacy layered icon styles */
 .team-icon-container .icon {
   position: absolute;
   font-size: 1.5em;
