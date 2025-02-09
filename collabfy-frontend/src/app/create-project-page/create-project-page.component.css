@@ -24,11 +24,12 @@
 .project-hub-header h1 {
   font-weight: bold;
   margin: 0;
+  font-size: 3rem;  /* Increased font size for the main title */
 }
 
 .project-hub-header p {
   font-weight: normal;
-  font-size: 1rem; /* Smaller than h1 */
+  font-size: 1.5rem; /* Increased font size for the subtitle */
   margin: 5px 0 0 0;
 }
 
