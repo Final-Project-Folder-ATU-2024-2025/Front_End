@@ -1,5 +1,3 @@
-/* src/app/header/header.component.css */
-
 /* Overall header styling */
 header {
   background-color: #313030; /* A muted color from the logo's palette */
@@ -26,9 +24,11 @@ header {
   border-radius: 50%;      /* Make the logo circular */
 }
 
-/* Create Project button (or Home button) styling:
-   Absolutely positioned in the center horizontally.
-   The underline effect is handled via the pseudo-element and animations below. */
+/* Create Project (or Home) button styling:
+   Positioned absolutely using your original transform.
+   Fixed width ensures the container stays the same,
+   but the text (wrapped in a span) will determine the underline width.
+*/
 .create-project-button {
   position: absolute;
   left: 50%;
@@ -39,11 +39,19 @@ header {
   cursor: pointer;
   font-size: 1rem;
   color: white;
+  width: 150px;         /* Fixed container width */
+  text-align: center;
 }
 
-/* Pseudo-element for the animated underline.
-   Initially hidden via transform: scaleX(0). */
-.create-project-button::after {
+/* The span wrapping the button text */
+.button-text {
+  position: relative;
+  display: inline-block;
+}
+
+/* Pseudo-element for the animated underline on the text.
+   Its width will match the text (span) width. */
+.button-text::after {
   content: "";
   position: absolute;
   bottom: -5px; /* Adjust as needed for spacing under the text */
@@ -54,19 +62,16 @@ header {
   transform: scaleX(0);
 }
 
-/* When the button has the 'underline-grow' class, run the keyframes animation
-   that makes the underline grow from the left. */
-.create-project-button.underline-grow::after {
+/* Underline animation when the button has the grow/shrink class */
+.create-project-button.underline-grow .button-text::after {
   animation: underlineGrow 0.2s forwards;
 }
 
-/* When the button has the 'underline-shrink' class, run the keyframes animation
-   that makes the underline retract (disappear from left to right). */
-.create-project-button.underline-shrink::after {
+.create-project-button.underline-shrink .button-text::after {
   animation: underlineShrink 0.2s forwards;
 }
 
-/* Keyframes for growing the underline (appearing from left to right) */
+/* Keyframes for growing the underline (from left) */
 @keyframes underlineGrow {
   from {
     transform: scaleX(0);
@@ -78,7 +83,7 @@ header {
   }
 }
 
-/* Keyframes for shrinking the underline (disappearing from left to right) */
+/* Keyframes for shrinking the underline (from right) */
 @keyframes underlineShrink {
   from {
     transform: scaleX(1);

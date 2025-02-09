@@ -1,4 +1,3 @@
-<!-- src/app/header/header.component.html -->
 <header>
   <div class="logo-container">
     <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
@@ -6,7 +5,7 @@
   
   <!-- The button is centered via absolute positioning.
        Its text and click behavior toggle based on the current route.
-       Mouse enter/leave events trigger the underline animations. -->
+       The inner span (with class "button-text") contains the text and will have the animated underline. -->
   <button class="create-project-button"
           (click)="onCreateProjectButtonClick()"
           (mouseenter)="onMouseEnterCreateProject()"
@@ -15,7 +14,9 @@
             'underline-grow': createProjectUnderlineState === 'grow',
             'underline-shrink': createProjectUnderlineState === 'shrink'
           }">
-    {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
+    <span class="button-text">
+      {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
+    </span>
   </button>
   
   <div class="auth-links">
