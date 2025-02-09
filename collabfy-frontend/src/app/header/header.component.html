@@ -1,20 +1,15 @@
 <!-- src/app/header/header.component.html -->
-<!--
-  This template displays:
-  - The logo on the left.
-  - On the right, a "Create project" button, a "Log Out" button,
-    and below the buttons, an emoji icon with the user's first name and surname.
--->
 <header>
   <div class="logo-container">
     <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
   </div>
+  
+  <!-- Create Project button is inserted here.
+       It will be centered horizontally via CSS (absolute positioning) -->
+  <button class="create-project-button" (click)="goToCreateProject()">Create project</button>
+  
   <div class="auth-links">
-    <!-- Create Project button -->
-    <button class="create-project-button" (click)="goToCreateProject()">Create project</button>
-    <!-- Log Out button -->
     <button (click)="logout()">Log Out</button>
-    <!-- User info: shown only if userName or userSurname is not empty -->
     <div class="user-info" *ngIf="userName || userSurname">
       <span class="user-icon">👤</span>
       <span class="user-name">{{ userName }} {{ userSurname }}</span>

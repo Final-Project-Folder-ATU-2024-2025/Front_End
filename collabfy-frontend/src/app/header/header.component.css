@@ -6,27 +6,45 @@ header {
   color: #333;               /* Dark color for contrast */
   padding: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between; /* Logo at left and auth-links at right */
   width: 100%;
   margin: 0;               /* Remove extra margin */
+  position: relative;      /* Needed for absolute positioning of the Create Project button */
 }
 
-/* Container for the logo */
+/* Logo container and styling */
 .logo-container {
   display: flex;
   align-items: center;
 }
 
-/* Logo styling: circular image */
 .logo {
   height: 100px;
-  margin-right: 10px;      /* Space between the logo and text */
+  margin-right: 10px;      /* Space between the logo and any following element */
   max-width: 100%;
   border-radius: 50%;      /* Make the logo circular */
 }
 
-/* Container for authentication links */
+/* Create Project button: absolutely positioned in the center horizontally.
+   The vertical alignment is kept similar to the other items via top: 50% and translateY. */
+.create-project-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-300%, 100%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+}
+
+.create-project-button:hover {
+  opacity: 0.8;
+}
+
+/* Auth-links container: remains unchanged from previous styling */
 .auth-links {
   display: flex;
   flex-direction: column;
@@ -34,7 +52,6 @@ header {
   gap: 5px;
 }
 
-/* Styling for the Log Out button */
 .auth-links button {
   color: white;
   text-decoration: none;
@@ -44,12 +61,11 @@ header {
   font-size: inherit;
 }
 
-/* Hover effect for the Log Out button */
 .auth-links button:hover {
   opacity: 0.8;
 }
 
-/* User info block: displays the user's name and emoji icon */
+/* User info styling remains the same */
 .user-info {
   display: flex;
   align-items: center;
@@ -57,13 +73,11 @@ header {
   color: white;
 }
 
-/* Styling for the user icon (emoji) */
 .user-icon {
   margin-right: 5px;
   font-size: 1.2rem;
 }
 
-/* Optional: style for the user name text */
 .user-name {
   font-weight: bold;
 }
