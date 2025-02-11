@@ -1,3 +1,8 @@
+/* Define a CSS variable for the fixed button width */
+:root {
+  --button-width: 150px;
+}
+
 /* Overall header styling */
 header {
   background-color: #313030; /* A muted color from the logo's palette */
@@ -8,7 +13,7 @@ header {
   justify-content: space-between; /* Logo at left and auth-links at right */
   width: 100%;
   margin: 0;               /* Remove extra margin */
-  position: relative;      /* Needed for absolute positioning of the button */
+  position: relative;      /* Needed for absolute positioning of the buttons */
 }
 
 /* Logo container and styling */
@@ -24,33 +29,45 @@ header {
   border-radius: 50%;      /* Make the logo circular */
 }
 
-/* Create Project (or Home) button styling:
-   Positioned absolutely using your original transform.
-   Fixed width ensures the container stays the same,
-   but the text (wrapped in a span) will determine the underline width.
-*/
+/* Create Project (or Home) button styling – unchanged */
 .create-project-button {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-300%, 100%);
+  width: var(--button-width);
+  transform: translate(calc(-300%), 100%);
+  /* (300% here represents 3 × button width; leaving as is) */
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1rem;
   color: white;
-  width: 150px;         /* Fixed container width */
   text-align: center;
 }
 
-/* The span wrapping the button text */
+/* New My Projects (or Home) button styling – placed to the right */
+.my-projects-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--button-width);
+  transform: translate(calc(-150%), 100%);
+  /* (150% here places it to the right of the Create Project button) */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+
+/* The span wrapping the button text (used by both buttons) */
 .button-text {
   position: relative;
   display: inline-block;
 }
 
-/* Pseudo-element for the animated underline on the text.
-   Its width will match the text (span) width. */
+/* Pseudo-element for the animated underline on the text */
 .button-text::after {
   content: "";
   position: absolute;
@@ -62,16 +79,17 @@ header {
   transform: scaleX(0);
 }
 
-/* Underline animation when the button has the grow/shrink class */
-.create-project-button.underline-grow .button-text::after {
+/* Underline animation for both buttons */
+.create-project-button.underline-grow .button-text::after,
+.my-projects-button.underline-grow .button-text::after {
   animation: underlineGrow 0.2s forwards;
 }
-
-.create-project-button.underline-shrink .button-text::after {
+.create-project-button.underline-shrink .button-text::after,
+.my-projects-button.underline-shrink .button-text::after {
   animation: underlineShrink 0.2s forwards;
 }
 
-/* Keyframes for growing the underline (from left) */
+/* Keyframes for underline animations */
 @keyframes underlineGrow {
   from {
     transform: scaleX(0);
@@ -83,7 +101,6 @@ header {
   }
 }
 
-/* Keyframes for shrinking the underline (from right) */
 @keyframes underlineShrink {
   from {
     transform: scaleX(1);
@@ -116,7 +133,7 @@ header {
   opacity: 0.8;
 }
 
-/* User info styling remains the same */
+/* User info styling remains unchanged */
 .user-info {
   display: flex;
   align-items: center;

@@ -3,9 +3,7 @@
     <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
   </div>
   
-  <!-- The button is centered via absolute positioning.
-       Its text and click behavior toggle based on the current route.
-       The inner span (with class "button-text") contains the text and will have the animated underline. -->
+  <!-- Existing Create Project button (unchanged) -->
   <button class="create-project-button"
           (click)="onCreateProjectButtonClick()"
           (mouseenter)="onMouseEnterCreateProject()"
@@ -16,6 +14,20 @@
           }">
     <span class="button-text">
       {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
+    </span>
+  </button>
+  
+  <!-- New My Projects button, positioned to the right of the Create Project button -->
+  <button class="my-projects-button"
+          (click)="onMyProjectsButtonClick()"
+          (mouseenter)="onMouseEnterMyProjects()"
+          (mouseleave)="onMouseLeaveMyProjects()"
+          [ngClass]="{
+            'underline-grow': myProjectsUnderlineState === 'grow',
+            'underline-shrink': myProjectsUnderlineState === 'shrink'
+          }">
+    <span class="button-text">
+      {{ currentRoute === '/my-projects-page' ? 'Home' : 'My projects' }}
     </span>
   </button>
   
