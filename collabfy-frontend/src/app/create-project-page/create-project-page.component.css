@@ -62,8 +62,8 @@
 }
 
 .target-icon {
-  width: 1.5em;
-  height: 1.5em;
+  width: 3em;    /* Increased from 2em */
+  height: 3em;   /* Increased from 2em */
   display: inline-block;
 }
 
@@ -88,8 +88,8 @@
 }
 
 .flag-icon {
-  width: 1.5em;
-  height: 1.5em;
+  width: 3em;    /* Increased from 2em */
+  height: 3em;   /* Increased from 2em */
   display: inline-block;
 }
 
@@ -114,8 +114,8 @@
 }
 
 .tracking-icon {
-  width: 1.5em;
-  height: 1.5em;
+  width: 3em;    /* Increased from 2em */
+  height: 3em;   /* Increased from 2em */
   display: inline-block;
 }
 
@@ -138,38 +138,17 @@
 .team-icon-container {
   position: relative;
   display: inline-block;
-  width: 1.5em;  /* Matches the other icon sizes */
-  height: 1.5em;
+  width: 3em;    /* Increased from 2em */
+  height: 3em;   /* Increased from 2em */
   margin-bottom: 5px;
 }
 
 /* Legacy layered icon styles */
 .team-icon-container .icon {
   position: absolute;
-  font-size: 1.5em;
-  line-height: 1.5em;
+  font-size: 3em;   /* Increased from 2em */
+  line-height: 3em; /* Increased from 2em */
   display: block;
-}
-
-.icon.front {
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  z-index: 2;
-}
-
-.icon.back-left {
-  left: -0.2em;
-  top: 0;
-  z-index: 1;
-  opacity: 0.8;
-}
-
-.icon.back-right {
-  right: -0.2em;
-  top: 0;
-  z-index: 1;
-  opacity: 0.8;
 }
 
 .team-title {
