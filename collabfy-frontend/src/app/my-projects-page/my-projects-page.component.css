@@ -1,0 +1,27 @@
+/* Container styling for the My Projects page */
+.my-projects-container {
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  /* Page title styling */
+  .my-projects-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Projects list container */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Individual project item styling */
+  .project-item {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
