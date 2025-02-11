@@ -10,7 +10,7 @@ header {
   margin: 0;
 }
 
-/* Logo container and styling */
+/* Logo styling */
 .logo-container {
   display: flex;
   align-items: center;
@@ -22,15 +22,18 @@ header {
   border-radius: 50%;
 }
 
-/* Navigation buttons container (centered) */
+/* Navigation buttons container (centered)
+   Added margin-top to shift vertically to align with user name */
 .nav-buttons {
   display: flex;
   gap: 20px;
   flex: 1;
   justify-content: center;
+  margin-top: 70px;  /* Adjust this value as needed */
+  margin-left: -1000px;
 }
 
-/* Navigation button styling */
+/* Nav button styling */
 .nav-button {
   background: none;
   border: none;
@@ -41,7 +44,6 @@ header {
   padding: 5px 10px;
 }
 
-/* Active button styling (when the route is active, text becomes bold) */
 .nav-button.active {
   font-weight: bold;
 }
@@ -57,19 +59,18 @@ header {
   position: absolute;
   bottom: -3px;
   left: 0;
-  width: 100%;
   height: 2px;
+  width: 100%;
   background: white;
   transform: scaleX(0);
   transition: transform 0.2s ease;
 }
 
-/* Expand underline on hover */
 .nav-button:hover .button-text::after {
   transform: scaleX(1);
 }
 
-/* Auth-links container styling */
+/* Auth-links styling */
 .auth-links {
   display: flex;
   flex-direction: column;
