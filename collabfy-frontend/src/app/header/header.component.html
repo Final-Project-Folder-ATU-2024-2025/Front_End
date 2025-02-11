@@ -1,36 +1,31 @@
 <header>
+  <!-- Left: Logo -->
   <div class="logo-container">
     <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
   </div>
   
-  <!-- Existing Create Project button (unchanged) -->
-  <button class="create-project-button"
-          (click)="onCreateProjectButtonClick()"
-          (mouseenter)="onMouseEnterCreateProject()"
-          (mouseleave)="onMouseLeaveCreateProject()"
-          [ngClass]="{
-            'underline-grow': createProjectUnderlineState === 'grow',
-            'underline-shrink': createProjectUnderlineState === 'shrink'
-          }">
-    <span class="button-text">
-      {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
-    </span>
-  </button>
+  <!-- Center: Navigation Buttons -->
+  <div class="nav-buttons">
+    <!-- Create Project / Home Button -->
+    <button class="nav-button"
+            (click)="onCreateProjectButtonClick()"
+            [ngClass]="{'active': currentRoute === '/create-project-page'}">
+      <span class="button-text">
+        {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
+      </span>
+    </button>
+    
+    <!-- My Projects / Home Button -->
+    <button class="nav-button"
+            (click)="onMyProjectsButtonClick()"
+            [ngClass]="{'active': currentRoute === '/my-projects-page'}">
+      <span class="button-text">
+        {{ currentRoute === '/my-projects-page' ? 'Home' : 'My projects' }}
+      </span>
+    </button>
+  </div>
   
-  <!-- New My Projects button, positioned to the right of the Create Project button -->
-  <button class="my-projects-button"
-          (click)="onMyProjectsButtonClick()"
-          (mouseenter)="onMouseEnterMyProjects()"
-          (mouseleave)="onMouseLeaveMyProjects()"
-          [ngClass]="{
-            'underline-grow': myProjectsUnderlineState === 'grow',
-            'underline-shrink': myProjectsUnderlineState === 'shrink'
-          }">
-    <span class="button-text">
-      {{ currentRoute === '/my-projects-page' ? 'Home' : 'My projects' }}
-    </span>
-  </button>
-  
+  <!-- Right: Auth Links -->
   <div class="auth-links">
     <button (click)="logout()">Log Out</button>
     <div class="user-info" *ngIf="userName || userSurname">
