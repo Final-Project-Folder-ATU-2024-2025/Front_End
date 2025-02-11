@@ -40,7 +40,66 @@
   </div>
 </div>
 
-<!-- Existing Slider Section -->
+<!-- Connections Section (Separated Container) -->
+<div class="connections-container">
+  <h2 class="connections-title">Connections</h2>
+  <div class="connections-inner">
+    <div class="connection-create">
+      <h3>Create a New Connection:</h3>
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
+      <button class="accept-button" (click)="searchConnections()">Search</button>
+      <div class="search-results" *ngIf="searchResults.length">
+        <ul>
+          <li *ngFor="let user of searchResults">
+            <div class="result-item">
+              <div class="result-line">
+                <span class="result-icon">👤</span>
+                {{ user.firstName }} {{ user.surname }}
+              </div>
+              <div class="result-line">
+                <span class="result-icon">✉️</span>
+                {{ user.email }}
+              </div>
+              <div class="result-line">
+                <span class="result-icon">📞</span>
+                {{ user.telephone || user.business_phone || '' }}
+              </div>
+              <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
+                      (click)="toggleConnection(user)">
+                {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="connection-count">
+      <h3>Your Connections:</h3>
+      <ul *ngIf="connections && connections.length > 0">
+        <li *ngFor="let conn of connections">
+          <div class="result-line">
+            <span class="result-icon">👤</span>
+            {{ conn.firstName }} {{ conn.surname }}
+          </div>
+          <div class="result-line">
+            <span class="result-icon">✉️</span>
+            {{ conn.email }}
+          </div>
+          <div class="result-line">
+            <span class="result-icon">📞</span>
+            {{ conn.telephone }}
+          </div>
+          <button class="disconnect-button" (click)="disconnectConnection(conn)">Disconnect</button>
+        </li>
+      </ul>
+      <div *ngIf="!connections || connections.length === 0">
+        You have no connections.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slider Section for Deadlines and Notifications -->
 <div class="home-container">
   <div class="slider-container">
     <button class="arrow left-arrow" (click)="previous()">&#9664;</button>
@@ -53,9 +112,6 @@
       <div class="slide" *ngFor="let option of options">
         <div class="container">
           <ng-container [ngSwitch]="option">
-
-            <!-- Removed "My Projects" slide since it should no longer appear on Home Page -->
-
             <!-- "Project Deadlines" slide -->
             <ng-container *ngSwitchCase="'Project Deadlines'">
               <h2 class="notifications-title">Project Deadlines</h2>
@@ -115,66 +171,7 @@
               </div>
             </ng-container>
 
-            <!-- "Connections" slide -->
-            <ng-container *ngSwitchCase="'Connections'">
-              <h2 class="connections-title">Connections</h2>
-              <div class="connections-inner">
-                <div class="connection-create">
-                  <h3>Create a New Connection:</h3>
-                  <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
-                  <button class="accept-button" (click)="searchConnections()">Search</button>
-                  <div class="search-results" *ngIf="searchResults.length">
-                    <ul>
-                      <li *ngFor="let user of searchResults">
-                        <div class="result-item">
-                          <div class="result-line">
-                            <span class="result-icon">👤</span>
-                            {{ user.firstName }} {{ user.surname }}
-                          </div>
-                          <div class="result-line">
-                            <span class="result-icon">✉️</span>
-                            {{ user.email }}
-                          </div>
-                          <div class="result-line">
-                            <span class="result-icon">📞</span>
-                            {{ user.telephone || user.business_phone || '' }}
-                          </div>
-                          <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
-                                  (click)="toggleConnection(user)">
-                            {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="connection-count">
-                  <h3>Your Connections:</h3>
-                  <ul *ngIf="connections && connections.length > 0">
-                    <li *ngFor="let conn of connections">
-                      <div class="result-line">
-                        <span class="result-icon">👤</span>
-                        {{ conn.firstName }} {{ conn.surname }}
-                      </div>
-                      <div class="result-line">
-                        <span class="result-icon">✉️</span>
-                        {{ conn.email }}
-                      </div>
-                      <div class="result-line">
-                        <span class="result-icon">📞</span>
-                        {{ conn.telephone }}
-                      </div>
-                      <button class="disconnect-button" (click)="disconnectConnection(conn)">Disconnect</button>
-                    </li>
-                  </ul>
-                  <div *ngIf="!connections || connections.length === 0">
-                    You have no connections.
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-
-            <!-- Default case: Simply display the option text -->
+            <!-- Default case -->
             <ng-container *ngSwitchDefault>
               {{ option }}
             </ng-container>

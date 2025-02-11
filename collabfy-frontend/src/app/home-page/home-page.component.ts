@@ -14,11 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  // Removed "My Projects" from the options array
+  // Slider now only cycles between "Project Deadlines" and "Notifications"
   options = [
     'Project Deadlines',
-    'Notifications',
-    'Connections'
+    'Notifications'
   ];
 
   currentIndex: number = 0;
@@ -33,7 +32,7 @@ export class HomePageComponent implements OnInit {
   notifications: any[] = [];
   notificationsLoaded: boolean = false;
 
-  // New properties for projects (if needed for deadlines slide)
+  // Properties for projects (if needed for deadlines slide)
   myProjects: any[] = [];
   projectDeadlines: any[] = []; // Optionally used for deadlines
 
@@ -43,11 +42,11 @@ export class HomePageComponent implements OnInit {
     const currentOption = this.options[this.currentIndex];
     if (currentOption === 'Notifications') {
       this.fetchNotifications();
-    } else if (currentOption === 'Connections') {
-      this.fetchConnections();
     } else if (currentOption === 'Project Deadlines') {
       this.fetchProjectDeadlines();
     }
+    // Fetch connections for the separate Connections container
+    this.fetchConnections();
   }
 
   searchConnections(): void {
@@ -61,7 +60,7 @@ export class HomePageComponent implements OnInit {
           this.searchResults = response.results || [];
           console.log('Search results:', this.searchResults);
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error searching connections:', error);
         }
       });
@@ -77,7 +76,7 @@ export class HomePageComponent implements OnInit {
             console.log('Connection request sent:', response);
             this.pendingRequests[user.email] = true;
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error('Error sending connection request:', error);
           }
         });
@@ -88,7 +87,7 @@ export class HomePageComponent implements OnInit {
             console.log('Connection request cancelled:', response);
             this.pendingRequests[user.email] = false;
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error('Error cancelling connection request:', error);
           }
         });
@@ -108,7 +107,7 @@ export class HomePageComponent implements OnInit {
           this.notificationsLoaded = true;
           console.log('Notifications:', this.notifications);
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error("Error fetching notifications:", error);
         }
       });
@@ -126,7 +125,7 @@ export class HomePageComponent implements OnInit {
           this.connections = response.connections || [];
           console.log("Connections:", this.connections);
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error("Error fetching connections:", error);
         }
       });
@@ -144,7 +143,7 @@ export class HomePageComponent implements OnInit {
           this.myProjects = response.projects || [];
           console.log("My Projects:", this.myProjects);
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error("Error fetching projects:", error);
         }
       });
@@ -166,7 +165,7 @@ export class HomePageComponent implements OnInit {
         this.dismissNotification(notif);
         this.fetchConnections();
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error("Error accepting connection request:", error);
       }
     });
@@ -181,7 +180,7 @@ export class HomePageComponent implements OnInit {
         console.log("Connection request rejected:", response);
         this.dismissNotification(notif);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error("Error rejecting connection request:", error);
       }
     });
@@ -201,7 +200,7 @@ export class HomePageComponent implements OnInit {
         console.log("Notification dismissed:", response);
         this.notifications = this.notifications.filter(n => n.id !== notif.id);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error("Error dismissing notification:", error);
       }
     });
@@ -213,21 +212,19 @@ export class HomePageComponent implements OnInit {
       console.error("User not logged in.");
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/disconnect', {
-      userId: uid,
-      disconnectUserId: conn.uid
-    }).subscribe({
-      next: (response: any) => {
-        console.log("Disconnected successfully:", response);
-        this.fetchConnections();
-      },
-      error: (error) => {
-        console.error("Error disconnecting:", error);
-      }
-    });
+    this.http.post('http://127.0.0.1:5000/api/disconnect', { userId: uid, disconnectUserId: conn.uid })
+      .subscribe({
+        next: (response: any) => {
+          console.log("Disconnected successfully:", response);
+          this.fetchConnections();
+        },
+        error: (error: any) => {
+          console.error("Error disconnecting:", error);
+        }
+      });
   }
 
-  next() {
+  next(): void {
     this.direction = 'next';
     this.isAnimating = true;
     setTimeout(() => {
@@ -236,15 +233,13 @@ export class HomePageComponent implements OnInit {
       const currentOption = this.options[this.currentIndex];
       if (currentOption === 'Notifications') {
         this.fetchNotifications();
-      } else if (currentOption === 'Connections') {
-        this.fetchConnections();
       } else if (currentOption === 'Project Deadlines') {
         this.fetchProjectDeadlines();
       }
     }, 500);
   }
 
-  previous() {
+  previous(): void {
     this.direction = 'prev';
     this.isAnimating = true;
     setTimeout(() => {
@@ -253,8 +248,6 @@ export class HomePageComponent implements OnInit {
       const currentOption = this.options[this.currentIndex];
       if (currentOption === 'Notifications') {
         this.fetchNotifications();
-      } else if (currentOption === 'Connections') {
-        this.fetchConnections();
       } else if (currentOption === 'Project Deadlines') {
         this.fetchProjectDeadlines();
       }
