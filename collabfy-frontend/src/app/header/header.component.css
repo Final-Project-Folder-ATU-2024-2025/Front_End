@@ -35,7 +35,7 @@ header {
   left: 50%;
   top: 50%;
   width: var(--button-width);
-  transform: translate(calc(-300%), 100%);
+  transform: translate(calc(-500%), 100%);
   /* (300% here represents 3 × button width; leaving as is) */
   background: none;
   border: none;
@@ -51,7 +51,7 @@ header {
   left: 50%;
   top: 50%;
   width: var(--button-width);
-  transform: translate(calc(-150%), 100%);
+  transform: translate(calc(-450%), 100%);
   /* (150% here places it to the right of the Create Project button) */
   background: none;
   border: none;
