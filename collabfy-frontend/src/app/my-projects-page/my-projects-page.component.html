@@ -1,12 +1,14 @@
 <app-header></app-header>
+
 <div class="my-projects-container">
   <h1>My Projects</h1>
   <div class="projects-list">
     <div class="project-item" *ngFor="let project of projects">
-      <h2>{{ project.name }}</h2>
+      <h2>{{ project.projectName }}</h2>
       <p>{{ project.description }}</p>
-      <p><strong>Deadline:</strong> {{ project.deadline }}</p>
+      <p><strong>Deadline:</strong> {{ project.deadline | date }}</p>
     </div>
   </div>
 </div>
+
 <app-footer></app-footer>
