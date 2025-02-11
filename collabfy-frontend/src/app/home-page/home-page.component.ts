@@ -1,7 +1,3 @@
-// src/app/home-page/home-page.component.ts
-// This component displays a slider with options including My Projects, Project Deadlines,
-// Notifications, and Connections. It fetches projects, connections, and notifications 
-// for the logged‑in user. (The Create a New Project slide has been removed.)
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
@@ -18,9 +14,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  // Removed "Create a New Project" from the options array.
+  // Removed "My Projects" from the options array
   options = [
-    'My Projects',
     'Project Deadlines',
     'Notifications',
     'Connections'
@@ -38,9 +33,9 @@ export class HomePageComponent implements OnInit {
   notifications: any[] = [];
   notificationsLoaded: boolean = false;
 
-  // New properties for projects
+  // New properties for projects (if needed for deadlines slide)
   myProjects: any[] = [];
-  projectDeadlines: any[] = []; // You can optionally use this if you want a separate slide for deadlines
+  projectDeadlines: any[] = []; // Optionally used for deadlines
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -50,8 +45,6 @@ export class HomePageComponent implements OnInit {
       this.fetchNotifications();
     } else if (currentOption === 'Connections') {
       this.fetchConnections();
-    } else if (currentOption === 'My Projects') {
-      this.fetchMyProjects();
     } else if (currentOption === 'Project Deadlines') {
       this.fetchProjectDeadlines();
     }
@@ -139,7 +132,6 @@ export class HomePageComponent implements OnInit {
       });
   }
 
-  // Updated fetchMyProjects() method: send "userId" in the payload (not "ownerId")
   fetchMyProjects(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
@@ -246,8 +238,6 @@ export class HomePageComponent implements OnInit {
         this.fetchNotifications();
       } else if (currentOption === 'Connections') {
         this.fetchConnections();
-      } else if (currentOption === 'My Projects') {
-        this.fetchMyProjects();
       } else if (currentOption === 'Project Deadlines') {
         this.fetchProjectDeadlines();
       }
@@ -265,8 +255,6 @@ export class HomePageComponent implements OnInit {
         this.fetchNotifications();
       } else if (currentOption === 'Connections') {
         this.fetchConnections();
-      } else if (currentOption === 'My Projects') {
-        this.fetchMyProjects();
       } else if (currentOption === 'Project Deadlines') {
         this.fetchProjectDeadlines();
       }
