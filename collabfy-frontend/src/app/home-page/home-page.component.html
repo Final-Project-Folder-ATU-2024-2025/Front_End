@@ -43,6 +43,9 @@
 <!-- Connections Section (Separated Container) -->
 <div class="connections-container">
   <h2 class="connections-title">Connections</h2>
+  <p class="connections-tagline">
+    Build a bridge to the future by connecting with others to unlock endless possibilities.
+  </p>
   <div class="connections-inner">
     <div class="connection-create">
       <h3>Create a New Connection:</h3>
@@ -67,12 +70,10 @@
                 </div>
               </div>
               <div class="result-actions">
-                <!-- Connection button -->
                 <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
                         (click)="toggleConnection(user)">
                   {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
                 </button>
-                <!-- Delete button to remove the search result -->
                 <button class="delete-search-button" (click)="removeSearchResult(user)">×</button>
               </div>
             </div>
