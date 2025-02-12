@@ -126,9 +126,10 @@
   justify-content: flex-start;
 }
 
-/* Make "Create a New Connection" slide smaller and centered */
+/* Make "Create a New Connection" slide smaller, centered, and with slightly rounded borders */
 .connection-create {
-  width: 50%;
+  width: 33.33%;  /* Reduced width to one-third smaller than before */
+  border-radius: 8px; /* Slightly rounded borders */
 }
 
 /* Headers for connections squares */
