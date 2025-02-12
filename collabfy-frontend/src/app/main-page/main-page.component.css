@@ -42,7 +42,14 @@
   }
   
   /* Image styling with asymmetrical rounding */
-  .image1,
+  .image1{
+    max-width: 100%;
+    height: auto;
+    border-top-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
   .image2 {
     max-width: 100%;
     height: auto;
