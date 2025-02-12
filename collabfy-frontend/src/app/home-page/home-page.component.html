@@ -47,27 +47,34 @@
     <div class="connection-create">
       <h3>Create a New Connection:</h3>
       <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
-      <button class="accept-button" (click)="searchConnections()">Search</button>
+      <button class="search-button" (click)="searchConnections()">Search</button>
       <div class="search-results" *ngIf="searchResults.length">
         <ul>
           <li *ngFor="let user of searchResults">
             <div class="result-item">
-              <div class="result-line">
-                <span class="result-icon">👤</span>
-                {{ user.firstName }} {{ user.surname }}
+              <div class="result-details">
+                <div class="result-line">
+                  <span class="result-icon">👤</span>
+                  {{ user.firstName }} {{ user.surname }}
+                </div>
+                <div class="result-line">
+                  <span class="result-icon">✉️</span>
+                  {{ user.email }}
+                </div>
+                <div class="result-line">
+                  <span class="result-icon">📞</span>
+                  {{ user.telephone || user.business_phone || '' }}
+                </div>
               </div>
-              <div class="result-line">
-                <span class="result-icon">✉️</span>
-                {{ user.email }}
+              <div class="result-actions">
+                <!-- Connection button -->
+                <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
+                        (click)="toggleConnection(user)">
+                  {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
+                </button>
+                <!-- Delete button to remove the search result -->
+                <button class="delete-search-button" (click)="removeSearchResult(user)">×</button>
               </div>
-              <div class="result-line">
-                <span class="result-icon">📞</span>
-                {{ user.telephone || user.business_phone || '' }}
-              </div>
-              <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
-                      (click)="toggleConnection(user)">
-                {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
-              </button>
             </div>
           </li>
         </ul>

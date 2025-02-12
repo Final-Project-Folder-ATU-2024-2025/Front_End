@@ -15,11 +15,7 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
   // Slider now only cycles between "Project Deadlines" and "Notifications"
-  options = [
-    'Project Deadlines',
-    'Notifications'
-  ];
-
+  options = ['Project Deadlines', 'Notifications'];
   currentIndex: number = 0;
   isAnimating: boolean = false;
   direction: 'next' | 'prev' = 'next';
@@ -54,7 +50,8 @@ export class HomePageComponent implements OnInit {
       this.searchResults = [];
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/search-users', { query: this.searchQuery })
+    this.http
+      .post('http://127.0.0.1:5000/api/search-users', { query: this.searchQuery })
       .subscribe({
         next: (response: any) => {
           this.searchResults = response.results || [];
@@ -62,15 +59,21 @@ export class HomePageComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Error searching connections:', error);
-        }
+        },
       });
   }
 
+  // New method to remove a search result from the displayed list
+  removeSearchResult(user: any): void {
+    this.searchResults = this.searchResults.filter((u) => u.email !== user.email);
+  }
+
   toggleConnection(user: any): void {
-    const fromUserId = localStorage.getItem('uid') || "user1"; // Replace with actual current UID
+    const fromUserId = localStorage.getItem('uid') || 'user1'; // Replace with actual current UID
     const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
-      this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
+      this.http
+        .post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
         .subscribe({
           next: (response: any) => {
             console.log('Connection request sent:', response);
@@ -78,10 +81,11 @@ export class HomePageComponent implements OnInit {
           },
           error: (error: any) => {
             console.error('Error sending connection request:', error);
-          }
+          },
         });
     } else {
-      this.http.post('http://127.0.0.1:5000/api/cancel-connection-request', { fromUserId, toUserId })
+      this.http
+        .post('http://127.0.0.1:5000/api/cancel-connection-request', { fromUserId, toUserId })
         .subscribe({
           next: (response: any) => {
             console.log('Connection request cancelled:', response);
@@ -89,7 +93,7 @@ export class HomePageComponent implements OnInit {
           },
           error: (error: any) => {
             console.error('Error cancelling connection request:', error);
-          }
+          },
         });
     }
   }
@@ -97,10 +101,11 @@ export class HomePageComponent implements OnInit {
   fetchNotifications(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
-      console.error("User not logged in.");
+      console.error('User not logged in.');
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/notifications', { userId: uid })
+    this.http
+      .post('http://127.0.0.1:5000/api/notifications', { userId: uid })
       .subscribe({
         next: (response: any) => {
           this.notifications = response.notifications || [];
@@ -108,44 +113,46 @@ export class HomePageComponent implements OnInit {
           console.log('Notifications:', this.notifications);
         },
         error: (error: any) => {
-          console.error("Error fetching notifications:", error);
-        }
+          console.error('Error fetching notifications:', error);
+        },
       });
   }
 
   fetchConnections(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
-      console.error("User not logged in.");
+      console.error('User not logged in.');
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/user-connections', { userId: uid })
+    this.http
+      .post('http://127.0.0.1:5000/api/user-connections', { userId: uid })
       .subscribe({
         next: (response: any) => {
           this.connections = response.connections || [];
-          console.log("Connections:", this.connections);
+          console.log('Connections:', this.connections);
         },
         error: (error: any) => {
-          console.error("Error fetching connections:", error);
-        }
+          console.error('Error fetching connections:', error);
+        },
       });
   }
 
   fetchMyProjects(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
-      console.error("User not logged in.");
+      console.error('User not logged in.');
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/my-projects', { userId: uid })
+    this.http
+      .post('http://127.0.0.1:5000/api/my-projects', { userId: uid })
       .subscribe({
         next: (response: any) => {
           this.myProjects = response.projects || [];
-          console.log("My Projects:", this.myProjects);
+          console.log('My Projects:', this.myProjects);
         },
         error: (error: any) => {
-          console.error("Error fetching projects:", error);
-        }
+          console.error('Error fetching projects:', error);
+        },
       });
   }
 
@@ -156,71 +163,78 @@ export class HomePageComponent implements OnInit {
   }
 
   acceptNotification(notif: any): void {
-    this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
-      requestId: notif.connectionRequestId,
-      action: "accepted"
-    }).subscribe({
-      next: (response: any) => {
-        console.log("Connection request accepted:", response);
-        this.dismissNotification(notif);
-        this.fetchConnections();
-      },
-      error: (error: any) => {
-        console.error("Error accepting connection request:", error);
-      }
-    });
+    this.http
+      .post('http://127.0.0.1:5000/api/respond-connection-request', {
+        requestId: notif.connectionRequestId,
+        action: 'accepted',
+      })
+      .subscribe({
+        next: (response: any) => {
+          console.log('Connection request accepted:', response);
+          this.dismissNotification(notif);
+          this.fetchConnections();
+        },
+        error: (error: any) => {
+          console.error('Error accepting connection request:', error);
+        },
+      });
   }
 
   rejectNotification(notif: any): void {
-    this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
-      requestId: notif.connectionRequestId,
-      action: "rejected"
-    }).subscribe({
-      next: (response: any) => {
-        console.log("Connection request rejected:", response);
-        this.dismissNotification(notif);
-      },
-      error: (error: any) => {
-        console.error("Error rejecting connection request:", error);
-      }
-    });
+    this.http
+      .post('http://127.0.0.1:5000/api/respond-connection-request', {
+        requestId: notif.connectionRequestId,
+        action: 'rejected',
+      })
+      .subscribe({
+        next: (response: any) => {
+          console.log('Connection request rejected:', response);
+          this.dismissNotification(notif);
+        },
+        error: (error: any) => {
+          console.error('Error rejecting connection request:', error);
+        },
+      });
   }
 
   dismissNotification(notif: any): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
-      console.error("User not logged in.");
+      console.error('User not logged in.');
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/dismiss-notification', {
-      userId: uid,
-      notificationId: notif.id
-    }).subscribe({
-      next: (response: any) => {
-        console.log("Notification dismissed:", response);
-        this.notifications = this.notifications.filter(n => n.id !== notif.id);
-      },
-      error: (error: any) => {
-        console.error("Error dismissing notification:", error);
-      }
-    });
+    this.http
+      .post('http://127.0.0.1:5000/api/dismiss-notification', {
+        userId: uid,
+        notificationId: notif.id,
+      })
+      .subscribe({
+        next: (response: any) => {
+          console.log('Notification dismissed:', response);
+          this.notifications = this.notifications.filter((n) => n.id !== notif.id);
+        },
+        error: (error: any) => {
+          console.error('Error dismissing notification:', error);
+        },
+      });
   }
 
   disconnectConnection(conn: any): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
-      console.error("User not logged in.");
+      console.error('User not logged in.');
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/disconnect', { userId: uid, disconnectUserId: conn.uid })
+    this.http
+      .post('http://127.0.0.1:5000/api/disconnect', { userId: uid, disconnectUserId: conn.uid })
       .subscribe({
         next: (response: any) => {
-          console.log("Disconnected successfully:", response);
+          console.log('Disconnected successfully:', response);
           this.fetchConnections();
         },
         error: (error: any) => {
-          console.error("Error disconnecting:", error);
-        }
+          console.error('Error disconnecting:', error);
+        },
       });
   }
 
