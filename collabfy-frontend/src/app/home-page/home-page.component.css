@@ -71,12 +71,14 @@
   margin: 0;
   margin-bottom: 20px;
   font-size: 1.8rem;
+  text-align: center; /* Center the "Connections" text */
 }
 
 /* Connections inner styling */
 .connections-inner {
   display: flex;
-  flex: 1;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;    /* Center items horizontally */
   gap: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -122,6 +124,11 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+/* Make "Create a New Connection" slide smaller and centered */
+.connection-create {
+  width: 50%;
 }
 
 /* Headers for connections squares */
