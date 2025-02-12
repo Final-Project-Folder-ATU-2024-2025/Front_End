@@ -140,6 +140,19 @@
   border-radius: 8px; /* Slightly rounded borders */
 }
 
+/* Make "Your Connections" slide the same size and with the same rounded borders */
+.connection-count {
+  width: 33.33%;
+  border-radius: 8px;
+}
+
+/* Remove bullet points for Your Connections list */
+.connection-count ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 /* Headers for connections squares */
 .connection-create h3,
 .connection-count h3 {
