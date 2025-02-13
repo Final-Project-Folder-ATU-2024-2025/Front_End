@@ -29,7 +29,8 @@
   <div class="auth-links">
     <button (click)="logout()">Log Out</button>
     <div class="user-info" *ngIf="userName || userSurname">
-      <span class="user-icon">👤</span>
+      <!-- Using FontAwesome user icon instead of the emoji -->
+      <i class="fa-solid fa-user user-icon"></i>
       <span class="user-name">{{ userName }} {{ userSurname }}</span>
     </div>
   </div>
