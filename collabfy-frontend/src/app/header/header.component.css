@@ -48,7 +48,7 @@ header {
   font-weight: bold;
 }
 
-/* Button text with animated underline */
+/* Button text with animated underline using clip-path */
 .button-text {
   position: relative;
   display: inline-block;
@@ -62,13 +62,18 @@ header {
   height: 2px;
   width: 100%;
   background: white;
-  transform: scaleX(0);
-  transition: transform 0.2s ease;
+  /* Initially, clip away the entire line by setting right inset to 100% */
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.2s ease;
 }
 
 .nav-button:hover .button-text::after {
-  transform: scaleX(1);
+  /* On hover, reveal the full underline */
+  clip-path: inset(0 0 0 0);
 }
+
+/* When mouse leaves, the clip-path will animate back to inset(0 100% 0 0),
+   causing the underline to vanish from left to right. */
 
 /* Auth-links styling */
 .auth-links {
