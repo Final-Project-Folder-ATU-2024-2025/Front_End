@@ -102,7 +102,7 @@
 /* Connections inner styling */
 .connections-inner {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column; /* Stack items vertically by default */
   align-items: center;    /* Center items horizontally */
   gap: 20px;
   padding-top: 20px;
@@ -153,7 +153,7 @@
 
 /* Make "Create a New Connection" slide smaller, centered, and with slightly rounded borders */
 .connection-create {
-  width: 33.33%;  /* Reduced width to one-third smaller than before */
+  width: 33.33%;  /* One-third of the container width */
   border-radius: 8px; /* Slightly rounded borders */
 }
 
