@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
   // Slider now only cycles between "Project Deadlines" and "Notifications"
   options = ['Project Deadlines', 'Notifications'];
   currentIndex: number = 0;
@@ -32,6 +32,9 @@ export class HomePageComponent implements OnInit {
   myProjects: any[] = [];
   projectDeadlines: any[] = []; // Optionally used for deadlines
 
+  // Polling interval for real-time notifications
+  private notificationsInterval: any;
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
@@ -43,6 +46,16 @@ export class HomePageComponent implements OnInit {
     }
     // Fetch connections for the separate Connections container
     this.fetchConnections();
+    // Start polling notifications every 30 seconds for real-time updates
+    this.notificationsInterval = setInterval(() => {
+      this.fetchNotifications();
+    }, 30000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.notificationsInterval) {
+      clearInterval(this.notificationsInterval);
+    }
   }
 
   searchConnections(): void {
@@ -63,7 +76,6 @@ export class HomePageComponent implements OnInit {
       });
   }
 
-  // New method to remove a search result from the displayed list
   removeSearchResult(user: any): void {
     this.searchResults = this.searchResults.filter((u) => u.email !== user.email);
   }
@@ -114,6 +126,9 @@ export class HomePageComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Error fetching notifications:', error);
+          // In case of error, mark as loaded so "No notifications." is displayed
+          this.notifications = [];
+          this.notificationsLoaded = true;
         },
       });
   }

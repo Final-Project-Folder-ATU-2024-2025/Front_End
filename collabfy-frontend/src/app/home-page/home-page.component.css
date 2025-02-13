@@ -423,3 +423,20 @@
   background: #ccc;
   transform: translateX(-50%);
 }
+
+/* NEW: Divider line for each connection in "Your Connections" list */
+.connection-count li {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.connection-count li::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 50%; /* half the width of the container */
+  height: 1px;
+  background: #ccc;
+  transform: translateX(-50%);
+}
