@@ -440,3 +440,22 @@
   background: #ccc;
   transform: translateX(-50%);
 }
+
+/* Botton images secction */
+.bottom-image-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  min-height: calc(100vh - 140px); /* Adjust if header/footer sizes differ */
+  width: 100%;
+  gap: 40px; /* Consistent spacing between image and text */
+}
+.bottom-image {
+  max-width: 100%;
+  height: auto;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 60px;
+  border-bottom-left-radius: 60px;
+}
