@@ -68,17 +68,14 @@
             <div class="result-item">
               <div class="result-details">
                 <div class="result-line">
-                  <!-- Updated icon to FontAwesome user icon -->
                   <i class="fa-solid fa-user result-icon"></i>
                   {{ user.firstName }} {{ user.surname }}
                 </div>
                 <div class="result-line">
-                  <!-- Updated icon to FontAwesome envelope icon -->
                   <i class="fa-solid fa-envelope result-icon"></i>
                   {{ user.email }}
                 </div>
                 <div class="result-line">
-                  <!-- Updated icon to FontAwesome phone icon -->
                   <i class="fa-solid fa-phone result-icon"></i>
                   {{ user.telephone || user.business_phone || '' }}
                 </div>
@@ -103,17 +100,14 @@
       <ul *ngIf="connections && connections.length > 0">
         <li *ngFor="let conn of connections">
           <div class="result-line">
-            <!-- Updated icon to FontAwesome user icon -->
             <i class="fa-solid fa-user result-icon"></i>
             {{ conn.firstName }} {{ conn.surname }}
           </div>
           <div class="result-line">
-            <!-- Updated icon to FontAwesome envelope icon -->
             <i class="fa-solid fa-envelope result-icon"></i>
             {{ conn.email }}
           </div>
           <div class="result-line">
-            <!-- Updated icon to FontAwesome phone icon -->
             <i class="fa-solid fa-phone result-icon"></i>
             {{ conn.telephone }}
           </div>
@@ -141,17 +135,14 @@
               <strong>The following user accepted your connection request:</strong>
             </div>
             <div class="notification-line">
-              <!-- Updated icon to FontAwesome user icon -->
               <i class="fa-solid fa-user result-icon"></i>
               {{ notif.fromUser.firstName }} {{ notif.fromUser.surname }}
             </div>
             <div class="notification-line">
-              <!-- Updated icon to FontAwesome envelope icon -->
               <i class="fa-solid fa-envelope result-icon"></i>
               {{ notif.fromUser.email }}
             </div>
             <div class="notification-line">
-              <!-- Updated icon to FontAwesome phone icon -->
               <i class="fa-solid fa-phone result-icon"></i>
               {{ notif.fromUser.telephone }}
             </div>
@@ -169,4 +160,10 @@
     
   </div>
 </div>
+
+<!-- New Bottom Image -->
+<div class="bottom-image-container" style="margin: 20px 0;">
+  <img src="/assets/images/home_page/homep_im94.jpg" alt="Home Page Image" class="bottom-image" style="max-width: 100%; height: auto;">
+</div>
+
 <app-footer></app-footer>

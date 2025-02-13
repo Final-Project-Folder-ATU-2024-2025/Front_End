@@ -126,6 +126,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         },
         error: (error: any) => {
           console.error('Error fetching notifications:', error);
+          // In case of error, mark as loaded so "No notifications." is displayed
           this.notifications = [];
           this.notificationsLoaded = true;
         },
