@@ -41,7 +41,8 @@
 </div>
 
 <!-- Connections Section (Modified to include 3 phase-card containers) -->
-<div class="connections-container">
+<!-- Added inline padding to ensure the containers don't touch the right and left borders -->
+<div class="connections-container" style="padding: 0 20px;">
   <h2 class="connections-title">Connections</h2>
   <p class="connections-tagline">
     Build a bridge to the future by connecting with others to unlock endless possibilities.
@@ -52,8 +53,8 @@
     <img src="/assets/images/homep_img5.jpg" alt="Connection 2" class="phase-image">
     <img src="/assets/images/homep_img6.jpg" alt="Connection 3" class="phase-image">
   </div>
-  <!-- Updated connections-inner: now using flex-direction: row to arrange the containers side by side -->
-  <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: space-between; gap: 40px;">
+  <!-- Updated connections-inner: using flex-direction row with reduced gap and centered content -->
+  <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
     
     <!-- Create a New Connection Container -->
     <div class="phase-card connection-create">
@@ -122,6 +123,7 @@
     <div class="phase-card connection-notifications">
       <h2 class="phase-title">Notifications</h2>
       <hr class="phase-divider">
+      <h3 class="phase-heading">Connection Notifications</h3>
       <div class="notifications-inner">
         <div *ngIf="!notificationsLoaded">Loading notifications...</div>
         <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
