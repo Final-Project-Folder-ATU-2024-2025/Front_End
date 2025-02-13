@@ -452,10 +452,9 @@
   gap: 40px; /* Consistent spacing between image and text */
 }
 .bottom-image {
-  max-width: 100%;
+  max-width: 70%;
+  max-height: 70%;
   height: auto;
-  border-top-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  border-top-right-radius: 60px;
-  border-bottom-left-radius: 60px;
+  border-radius: 60px;
+  margin: 0 auto; 
 }
