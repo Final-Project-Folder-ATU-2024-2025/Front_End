@@ -442,19 +442,35 @@
 }
 
 /* Botton images secction */
+
 .bottom-image-container{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px;
-  min-height: calc(100vh - 140px); /* Adjust if header/footer sizes differ */
   width: 100%;
   gap: 40px; /* Consistent spacing between image and text */
 }
+
+.bottom-image-wrapper{
+  position: relative;
+  display: inline-block;
+}
+
 .bottom-image {
-  max-width: 70%;
+  max-width: 100%;
   max-height: 70%;
-  height: auto;
   border-radius: 60px;
   margin: 0 auto; 
+}
+
+.bottom-image-text{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 3rem; /* Adjust as needed */
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);  /* Improve readability */
+  pointer-events: none;  /* Ensure text does not block mouse interactions on the image */
 }
