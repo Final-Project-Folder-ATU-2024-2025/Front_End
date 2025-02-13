@@ -68,15 +68,18 @@
             <div class="result-item">
               <div class="result-details">
                 <div class="result-line">
-                  <span class="result-icon">👤</span>
+                  <!-- Updated icon to FontAwesome user icon -->
+                  <i class="fa-solid fa-user result-icon"></i>
                   {{ user.firstName }} {{ user.surname }}
                 </div>
                 <div class="result-line">
-                  <span class="result-icon">✉️</span>
+                  <!-- Updated icon to FontAwesome envelope icon -->
+                  <i class="fa-solid fa-envelope result-icon"></i>
                   {{ user.email }}
                 </div>
                 <div class="result-line">
-                  <span class="result-icon">📞</span>
+                  <!-- Updated icon to FontAwesome phone icon -->
+                  <i class="fa-solid fa-phone result-icon"></i>
                   {{ user.telephone || user.business_phone || '' }}
                 </div>
               </div>
@@ -100,15 +103,18 @@
       <ul *ngIf="connections && connections.length > 0">
         <li *ngFor="let conn of connections">
           <div class="result-line">
-            <span class="result-icon">👤</span>
+            <!-- Updated icon to FontAwesome user icon -->
+            <i class="fa-solid fa-user result-icon"></i>
             {{ conn.firstName }} {{ conn.surname }}
           </div>
           <div class="result-line">
-            <span class="result-icon">✉️</span>
+            <!-- Updated icon to FontAwesome envelope icon -->
+            <i class="fa-solid fa-envelope result-icon"></i>
             {{ conn.email }}
           </div>
           <div class="result-line">
-            <span class="result-icon">📞</span>
+            <!-- Updated icon to FontAwesome phone icon -->
+            <i class="fa-solid fa-phone result-icon"></i>
             {{ conn.telephone }}
           </div>
           <button class="disconnect-button" (click)="disconnectConnection(conn)">Disconnect</button>
@@ -119,7 +125,7 @@
       </div>
     </div>
     
-    <!-- Notifications Container -->
+    <!-- Notifications Container (remains unchanged) -->
     <div class="phase-card connection-notifications">
       <h2 class="phase-title">Notifications</h2>
       <hr class="phase-divider">
@@ -135,15 +141,18 @@
               <strong>The following user accepted your connection request:</strong>
             </div>
             <div class="notification-line">
-              <span class="notification-icon">👤</span>
+              <!-- Updated icon to FontAwesome user icon -->
+              <i class="fa-solid fa-user result-icon"></i>
               {{ notif.fromUser.firstName }} {{ notif.fromUser.surname }}
             </div>
             <div class="notification-line">
-              <span class="notification-icon">✉️</span>
+              <!-- Updated icon to FontAwesome envelope icon -->
+              <i class="fa-solid fa-envelope result-icon"></i>
               {{ notif.fromUser.email }}
             </div>
             <div class="notification-line">
-              <span class="notification-icon">📞</span>
+              <!-- Updated icon to FontAwesome phone icon -->
+              <i class="fa-solid fa-phone result-icon"></i>
               {{ notif.fromUser.telephone }}
             </div>
             <div class="notification-actions" *ngIf="notif.type === 'request'">
@@ -157,6 +166,7 @@
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 <app-footer></app-footer>

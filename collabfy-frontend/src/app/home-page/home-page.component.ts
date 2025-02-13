@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  // Slider now only cycles between "Project Deadlines" and "Notifications"
+  // Slider now cycles between "Project Deadlines" and "Notifications"
   options = ['Project Deadlines', 'Notifications'];
   currentIndex: number = 0;
   isAnimating: boolean = false;
@@ -126,7 +126,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         },
         error: (error: any) => {
           console.error('Error fetching notifications:', error);
-          // In case of error, mark as loaded so "No notifications." is displayed
           this.notifications = [];
           this.notificationsLoaded = true;
         },
@@ -251,35 +250,5 @@ export class HomePageComponent implements OnInit, OnDestroy {
           console.error('Error disconnecting:', error);
         },
       });
-  }
-
-  next(): void {
-    this.direction = 'next';
-    this.isAnimating = true;
-    setTimeout(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.options.length;
-      this.isAnimating = false;
-      const currentOption = this.options[this.currentIndex];
-      if (currentOption === 'Notifications') {
-        this.fetchNotifications();
-      } else if (currentOption === 'Project Deadlines') {
-        this.fetchProjectDeadlines();
-      }
-    }, 500);
-  }
-
-  previous(): void {
-    this.direction = 'prev';
-    this.isAnimating = true;
-    setTimeout(() => {
-      this.currentIndex = (this.currentIndex - 1 + this.options.length) % this.options.length;
-      this.isAnimating = false;
-      const currentOption = this.options[this.currentIndex];
-      if (currentOption === 'Notifications') {
-        this.fetchNotifications();
-      } else if (currentOption === 'Project Deadlines') {
-        this.fetchProjectDeadlines();
-      }
-    }, 500);
   }
 }
