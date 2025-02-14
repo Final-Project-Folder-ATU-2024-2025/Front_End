@@ -160,12 +160,27 @@
   </div>
 </div>
 
-<!-- New Bottom Images -->
-<div class="bottom-image-container">
-  <div class="bottom-image-wrapper">
-    <img src="/assets/images/home_page/homep_img9.jpg" alt="Home Page Image9" class="bottom-image"/>
-    <h1 class="bottom-image-text header">Collaborate Workspaces</h1>
-    <h5 class="bottom-image-text subtext">Engage in productive discussions and brainstorming sessions.</h5>
+<!-- SLIDER SECTION (Bottom Images as Slides) -->
+<div class="slider-container">
+  <div class="slider-wrapper" [ngStyle]="{'transform': 'translateX(-' + currentSlideIndex * 100 + '%)'}">
+    <div class="slide" *ngFor="let slide of sliderSlides">
+      <!-- Use your exact bottom image layout -->
+      <div class="bottom-image-container">
+        <div class="bottom-image-wrapper">
+          <img [src]="slide.image" [alt]="slide.alt" class="bottom-image"/>
+          <h1 class="bottom-image-text header">{{ slide.header }}</h1>
+          <h5 class="bottom-image-text subtext">{{ slide.subtext }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Pagination Dots -->
+  <div class="pagination">
+    <span class="dot" 
+          *ngFor="let slide of sliderSlides; let i = index"
+          [class.active]="i === currentSlideIndex"
+          (click)="goToSlide(i)"></span>
   </div>
 </div>
+
 <app-footer></app-footer>

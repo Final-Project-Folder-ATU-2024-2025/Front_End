@@ -457,13 +457,15 @@
 .bottom-image-wrapper{
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 
 .bottom-image {
-  max-width: 100%;
-  max-height: 30%;
+  width: 100%;       /* Image will fill the container's width */
+  height: 600px;     /* Fixed height for every image */
+  object-fit: fill;  /* Stretches the image to fill the container */
   border-radius: 60px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 /* Shared styles for text over the image */
@@ -486,4 +488,50 @@
 .bottom-image-text.subtext {
   top: 80%;         /* Positioned below the header */
   font-size: 1.5rem; /* Smaller size for subtext */
+}
+
+/* Slider container styling */
+.slider-container {
+  flex: 1;
+  width: 80%;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto; /* center it */
+}
+
+/* Slider wrapper styling */
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease;
+  height: 100%;
+}
+
+/* Slide styling */
+.slide {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Pagination dots styling */
+.pagination {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 5px;
+  background-color: transparent;
+  border: 2px solid #6d92b9;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+.dot.active {
+  background-color: #6d92b9;
 }

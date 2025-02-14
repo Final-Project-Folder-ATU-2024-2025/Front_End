@@ -14,13 +14,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  // Slider now cycles between "Project Deadlines" and "Notifications"
+  // ----- Your Existing Properties & Methods -----
   options = ['Project Deadlines', 'Notifications'];
   currentIndex: number = 0;
   isAnimating: boolean = false;
   direction: 'next' | 'prev' = 'next';
 
-  // Properties for various slides
   searchQuery: string = '';
   searchResults: any[] = [];
   pendingRequests: { [email: string]: boolean } = {};
@@ -28,34 +27,78 @@ export class HomePageComponent implements OnInit, OnDestroy {
   notifications: any[] = [];
   notificationsLoaded: boolean = false;
 
-  // Properties for projects (if needed for deadlines slide)
   myProjects: any[] = [];
-  projectDeadlines: any[] = []; // Optionally used for deadlines
+  projectDeadlines: any[] = [];
 
-  // Polling interval for real-time notifications
   private notificationsInterval: any;
+
+  // ----- Bottom slider Properties -----
+  // These are the three slides)
+  sliderSlides: Array<{ image: string; alt: string; header: string; subtext: string }> = [
+    {
+      image: '/assets/images/home_page/homep_img9.jpg',
+      alt: 'Home Page Image9',
+      header: 'Collaborate Workspaces',
+      subtext: 'Engage in productive discussions and brainstorming sessions.'
+    },
+    {
+      image: '/assets/images/home_page/homep_img10.jpg',
+      alt: 'Innovative Ideas',
+      header: 'Innovative Ideas',
+      subtext: 'Drive your projects forward with cutting-edge concepts.'
+    },
+    {
+      image: '/assets/images/home_page/homep_img11.jpg',
+      alt: 'Home Page Image11',
+      header: 'Dynamic Tools',
+      subtext: 'Streamline your workflow with agile, high-performance solutions.'
+    }
+  ];
+  currentSlideIndex: number = 0;
+  sliderInterval: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+    // ----- Existing initialization code -----
     const currentOption = this.options[this.currentIndex];
     if (currentOption === 'Notifications') {
       this.fetchNotifications();
     } else if (currentOption === 'Project Deadlines') {
       this.fetchProjectDeadlines();
     }
-    // Fetch connections for the separate Connections container
     this.fetchConnections();
-    // Start polling notifications every 30 seconds for real-time updates
     this.notificationsInterval = setInterval(() => {
       this.fetchNotifications();
     }, 30000);
+
+    // ----- Start the slider auto-advance (3 seconds) -----
+    this.sliderInterval = setInterval(() => {
+      this.nextSlide();
+    }, 3000);
   }
 
   ngOnDestroy(): void {
     if (this.notificationsInterval) {
       clearInterval(this.notificationsInterval);
     }
+    if (this.sliderInterval) {
+      clearInterval(this.sliderInterval);
+    }
+  }
+
+  // ----- SLIDER METHODS -----
+  nextSlide(): void {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.sliderSlides.length;
+  }
+
+  goToSlide(index: number): void {
+    this.currentSlideIndex = index;
+    // Reset the interval so auto-advance timing restarts
+    clearInterval(this.sliderInterval);
+    this.sliderInterval = setInterval(() => {
+      this.nextSlide();
+    }, 3000);
   }
 
   searchConnections(): void {
@@ -81,7 +124,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   toggleConnection(user: any): void {
-    const fromUserId = localStorage.getItem('uid') || 'user1'; // Replace with actual current UID
+    const fromUserId = localStorage.getItem('uid') || 'user1';
     const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
       this.http
@@ -126,7 +169,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         },
         error: (error: any) => {
           console.error('Error fetching notifications:', error);
-          // In case of error, mark as loaded so "No notifications." is displayed
           this.notifications = [];
           this.notificationsLoaded = true;
         },
@@ -172,9 +214,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   fetchProjectDeadlines(): void {
-    // For now, assume projectDeadlines is the same as myProjects.
     this.fetchMyProjects();
-    this.projectDeadlines = this.myProjects; // Adjust as needed.
+    this.projectDeadlines = this.myProjects;
   }
 
   acceptNotification(notif: any): void {
