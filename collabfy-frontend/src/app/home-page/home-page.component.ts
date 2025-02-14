@@ -33,7 +33,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private notificationsInterval: any;
 
   // ----- Bottom slider Properties -----
-  // These are the three slides)
   sliderSlides: Array<{ image: string; alt: string; header: string; subtext: string }> = [
     {
       image: '/assets/images/home_page/homep_img9.jpg',
@@ -75,7 +74,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     // ----- Start the slider auto-advance (3 seconds) -----
     this.sliderInterval = setInterval(() => {
       this.nextSlide();
-    }, 3000);
+    }, 4000);
   }
 
   ngOnDestroy(): void {
