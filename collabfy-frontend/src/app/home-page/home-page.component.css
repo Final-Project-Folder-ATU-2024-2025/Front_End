@@ -530,7 +530,7 @@
   margin: 5px;
   background-color: #e4e9ed;
   border: 2px solid #e4e9ed;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.1s ease;
   cursor: pointer;
 }
 .dot.active {
