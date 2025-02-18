@@ -461,6 +461,8 @@
 }
 
 .bottom-image {
+  max-inline-size: 100%;
+  block-size: auto;
   width: 100%;       /* Image will fill the container's width */
   height: 600px;     /* Fixed height for every image */
   object-fit: fill;  /* Stretches the image to fill the container */

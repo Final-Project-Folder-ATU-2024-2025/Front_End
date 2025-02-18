@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="create-project-container">
-  <!-- Header section for page title and subtitle -->
+  <!-- Header Section for Page Title and Subtitle -->
   <div class="project-hub-header">
     <h1>Project Creation Hub</h1>
     <p>
@@ -8,13 +8,12 @@
     </p>
   </div>
   
-  <!-- White container wrapping the info sections -->
+  <!-- White Container wrapping the Info Sections (static) -->
   <div class="info-container">
     <div class="info-sections">
       <!-- Define Objectives Section -->
       <div class="objectives-section">
         <div class="target-symbol">
-          <!-- Using FontAwesome bullseye icon -->
           <i class="fa-solid fa-bullseye target-icon"></i>
         </div>
         <h2 class="objectives-title">Define Objectives</h2>
@@ -22,11 +21,9 @@
           Clearly outline your project goals to ensure all team members are aligned and focused.
         </p>
       </div>
-      
       <!-- Set Milestones Section -->
       <div class="milestones-section">
         <div class="flag-symbol">
-          <!-- Using FontAwesome checkered flag icon -->
           <i class="fa-solid fa-flag-checkered flag-icon"></i>
         </div>
         <h2 class="milestones-title">Set Milestones</h2>
@@ -34,11 +31,9 @@
           Plan and track key milestones to measure progress and maintain momentum throughout the project lifecycle.
         </p>
       </div>
-      
-      <!-- Assemble Team Section -->
+      <!-- Static Assemble Team Section (unchanged) -->
       <div class="team-section">
         <div class="team-icon-container">
-          <!-- Using FontAwesome users icon -->
           <i class="fa-solid fa-users team-icon"></i>
         </div>
         <h2 class="team-title">Assemble Team</h2>
@@ -46,11 +41,9 @@
           Select the right team members with the necessary skills to drive your project to success.
         </p>
       </div>
-      
       <!-- Keep Track Section -->
       <div class="tracking-section">
         <div class="tracking-symbol">
-          <!-- Using FontAwesome arrow trend up icon -->
           <i class="fa-solid fa-arrow-trend-up tracking-icon"></i>
         </div>
         <h2 class="tracking-title">Keep Track</h2>
@@ -61,7 +54,7 @@
     </div>
   </div>
   
-  <!-- Project creation form -->
+  <!-- Project Creation Form -->
   <form (ngSubmit)="createProject()">
     <div>
       <label for="projectName">Project Name:</label>
@@ -89,6 +82,23 @@
       </div>
       <button type="button" (click)="addTask()">Add Task</button>
     </div>
+    
+    <!-- NEW: Add Connections as Collaborators Section (Placed immediately under Tasks) -->
+    <div>
+      <h3>Add connections as collaborators</h3>
+      <div class="collaborators-list">
+        <div *ngFor="let member of connections" class="collaborator-item" style="margin-bottom: 10px;">
+          <!-- Person Icon (FontAwesome) -->
+          <i class="fa-solid fa-user" style="margin-right: 8px;"></i>
+          <span>{{ member.firstName }} {{ member.surname }}</span>
+          <!-- Invite/Cancel Button -->
+          <button type="button" (click)="toggleCollaborator(member)" style="margin-left: 10px;">
+            {{ isCollaboratorInvited(member) ? 'Cancel' : 'Invite' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
     <div>
       <button type="submit">Create Project</button>
     </div>

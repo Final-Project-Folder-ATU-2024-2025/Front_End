@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  // ----- Your Existing Properties & Methods -----
   options = ['Project Deadlines', 'Notifications'];
   currentIndex: number = 0;
   isAnimating: boolean = false;
@@ -32,7 +31,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   private notificationsInterval: any;
 
-  // ----- Bottom slider Properties -----
+  // Bottom slider properties
   sliderSlides: Array<{ image: string; alt: string; header: string; subtext: string }> = [
     {
       image: '/assets/images/home_page/homep_img9.jpg',
@@ -59,7 +58,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    // ----- Existing initialization code -----
     const currentOption = this.options[this.currentIndex];
     if (currentOption === 'Notifications') {
       this.fetchNotifications();
@@ -70,8 +68,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.notificationsInterval = setInterval(() => {
       this.fetchNotifications();
     }, 30000);
-
-    // ----- Start the slider auto-advance (3 seconds) -----
     this.sliderInterval = setInterval(() => {
       this.nextSlide();
     }, 4000);
@@ -86,14 +82,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ----- SLIDER METHODS -----
   nextSlide(): void {
     this.currentSlideIndex = (this.currentSlideIndex + 1) % this.sliderSlides.length;
   }
 
   goToSlide(index: number): void {
     this.currentSlideIndex = index;
-    // Reset the interval so auto-advance timing restarts
     clearInterval(this.sliderInterval);
     this.sliderInterval = setInterval(() => {
       this.nextSlide();
@@ -217,6 +211,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.projectDeadlines = this.myProjects;
   }
 
+  // Methods for connection request notifications.
   acceptNotification(notif: any): void {
     this.http
       .post('http://127.0.0.1:5000/api/respond-connection-request', {
@@ -250,6 +245,41 @@ export class HomePageComponent implements OnInit, OnDestroy {
           console.error('Error rejecting connection request:', error);
         },
       });
+  }
+
+  // NEW: Methods for project invitation notifications.
+  acceptProjectInvitation(notif: any): void {
+    const uid = localStorage.getItem('uid');
+    this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {
+      invitationId: notif.id,
+      action: 'accepted',
+      userId: uid
+    }).subscribe({
+      next: (response: any) => {
+        console.log('Project invitation accepted:', response);
+        this.dismissNotification(notif);
+      },
+      error: (error: any) => {
+        console.error('Error accepting project invitation:', error);
+      }
+    });
+  }
+
+  rejectProjectInvitation(notif: any): void {
+    const uid = localStorage.getItem('uid');
+    this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {
+      invitationId: notif.id,
+      action: 'declined',
+      userId: uid
+    }).subscribe({
+      next: (response: any) => {
+        console.log('Project invitation declined:', response);
+        this.dismissNotification(notif);
+      },
+      error: (error: any) => {
+        console.error('Error declining project invitation:', error);
+      }
+    });
   }
 
   dismissNotification(notif: any): void {

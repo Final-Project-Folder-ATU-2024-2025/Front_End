@@ -18,7 +18,6 @@ export class MyProjectsPageComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    // Retrieve the logged-in user's UID from localStorage
     this.uid = localStorage.getItem('uid') || '';
     if (this.uid) {
       this.fetchProjects();

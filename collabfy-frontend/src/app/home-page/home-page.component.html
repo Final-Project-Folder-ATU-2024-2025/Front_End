@@ -128,10 +128,15 @@
         <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
         <ul *ngIf="notificationsLoaded && notifications.length > 0">
           <li *ngFor="let notif of notifications" class="notification-item">
-            <div class="notification-line" *ngIf="notif.type === 'request'">
+            <!-- For project invitation notifications -->
+            <div *ngIf="notif.type === 'project-invitation'">
+              <strong>{{ notif.fromUser.firstName }} {{ notif.fromUser.surname }} invited you to join their project: {{ notif.projectName }}</strong>
+            </div>
+            <!-- For connection requests -->
+            <div *ngIf="notif.type === 'request'">
               <strong>The following user wants to connect with you:</strong>
             </div>
-            <div class="notification-line" *ngIf="notif.type === 'response'">
+            <div *ngIf="notif.type === 'response'">
               <strong>The following user accepted your connection request:</strong>
             </div>
             <div class="notification-line">
@@ -146,6 +151,12 @@
               <i class="fa-solid fa-phone result-icon"></i>
               {{ notif.fromUser.telephone }}
             </div>
+            <!-- Buttons for project invitation notifications -->
+            <div class="notification-actions" *ngIf="notif.type === 'project-invitation'">
+              <button class="accept-button" (click)="acceptProjectInvitation(notif)">Accept</button>
+              <button class="reject-button" (click)="rejectProjectInvitation(notif)">Reject</button>
+            </div>
+            <!-- Existing actions for connection requests -->
             <div class="notification-actions" *ngIf="notif.type === 'request'">
               <button class="accept-button" (click)="acceptNotification(notif)">Accept</button>
               <button class="reject-button" (click)="rejectNotification(notif)">Reject</button>
