@@ -83,16 +83,26 @@
       <button type="button" (click)="addTask()">Add Task</button>
     </div>
     
-    <!-- NEW: Add Connections as Collaborators Section (Placed immediately under Tasks) -->
+    <!-- Updated: Add Connections as Collaborators Section -->
     <div>
-      <h3>Add connections as collaborators</h3>
+      <h3>Invite collaborators</h3>
       <div class="collaborators-list">
-        <div *ngFor="let member of connections" class="collaborator-item" style="margin-bottom: 10px;">
-          <!-- Person Icon (FontAwesome) -->
-          <i class="fa-solid fa-user" style="margin-right: 8px;"></i>
-          <span>{{ member.firstName }} {{ member.surname }}</span>
-          <!-- Invite/Cancel Button -->
-          <button type="button" (click)="toggleCollaborator(member)" style="margin-left: 10px;">
+        <div *ngFor="let member of connections" class="collaborator-item">
+          <div class="collaborator-details">
+            <div class="collaborator-name">
+              <i class="fa-solid fa-user"></i>
+              <span>{{ member.firstName }} {{ member.surname }}</span>
+            </div>
+            <div class="collaborator-email">
+              <i class="fa-solid fa-envelope"></i>
+              <span>{{ member.email }}</span>
+            </div>
+            <div class="collaborator-phone">
+              <i class="fa-solid fa-phone"></i>
+              <span>{{ member.telephone }}</span>
+            </div>
+          </div>
+          <button type="button" (click)="toggleCollaborator(member)">
             {{ isCollaboratorInvited(member) ? 'Cancel' : 'Invite' }}
           </button>
         </div>
@@ -102,7 +112,6 @@
     <div>
       <button type="submit">Create Project</button>
     </div>
-    <button type="button" (click)="goToHomePage()">Back to Home</button>
   </form>
 </div>
 <app-footer></app-footer>
