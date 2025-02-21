@@ -11,6 +11,23 @@
     background: #f5f5f5;
   }
   
+  /* Projects dropdown styling */
+  .projects-dropdown {
+    margin-bottom: 20px;
+    text-align: left;
+    max-width: 300px;
+  }
+  .projects-dropdown label {
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+  .projects-dropdown select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
   /* Container for boards */
   .kanban-boards {
     display: flex;
@@ -21,7 +38,7 @@
   
   /* Common board styling */
   .board {
-    flex: 1 1 calc(33.33% - 20px); /* Up to 3 per row; adjust gap */
+    flex: 1 1 calc(33.33% - 20px); /* Up to 3 per row */
     padding: 20px;
     border-radius: 8px;
     overflow-y: auto;

@@ -1,5 +1,17 @@
 <app-header></app-header>
 <main class="kanban-main">
+  <!-- Dropdown for selecting a project (populated from My Projects) -->
+  <div class="projects-dropdown">
+    <label for="projectSelect">Select Project:</label>
+    <select id="projectSelect" (change)="onProjectChange($event)">
+      <option value="">-- Choose a Project --</option>
+      <option *ngFor="let project of projects" [value]="project.projectId">
+        {{ project.projectName }}
+      </option>
+    </select>
+  </div>
+  
+  <!-- Kanban Boards Container -->
   <div class="kanban-boards">
     <div class="board todo">
       <h2>To Do</h2>
