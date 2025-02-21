@@ -1,12 +1,23 @@
 <app-header></app-header>
 <main class="kanban-main">
-  <!-- Dropdown for selecting a project (populated from My Projects) -->
+  <!-- Dropdown for selecting a project -->
   <div class="projects-dropdown">
     <label for="projectSelect">Select Project:</label>
     <select id="projectSelect" (change)="onProjectChange($event)">
       <option value="">-- Choose a Project --</option>
       <option *ngFor="let project of projects" [value]="project.projectId">
         {{ project.projectName }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Dropdown for selecting a task from the selected project -->
+  <div class="tasks-dropdown" *ngIf="tasks.length > 0">
+    <label for="taskSelect">Select Task:</label>
+    <select id="taskSelect" (change)="onTaskChange($event)">
+      <option value="">-- Choose a Task --</option>
+      <option *ngFor="let task of tasks" [value]="task.taskName">
+        {{ task.taskName }}
       </option>
     </select>
   </div>

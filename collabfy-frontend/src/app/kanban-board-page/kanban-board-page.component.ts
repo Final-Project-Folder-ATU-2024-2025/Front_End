@@ -16,7 +16,9 @@ import { ApiService } from '../api.service';
 })
 export class KanbanBoardPageComponent implements OnInit {
   projects: any[] = [];
+  tasks: any[] = [];
   selectedProjectId: string = '';
+  selectedTaskId: string = '';
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -43,5 +45,17 @@ export class KanbanBoardPageComponent implements OnInit {
   onProjectChange(event: any): void {
     this.selectedProjectId = event.target.value;
     console.log("Selected project:", this.selectedProjectId);
+    // Find the selected project in the projects array and set its tasks
+    const project = this.projects.find(p => p.projectId === this.selectedProjectId);
+    if (project && project.tasks) {
+      this.tasks = project.tasks;
+    } else {
+      this.tasks = [];
+    }
+  }
+
+  onTaskChange(event: any): void {
+    this.selectedTaskId = event.target.value;
+    console.log("Selected task:", this.selectedTaskId);
   }
 }
