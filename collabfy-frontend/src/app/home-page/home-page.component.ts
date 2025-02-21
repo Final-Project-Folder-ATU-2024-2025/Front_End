@@ -247,24 +247,28 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
-  // NEW: Methods for project invitation notifications.
+  // Updated: Accept Project Invitation method now refreshes My Projects list.
   acceptProjectInvitation(notif: any): void {
     const uid = localStorage.getItem('uid');
     this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {
       invitationId: notif.id,
       action: 'accepted',
-      userId: uid
+      userId: uid,
+      projectId: notif.projectId,    // These fields come from the invitation notification
+      projectName: notif.projectName,
+      ownerId: notif.ownerId
     }).subscribe({
       next: (response: any) => {
         console.log('Project invitation accepted:', response);
         this.dismissNotification(notif);
+        this.fetchMyProjects();
       },
       error: (error: any) => {
         console.error('Error accepting project invitation:', error);
       }
     });
   }
-
+  
   rejectProjectInvitation(notif: any): void {
     const uid = localStorage.getItem('uid');
     this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {

@@ -14,7 +14,7 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/create-user`, userData);
   }
 
-  // Add this method to fetch the user's projects from your backend.
+  // Add this method to fetch the user's projects from my backend.
   getMyProjects(userId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/my-projects`, { userId });
   }
