@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Main content area takes up remaining space and centers its content */
+  .kanban-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
