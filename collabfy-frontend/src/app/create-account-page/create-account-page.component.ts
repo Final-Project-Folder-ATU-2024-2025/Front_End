@@ -7,11 +7,10 @@ import { Router } from '@angular/router';
 import { HeaderPublicComponent } from '../header-public/header-public.component';
 
 @Component({
-  selector: 'app-create-account-page',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
-  templateUrl: './create-account-page.component.html',
-  styleUrls: ['./create-account-page.component.css'],
+    selector: 'app-create-account-page',
+    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
+    templateUrl: './create-account-page.component.html',
+    styleUrls: ['./create-account-page.component.css']
 })
 export class CreateAccountPageComponent {
   form: FormGroup;

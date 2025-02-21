@@ -7,11 +7,10 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home-page',
-  standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css'],
+    selector: 'app-home-page',
+    imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+    templateUrl: './home-page.component.html',
+    styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   options = ['Project Deadlines', 'Notifications'];

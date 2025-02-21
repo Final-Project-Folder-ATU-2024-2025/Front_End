@@ -7,11 +7,10 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-project-page',
-  standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-  templateUrl: './create-project-page.component.html',
-  styleUrls: ['./create-project-page.component.css']
+    selector: 'app-create-project-page',
+    imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+    templateUrl: './create-project-page.component.html',
+    styleUrls: ['./create-project-page.component.css']
 })
 export class CreateProjectPageComponent implements OnInit {
   projectName: string = '';

@@ -8,11 +8,10 @@ import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 
 @Component({
-  selector: 'app-kanban-board-page',
-  standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-  templateUrl: './kanban-board-page.component.html',
-  styleUrls: ['./kanban-board-page.component.css']
+    selector: 'app-kanban-board-page',
+    imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+    templateUrl: './kanban-board-page.component.html',
+    styleUrls: ['./kanban-board-page.component.css']
 })
 export class KanbanBoardPageComponent implements OnInit {
   projects: any[] = [];

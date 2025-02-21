@@ -4,11 +4,10 @@ import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-header-public',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './header-public.component.html',
-  styleUrls: ['./header-public.component.css'],
+    selector: 'app-header-public',
+    imports: [CommonModule, RouterLink],
+    templateUrl: './header-public.component.html',
+    styleUrls: ['./header-public.component.css']
 })
 export class HeaderPublicComponent implements OnInit {
   currentUrl: string = '';
