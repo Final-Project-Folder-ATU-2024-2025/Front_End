@@ -1,37 +1,55 @@
 <app-header></app-header>
 <main class="kanban-main">
-  <!-- Dropdown for selecting a project -->
-  <div class="projects-dropdown">
-    <label for="projectSelect">Select Project:</label>
-    <select id="projectSelect" (change)="onProjectChange($event)">
-      <option value="">-- Choose a Project --</option>
-      <option *ngFor="let project of projects" [value]="project.projectId">
-        {{ project.projectName }}
-      </option>
-    </select>
-  </div>
-
-  <!-- Dropdown for selecting a task from the selected project -->
-  <div class="tasks-dropdown" *ngIf="tasks.length > 0">
-    <label for="taskSelect">Select Task:</label>
-    <select id="taskSelect" (change)="onTaskChange($event)">
-      <option value="">-- Choose a Task --</option>
-      <option *ngFor="let task of tasks" [value]="task.taskName">
-        {{ task.taskName }}
-      </option>
-    </select>
-  </div>
-  
-  <!-- Kanban Boards Container -->
   <div class="kanban-boards">
+    <!-- Board 1: Project Info with dropdowns (Light Gray) -->
+    <div class="board project-info">
+      <h2>Project Info</h2>
+      <div class="projects-dropdown">
+        <label for="projectSelect">Select Project:</label>
+        <select id="projectSelect" (change)="onProjectChange($event)">
+          <option value="">-- Choose a Project --</option>
+          <option *ngFor="let project of projects" [value]="project.projectId">
+            {{ project.projectName }}
+          </option>
+        </select>
+      </div>
+      <div class="tasks-dropdown" *ngIf="tasks.length > 0">
+        <label for="taskSelect">Select Task:</label>
+        <select id="taskSelect" (change)="onTaskChange($event)">
+          <option value="">-- Choose a Task --</option>
+          <option *ngFor="let task of tasks" [value]="task.taskName">
+            {{ task.taskName }}
+          </option>
+        </select>
+      </div>
+      <!-- Milestone creation section (visible only when both project and task are selected) -->
+      <div class="milestone-section" *ngIf="selectedProjectId && selectedTaskId">
+        <h3>Create Milestone for "{{ selectedTaskId }}"</h3>
+        <div class="milestone-form">
+          <input type="text" placeholder="Enter milestone" [(ngModel)]="newMilestone" name="milestoneInput"/>
+          <button type="button" (click)="addMilestone()">Add Milestone</button>
+        </div>
+        <ul class="milestones-list" *ngIf="milestones.length > 0">
+          <li *ngFor="let milestone of milestones">
+            {{ milestone }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Board 2: To Do (Light Blue) -->
     <div class="board todo">
       <h2>To Do</h2>
       <!-- Add To Do tasks here -->
     </div>
+
+    <!-- Board 3: In Progress (Light Yellow) -->
     <div class="board in-progress">
       <h2>In Progress</h2>
       <!-- Add In Progress tasks here -->
     </div>
+
+    <!-- Board 4: Done (Light Green) -->
     <div class="board done">
       <h2>Done</h2>
       <!-- Add Done tasks here -->
