@@ -4,11 +4,46 @@
     min-height: 100vh;
   }
   
-  /* Main content area takes up remaining space and centers its content */
+  /* Main content area */
   .kanban-main {
     flex: 1;
+    padding: 20px;
+    background: #f5f5f5;
+  }
+  
+  /* Container for boards */
+  .kanban-boards {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Wrap boards to the next line if screen is too narrow */
+    height: 100%;
+  }
+  
+  /* Common board styling */
+  .board {
+    flex: 1 1 calc(33.33% - 20px); /* Up to 3 per row; adjust gap */
+    padding: 20px;
+    border-radius: 8px;
+    overflow-y: auto;
+  }
+  
+  /* Specific board colors */
+  .todo {
+    background-color: #d0eaff; /* Light blue */
+  }
+  
+  .in-progress {
+    background-color: #fff8a1; /* Light yellow */
+  }
+  
+  .done {
+    background-color: #c8f7c5; /* Light green */
+  }
+  
+  /* Board title styling */
+  .board h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
   }
   
