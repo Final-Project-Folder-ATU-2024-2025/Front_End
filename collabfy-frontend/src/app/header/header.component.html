@@ -23,13 +23,21 @@
         {{ currentRoute === '/my-projects-page' ? 'Home' : 'My projects' }}
       </span>
     </button>
+    
+    <!-- Kanban Board / Home Button -->
+    <button class="nav-button"
+            (click)="onKanbanBoardButtonClick()"
+            [ngClass]="{'active': currentRoute === '/kanban-board-page'}">
+      <span class="button-text">
+        {{ currentRoute === '/kanban-board-page' ? 'Home' : 'Kanban Board' }}
+      </span>
+    </button>
   </div>
   
   <!-- Right: Auth Links -->
   <div class="auth-links">
     <button (click)="logout()">Log Out</button>
     <div class="user-info" *ngIf="userName || userSurname">
-      <!-- Using FontAwesome user icon instead of the emoji -->
       <i class="fa-solid fa-user user-icon"></i>
       <span class="user-name">{{ userName }} {{ userSurname }}</span>
     </div>

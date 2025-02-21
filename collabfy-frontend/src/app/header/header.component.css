@@ -29,8 +29,9 @@ header {
   gap: 20px;
   flex: 1;
   justify-content: center;
-  margin-top: 70px;  /* Adjust this value as needed */
-  margin-left: -1000px;
+  align-items: center; /* Vertically center items */
+  flex-wrap: wrap;     /* Allow items to wrap on smaller screens */
+  margin-top: 70px;    /* Keep your top margin */
 }
 
 /* Nav button styling */

@@ -43,6 +43,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  onKanbanBoardButtonClick(): void {
+    if (this.currentRoute === '/kanban-board-page') {
+      this.router.navigate(['/home-page']);
+    } else {
+      this.router.navigate(['/kanban-board-page']);
+    }
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('firstName');
