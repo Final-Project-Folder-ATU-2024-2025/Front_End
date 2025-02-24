@@ -1,119 +1,134 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* Main content area */
-  .kanban-main {
-    flex: 1;
-    padding: 20px;
-    background: #f5f5f5;
-  }
-  
-  /* Container for boards: 4 boards in one row */
-  .kanban-boards {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap; /* Wrap if screen is too narrow */
-  }
-  
-  /* Common board styling */
-  .board {
-    flex: 1 1 calc(25% - 20px); /* 4 boards per row */
-    padding: 20px;
-    border-radius: 8px;
-    overflow-y: auto;
-  }
-  
-  /* Specific board colors */
-  .project-info {
-    background-color: #e0e0e0; /* Light gray */
-  }
-  
-  .todo {
-    background-color: #d0eaff; /* Light blue */
-  }
-  
-  .in-progress {
-    background-color: #fff8a1; /* Light yellow */
-  }
-  
-  .done {
-    background-color: #c8f7c5; /* Light green */
-  }
-  
-  /* Board title styling */
-  .board h2 {
-    margin-top: 0;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  /* Dropdown styling for project and task selection */
-  .projects-dropdown,
-  .tasks-dropdown {
-    margin-bottom: 20px;
-    text-align: left;
-    max-width: 100%;
-  }
-  .projects-dropdown label,
-  .tasks-dropdown label {
-    font-size: 1rem;
-    margin-right: 10px;
-  }
-  .projects-dropdown select,
-  .tasks-dropdown select {
-    width: 100%;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  /* Milestone section styling */
-  .milestone-section {
-    margin-top: 20px;
-  }
-  .milestone-section h3 {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-  }
-  .milestone-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .milestone-form input[type="text"] {
-    flex: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  .milestone-form button {
-    padding: 5px 10px;
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .milestone-form button:hover {
-    background-color: #4cae4c;
-  }
-  .milestones-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .milestones-list li {
-    padding: 5px 0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .milestone-item {
-    background-color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content area */
+.kanban-main {
+  flex: 1;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+/* Container for boards: 4 boards in one row */
+.kanban-boards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Wrap if screen is too narrow */
+}
+
+/* Common board styling */
+/* Removed overflow-y: auto to disable inner scrolling */
+.board {
+  flex: 1 1 calc(25% - 20px); /* 4 boards per row */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Specific board colors */
+.project-info {
+  background-color: #e0e0e0; /* Light gray */
+}
+
+.todo {
+  background-color: #d0eaff; /* Light blue */
+}
+
+.in-progress {
+  background-color: #fff8a1; /* Light yellow */
+}
+
+.done {
+  background-color: #c8f7c5; /* Light green */
+}
+
+/* Board title styling */
+.board h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Dropdown styling for project and task selection */
+.projects-dropdown,
+.tasks-dropdown {
+  margin-bottom: 20px;
+  text-align: left;
+  max-width: 100%;
+}
+.projects-dropdown label,
+.tasks-dropdown label {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.projects-dropdown select,
+.tasks-dropdown select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Milestone section styling */
+.milestone-section {
+  margin-top: 20px;
+}
+.milestone-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+.milestone-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.milestone-form input[type="text"] {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.milestone-form button {
+  padding: 5px 10px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.milestone-form button:hover {
+  background-color: #4cae4c;
+}
+
+/* Milestone list styling: remove bullet points */
+.milestones-list {
+  list-style: none; /* no bullets */
+  padding: 0;
+  margin: 0;
+}
+.milestones-list li {
+  list-style-type: none; /* explicitly disable bullet type */
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Milestone item container styling */
+.milestone-item {
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Additional styles to remove bullet points and scrollbars during drag operations */
+.cdk-drag-placeholder,
+.cdk-drag-preview {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
