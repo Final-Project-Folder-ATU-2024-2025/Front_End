@@ -1,7 +1,7 @@
 <app-header></app-header>
 <main class="kanban-main">
   <div class="kanban-boards">
-    <!-- Board 1: Project Info with dropdowns (Light Gray) -->
+    <!-- Board 1: Project Info -->
     <div class="board project-info">
       <h2>Project Info</h2>
       <div class="projects-dropdown">
@@ -22,37 +22,56 @@
           </option>
         </select>
       </div>
-      <!-- Milestone creation section (visible only when both project and task are selected) -->
+      <!-- Milestone creation section -->
       <div class="milestone-section" *ngIf="selectedProjectId && selectedTaskId">
-        <h3>Create Milestone for "{{ selectedTaskId }}"</h3>
+        <h3>Create Milestone for {{ selectedTaskId }}</h3>
         <div class="milestone-form">
-          <input type="text" placeholder="Enter milestone" [(ngModel)]="newMilestone" name="milestoneInput"/>
+          <input type="text" placeholder="Enter milestone" [(ngModel)]="newMilestone" name="milestoneInput" />
           <button type="button" (click)="addMilestone()">Add Milestone</button>
         </div>
-        <ul class="milestones-list" *ngIf="milestones.length > 0">
-          <li *ngFor="let milestone of milestones; let i = index" (click)="cycleMilestoneStatus(i)">
-            {{ milestone.text }} ({{ milestone.status }})
-          </li>
-        </ul>
       </div>
     </div>
 
-    <!-- Board 2: To Do (Light Blue) -->
-    <div class="board todo">
+    <!-- Board 2: To Do -->
+    <div class="board todo" id="todo"
+         cdkDropList 
+         [cdkDropListData]="todoMilestones"
+         [cdkDropListConnectedTo]="['in-progress', 'done']"
+         (cdkDropListDropped)="drop($event)">
       <h2>To Do</h2>
-      <!-- Here you can list tasks/milestones that are in the "todo" status -->
+      <ul class="milestones-list">
+        <li *ngFor="let milestone of todoMilestones" cdkDrag>
+          {{ milestone.text }} ({{ milestone.status }})
+        </li>
+      </ul>
     </div>
 
-    <!-- Board 3: In Progress (Light Yellow) -->
-    <div class="board in-progress">
+    <!-- Board 3: In Progress -->
+    <div class="board in-progress" id="in-progress"
+         cdkDropList 
+         [cdkDropListData]="inProgressMilestones"
+         [cdkDropListConnectedTo]="['todo', 'done']"
+         (cdkDropListDropped)="drop($event)">
       <h2>In Progress</h2>
-      <!-- Here you can list tasks/milestones that are "in progress" -->
+      <ul class="milestones-list">
+        <li *ngFor="let milestone of inProgressMilestones" cdkDrag>
+          {{ milestone.text }} ({{ milestone.status }})
+        </li>
+      </ul>
     </div>
 
-    <!-- Board 4: Done (Light Green) -->
-    <div class="board done">
+    <!-- Board 4: Done -->
+    <div class="board done" id="done"
+         cdkDropList 
+         [cdkDropListData]="doneMilestones"
+         [cdkDropListConnectedTo]="['todo', 'in-progress']"
+         (cdkDropListDropped)="drop($event)">
       <h2>Done</h2>
-      <!-- Here you can list tasks/milestones that are "done" -->
+      <ul class="milestones-list">
+        <li *ngFor="let milestone of doneMilestones" cdkDrag>
+          {{ milestone.text }} ({{ milestone.status }})
+        </li>
+      </ul>
     </div>
   </div>
 </main>

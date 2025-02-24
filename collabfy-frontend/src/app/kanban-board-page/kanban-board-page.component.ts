@@ -6,19 +6,36 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
+import {
+  DragDropModule,
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-kanban-board-page',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    HeaderComponent,
+    FooterComponent,
+    FormsModule,
+    HttpClientModule,
+    DragDropModule
+  ],
   templateUrl: './kanban-board-page.component.html',
   styleUrls: ['./kanban-board-page.component.css']
 })
 export class KanbanBoardPageComponent implements OnInit {
   projects: any[] = [];
   tasks: any[] = [];
-  // Milestones is now an array of objects with "text" and "status"
+  // Full milestones for the selected task.
   milestones: { text: string; status: string }[] = [];
+  // Separate arrays for each board.
+  todoMilestones: { text: string; status: string }[] = [];
+  inProgressMilestones: { text: string; status: string }[] = [];
+  doneMilestones: { text: string; status: string }[] = [];
   newMilestone: string = '';
   selectedProjectId: string = '';
   selectedTaskId: string = '';
@@ -48,16 +65,15 @@ export class KanbanBoardPageComponent implements OnInit {
   onProjectChange(event: any): void {
     this.selectedProjectId = event.target.value;
     console.log("Selected project:", this.selectedProjectId);
-    // Find the selected project in the projects array and set its tasks.
     const project = this.projects.find(p => p.projectId === this.selectedProjectId);
     if (project && project.tasks) {
       this.tasks = project.tasks;
     } else {
       this.tasks = [];
     }
-    // Reset task selection and milestones when project changes.
     this.selectedTaskId = '';
     this.milestones = [];
+    this.clearMilestoneColumns();
     this.newMilestone = '';
   }
 
@@ -75,32 +91,57 @@ export class KanbanBoardPageComponent implements OnInit {
     } else {
       this.milestones = [];
     }
+    this.refreshMilestoneColumns();
   }
 
   addMilestone(): void {
     if (this.newMilestone.trim() === '') {
       return;
     }
-    // Create a milestone object with "text" and default "status" set to 'todo'.
+    // New milestones are created with a default status of 'todo'
     const newMilestoneObj = { text: this.newMilestone.trim(), status: 'todo' };
     this.milestones.push(newMilestoneObj);
-    console.log("Milestone added:", newMilestoneObj);
     this.newMilestone = '';
+    this.refreshMilestoneColumns();
+    this.updateMilestonesOnServer();
+  }
 
-    // Update the local projects array for the selected task.
-    const projectIndex = this.projects.findIndex(p => p.projectId === this.selectedProjectId);
-    if (projectIndex > -1) {
-      const project = this.projects[projectIndex];
-      const taskIndex = project.tasks.findIndex((t: any) => t.taskName === this.selectedTaskId);
-      if (taskIndex > -1) {
-        if (!project.tasks[taskIndex].milestones) {
-          project.tasks[taskIndex].milestones = [];
-        }
-        project.tasks[taskIndex].milestones = this.milestones;
-      }
+  refreshMilestoneColumns(): void {
+    this.todoMilestones = this.milestones.filter(m => m.status === 'todo');
+    this.inProgressMilestones = this.milestones.filter(m => m.status === 'in-progress');
+    this.doneMilestones = this.milestones.filter(m => m.status === 'done');
+  }
+
+  clearMilestoneColumns(): void {
+    this.todoMilestones = [];
+    this.inProgressMilestones = [];
+    this.doneMilestones = [];
+  }
+
+  drop(event: CdkDragDrop<{ text: string; status: string }[]>): void {
+    let newStatus = '';
+    if (event.container.id === 'todo') {
+      newStatus = 'todo';
+    } else if (event.container.id === 'in-progress') {
+      newStatus = 'in-progress';
+    } else if (event.container.id === 'done') {
+      newStatus = 'done';
     }
 
-    // Call the API to update the milestones on the server.
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      const movedMilestone = event.previousContainer.data[event.previousIndex];
+      movedMilestone.status = newStatus;
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+    // After moving, merge the three column arrays back into the full milestones array.
+    this.milestones = [...this.todoMilestones, ...this.inProgressMilestones, ...this.doneMilestones];
     this.updateMilestonesOnServer();
   }
 
@@ -121,26 +162,5 @@ export class KanbanBoardPageComponent implements OnInit {
         console.error("Error updating milestones on server", error);
       }
     });
-  }
-
-  // New method: cycle milestone status on click.
-  cycleMilestoneStatus(index: number): void {
-    const statuses = ['todo', 'in-progress', 'done'];
-    const currentStatus = this.milestones[index].status;
-    const currentIndex = statuses.indexOf(currentStatus);
-    const nextStatus = statuses[(currentIndex + 1) % statuses.length];
-    this.milestones[index].status = nextStatus;
-    console.log(`Milestone at index ${index} status updated to ${nextStatus}`);
-    this.updateMilestonesOnServer();
-
-    // Also update the local projects array for consistency.
-    const projectIndex = this.projects.findIndex(p => p.projectId === this.selectedProjectId);
-    if (projectIndex > -1) {
-      const project = this.projects[projectIndex];
-      const taskIndex = project.tasks.findIndex((t: any) => t.taskName === this.selectedTaskId);
-      if (taskIndex > -1) {
-        project.tasks[taskIndex].milestones = this.milestones;
-      }
-    }
   }
 }
