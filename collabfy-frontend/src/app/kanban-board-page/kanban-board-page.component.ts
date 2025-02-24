@@ -140,7 +140,7 @@ export class KanbanBoardPageComponent implements OnInit {
         event.currentIndex
       );
     }
-    // After moving, merge the three column arrays back into the full milestones array.
+    // Merge the columns back into the full milestones array.
     this.milestones = [...this.todoMilestones, ...this.inProgressMilestones, ...this.doneMilestones];
     this.updateMilestonesOnServer();
   }

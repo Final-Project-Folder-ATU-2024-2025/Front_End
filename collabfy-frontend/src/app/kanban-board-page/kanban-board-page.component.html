@@ -41,7 +41,9 @@
       <h2>To Do</h2>
       <ul class="milestones-list">
         <li *ngFor="let milestone of todoMilestones" cdkDrag>
-          {{ milestone.text }} ({{ milestone.status }})
+          <div class="milestone-item">
+            {{ milestone.text }}
+          </div>
         </li>
       </ul>
     </div>
@@ -55,7 +57,9 @@
       <h2>In Progress</h2>
       <ul class="milestones-list">
         <li *ngFor="let milestone of inProgressMilestones" cdkDrag>
-          {{ milestone.text }} ({{ milestone.status }})
+          <div class="milestone-item">
+            {{ milestone.text }}
+          </div>
         </li>
       </ul>
     </div>
@@ -69,7 +73,9 @@
       <h2>Done</h2>
       <ul class="milestones-list">
         <li *ngFor="let milestone of doneMilestones" cdkDrag>
-          {{ milestone.text }} ({{ milestone.status }})
+          <div class="milestone-item">
+            {{ milestone.text }}
+          </div>
         </li>
       </ul>
     </div>
