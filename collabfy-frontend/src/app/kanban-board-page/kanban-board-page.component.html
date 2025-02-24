@@ -30,8 +30,8 @@
           <button type="button" (click)="addMilestone()">Add Milestone</button>
         </div>
         <ul class="milestones-list" *ngIf="milestones.length > 0">
-          <li *ngFor="let milestone of milestones">
-            {{ milestone }}
+          <li *ngFor="let milestone of milestones; let i = index" (click)="cycleMilestoneStatus(i)">
+            {{ milestone.text }} ({{ milestone.status }})
           </li>
         </ul>
       </div>
@@ -40,19 +40,19 @@
     <!-- Board 2: To Do (Light Blue) -->
     <div class="board todo">
       <h2>To Do</h2>
-      <!-- Add To Do tasks here -->
+      <!-- Here you can list tasks/milestones that are in the "todo" status -->
     </div>
 
     <!-- Board 3: In Progress (Light Yellow) -->
     <div class="board in-progress">
       <h2>In Progress</h2>
-      <!-- Add In Progress tasks here -->
+      <!-- Here you can list tasks/milestones that are "in progress" -->
     </div>
 
     <!-- Board 4: Done (Light Green) -->
     <div class="board done">
       <h2>Done</h2>
-      <!-- Add Done tasks here -->
+      <!-- Here you can list tasks/milestones that are "done" -->
     </div>
   </div>
 </main>

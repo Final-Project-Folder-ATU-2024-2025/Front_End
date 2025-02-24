@@ -14,8 +14,13 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/create-user`, userData);
   }
 
-  // Add this method to fetch the user's projects from my backend.
+  // Fetch the user's projects from the backend.
   getMyProjects(userId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/my-projects`, { userId });
+  }
+
+  // Update task milestones for a given project and task.
+  updateTaskMilestones(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/update-task-milestones`, payload);
   }
 }

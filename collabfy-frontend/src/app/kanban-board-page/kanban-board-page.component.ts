@@ -8,15 +8,17 @@ import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 
 @Component({
-    selector: 'app-kanban-board-page',
-    imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-    templateUrl: './kanban-board-page.component.html',
-    styleUrls: ['./kanban-board-page.component.css']
+  selector: 'app-kanban-board-page',
+  standalone: true,
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+  templateUrl: './kanban-board-page.component.html',
+  styleUrls: ['./kanban-board-page.component.css']
 })
 export class KanbanBoardPageComponent implements OnInit {
   projects: any[] = [];
   tasks: any[] = [];
-  milestones: string[] = [];
+  // Milestones is now an array of objects with "text" and "status"
+  milestones: { text: string; status: string }[] = [];
   newMilestone: string = '';
   selectedProjectId: string = '';
   selectedTaskId: string = '';
@@ -46,14 +48,14 @@ export class KanbanBoardPageComponent implements OnInit {
   onProjectChange(event: any): void {
     this.selectedProjectId = event.target.value;
     console.log("Selected project:", this.selectedProjectId);
-    // Find the selected project in the projects array and set its tasks
+    // Find the selected project in the projects array and set its tasks.
     const project = this.projects.find(p => p.projectId === this.selectedProjectId);
     if (project && project.tasks) {
       this.tasks = project.tasks;
     } else {
       this.tasks = [];
     }
-    // Reset task and milestones when project changes
+    // Reset task selection and milestones when project changes.
     this.selectedTaskId = '';
     this.milestones = [];
     this.newMilestone = '';
@@ -64,10 +66,9 @@ export class KanbanBoardPageComponent implements OnInit {
     console.log("Selected task:", this.selectedTaskId);
     const project = this.projects.find(p => p.projectId === this.selectedProjectId);
     if (project && project.tasks) {
-      // Explicitly type 't' as any to avoid implicit any error.
       const task = project.tasks.find((t: any) => t.taskName === this.selectedTaskId);
-      if (task && task.milestones) {
-        this.milestones = task.milestones;
+      if (task) {
+        this.milestones = task.milestones ? task.milestones : [];
       } else {
         this.milestones = [];
       }
@@ -80,21 +81,64 @@ export class KanbanBoardPageComponent implements OnInit {
     if (this.newMilestone.trim() === '') {
       return;
     }
-    // Add the new milestone to the local array
-    this.milestones.push(this.newMilestone.trim());
-    console.log("Milestone added:", this.newMilestone);
+    // Create a milestone object with "text" and default "status" set to 'todo'.
+    const newMilestoneObj = { text: this.newMilestone.trim(), status: 'todo' };
+    this.milestones.push(newMilestoneObj);
+    console.log("Milestone added:", newMilestoneObj);
     this.newMilestone = '';
 
-    // Optionally, update the selected project's task milestones (in local projects array)
+    // Update the local projects array for the selected task.
     const projectIndex = this.projects.findIndex(p => p.projectId === this.selectedProjectId);
     if (projectIndex > -1) {
       const project = this.projects[projectIndex];
       const taskIndex = project.tasks.findIndex((t: any) => t.taskName === this.selectedTaskId);
       if (taskIndex > -1) {
-        // Ensure the milestones array exists for the task
         if (!project.tasks[taskIndex].milestones) {
           project.tasks[taskIndex].milestones = [];
         }
+        project.tasks[taskIndex].milestones = this.milestones;
+      }
+    }
+
+    // Call the API to update the milestones on the server.
+    this.updateMilestonesOnServer();
+  }
+
+  updateMilestonesOnServer(): void {
+    if (!this.selectedProjectId || !this.selectedTaskId) {
+      return;
+    }
+    const payload = {
+      projectId: this.selectedProjectId,
+      taskName: this.selectedTaskId,
+      milestones: this.milestones
+    };
+    this.apiService.updateTaskMilestones(payload).subscribe({
+      next: (response: any) => {
+        console.log("Milestones updated successfully on server", response);
+      },
+      error: (error: any) => {
+        console.error("Error updating milestones on server", error);
+      }
+    });
+  }
+
+  // New method: cycle milestone status on click.
+  cycleMilestoneStatus(index: number): void {
+    const statuses = ['todo', 'in-progress', 'done'];
+    const currentStatus = this.milestones[index].status;
+    const currentIndex = statuses.indexOf(currentStatus);
+    const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+    this.milestones[index].status = nextStatus;
+    console.log(`Milestone at index ${index} status updated to ${nextStatus}`);
+    this.updateMilestonesOnServer();
+
+    // Also update the local projects array for consistency.
+    const projectIndex = this.projects.findIndex(p => p.projectId === this.selectedProjectId);
+    if (projectIndex > -1) {
+      const project = this.projects[projectIndex];
+      const taskIndex = project.tasks.findIndex((t: any) => t.taskName === this.selectedTaskId);
+      if (taskIndex > -1) {
         project.tasks[taskIndex].milestones = this.milestones;
       }
     }
