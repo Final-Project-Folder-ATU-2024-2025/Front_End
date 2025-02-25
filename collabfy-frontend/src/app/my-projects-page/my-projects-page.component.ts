@@ -6,6 +6,7 @@ import { ApiService } from '../api.service';
 
 @Component({
     selector: 'app-my-projects-page',
+    standalone: true, 
     imports: [HeaderComponent, FooterComponent, CommonModule],
     templateUrl: './my-projects-page.component.html',
     styleUrls: ['./my-projects-page.component.css']
