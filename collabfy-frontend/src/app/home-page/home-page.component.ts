@@ -99,18 +99,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.searchResults = [];
       return;
     }
-    this.http
-      .post('http://127.0.0.1:5000/api/search-users', { query: this.searchQuery })
-      .subscribe({
-        next: (response: any) => {
-          this.searchResults = response.results || [];
-          console.log('Search results:', this.searchResults);
-        },
-        error: (error: any) => {
-          console.error('Error searching connections:', error);
-        },
-      });
+    const currentUserId = localStorage.getItem('uid'); // Get the current user's UID
+    this.http.post('http://127.0.0.1:5000/api/search-users', { 
+      query: this.searchQuery,
+      currentUserId: currentUserId // Pass it in the payload
+    }).subscribe({
+      next: (response: any) => {
+        this.searchResults = response.results || [];
+        console.log('Search results:', this.searchResults);
+      },
+      error: (error: any) => {
+        console.error('Error searching connections:', error);
+      },
+    });
   }
+  
 
   removeSearchResult(user: any): void {
     this.searchResults = this.searchResults.filter((u) => u.email !== user.email);
