@@ -8,7 +8,7 @@
     </p>
   </div>
   
-  <!-- White Container wrapping the Info Sections (static) -->
+  <!-- White Container wrapping the Info Sections -->
   <div class="info-container">
     <div class="info-sections">
       <!-- Define Objectives Section -->
@@ -31,7 +31,7 @@
           Plan and track key milestones to measure progress and maintain momentum throughout the project lifecycle.
         </p>
       </div>
-      <!-- Static Assemble Team Section (unchanged) -->
+      <!-- Assemble Team Section -->
       <div class="team-section">
         <div class="team-icon-container">
           <i class="fa-solid fa-users team-icon"></i>
@@ -54,7 +54,7 @@
     </div>
   </div>
   
-  <!-- Project Creation Form -->
+  <!-- Project Creation / Update Form -->
   <form (ngSubmit)="createProject()">
     <div>
       <label for="projectName">Project Name:</label>
@@ -69,7 +69,7 @@
       <input type="date" id="deadline" [(ngModel)]="deadline" name="deadline" required />
     </div>
     <div>
-      <h3>Set projects main tasks:</h3>
+      <h3>Set project main tasks:</h3>
       <div *ngFor="let task of tasks; let i = index" class="task-row">
         <label>Task {{ i + 1 }}</label>
         <div>
@@ -83,7 +83,7 @@
       <button type="button" (click)="addTask()">Add Task</button>
     </div>
     
-    <!-- Updated: Add Connections as Collaborators Section -->
+    <!-- Invite Collaborators Section -->
     <div>
       <h3>Invite collaborators</h3>
       <div class="collaborators-list">
@@ -110,7 +110,7 @@
     </div>
     
     <div>
-      <button type="submit">Create Project</button>
+      <button type="submit">{{ projectId ? 'Update Project' : 'Create Project' }}</button>
     </div>
   </form>
 </div>

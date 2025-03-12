@@ -4,18 +4,14 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-create-project-page',
-    standalone: true, 
-    imports: [CommonModule, 
-              HeaderComponent, 
-              FooterComponent, 
-              FormsModule, 
-              HttpClientModule],
-    templateUrl: './create-project-page.component.html',
-    styleUrls: ['./create-project-page.component.css']
+  selector: 'app-create-project-page',
+  standalone: true,
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+  templateUrl: './create-project-page.component.html',
+  styleUrls: ['./create-project-page.component.css']
 })
 export class CreateProjectPageComponent implements OnInit {
   projectName: string = '';
@@ -23,7 +19,7 @@ export class CreateProjectPageComponent implements OnInit {
   deadline: string = ''; // Expected format: YYYY-MM-DD
 
   // Dynamic tasks: each task has a taskName and taskDescription
-  tasks: { taskName: string; taskDescription: string }[] = [];
+  tasks: { taskName: string; taskDescription: string }[] = [{ taskName: '', taskDescription: '' }];
 
   // For collaborators: list of available connections and invited collaborators.
   connections: any[] = [];
@@ -32,17 +28,49 @@ export class CreateProjectPageComponent implements OnInit {
   // Current user ID
   uid: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {
-    // Start with one empty task by default.
-    this.tasks.push({ taskName: '', taskDescription: '' });
-  }
+  // If updating, store the current projectId as a string (default to empty string)
+  projectId: string = '';
+
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.uid = localStorage.getItem('uid') || 'user1';
+    this.uid = localStorage.getItem('uid') || '';
     this.fetchConnections();
+
+    // Check for projectId in query parameters (update mode)
+    this.route.queryParams.subscribe(params => {
+      if (params['projectId']) {
+        this.projectId = params['projectId'];
+        this.loadProjectData(this.projectId);
+      }
+    });
   }
 
-  // Fetch the current user's connections from the backend.
+  loadProjectData(projectId: string): void {
+    this.http.post('http://127.0.0.1:5000/api/get-project', { projectId: projectId })
+      .subscribe({
+        next: (response: any) => {
+          if (response.project) {
+            const proj = response.project;
+            this.projectName = proj.projectName;
+            this.description = proj.description;
+            // Convert deadline from Firestore timestamp if needed:
+            if (proj.deadline && proj.deadline.seconds) {
+              this.deadline = new Date(proj.deadline.seconds * 1000)
+                .toISOString()
+                .substring(0, 10);
+            } else {
+              this.deadline = proj.deadline;
+            }
+            this.tasks = proj.tasks || [];
+          }
+        },
+        error: (error: any) => {
+          console.error("Error loading project data", error);
+        }
+      });
+  }
+
   fetchConnections(): void {
     this.http.post('http://127.0.0.1:5000/api/user-connections', { userId: this.uid })
       .subscribe({
@@ -55,12 +83,10 @@ export class CreateProjectPageComponent implements OnInit {
       });
   }
 
-  // Helper to check if a connection is already invited.
   isCollaboratorInvited(member: any): boolean {
     return this.invitedCollaborators.some(m => m.uid === member.uid);
   }
 
-  // Toggle a connection’s invitation status.
   toggleCollaborator(member: any): void {
     if (this.isCollaboratorInvited(member)) {
       this.invitedCollaborators = this.invitedCollaborators.filter(m => m.uid !== member.uid);
@@ -69,23 +95,19 @@ export class CreateProjectPageComponent implements OnInit {
     }
   }
 
-  // Add a new empty task.
   addTask(): void {
     this.tasks.push({ taskName: '', taskDescription: '' });
   }
 
-  // Remove a task at the specified index.
   removeTask(index: number): void {
     if (this.tasks.length > 1) {
       this.tasks.splice(index, 1);
     }
   }
 
-  // Create the project and send invitations to invited collaborators.
   createProject(): void {
     const ownerId = this.uid;
-    // IMPORTANT: Do not auto-add collaborators into the project team.
-    const projectData = {
+    const projectData: any = {
       projectName: this.projectName,
       description: this.description,
       deadline: this.deadline,
@@ -94,39 +116,72 @@ export class CreateProjectPageComponent implements OnInit {
       team: []  // Initially empty; collaborators must accept invitation.
     };
 
-    this.http.post('http://127.0.0.1:5000/api/create-project', projectData)
-      .subscribe({
-        next: (response: any) => {
-          alert('Project created successfully!');
-          const projectId = response.projectId;
-          // For each invited collaborator, send an invitation.
-          this.invitedCollaborators.forEach(member => {
-            const invitationData = {
-              projectId: projectId,
-              projectName: this.projectName,
-              deadline: this.deadline,
-              ownerId: ownerId,
-              invitedUserId: member.uid
-            };
-            this.http.post('http://127.0.0.1:5000/api/invite-to-project', invitationData)
-              .subscribe({
-                next: (resp: any) => {
-                  console.log(`Invitation sent to ${member.firstName} ${member.surname}`);
-                },
-                error: (err) => {
-                  console.error(`Error inviting ${member.firstName} ${member.surname}:`, err);
-                }
-              });
-          });
-          this.router.navigate(['/home-page']);
-        },
-        error: (error) => {
-          alert('Error creating project: ' + (error.error?.error || error.message));
-        }
-      });
+    if (this.projectId) {
+      // Update mode: include projectId and call the update endpoint.
+      projectData.projectId = this.projectId;
+      this.http.post('http://127.0.0.1:5000/api/update-project', projectData)
+        .subscribe({
+          next: (response: any) => {
+            alert('Project updated successfully!');
+            // Send invitations for each invited collaborator
+            this.invitedCollaborators.forEach(member => {
+              const invitationData = {
+                projectId: this.projectId,
+                projectName: this.projectName,
+                deadline: this.deadline,
+                ownerId: ownerId,
+                invitedUserId: member.uid
+              };
+              this.http.post('http://127.0.0.1:5000/api/invite-to-project', invitationData)
+                .subscribe({
+                  next: (resp: any) => {
+                    console.log(`Invitation sent to ${member.firstName} ${member.surname}`);
+                  },
+                  error: (err) => {
+                    console.error(`Error inviting ${member.firstName} ${member.surname}:`, err);
+                  }
+                });
+            });
+            this.router.navigate(['/home-page']);
+          },
+          error: (error) => {
+            alert('Error updating project: ' + (error.error?.error || error.message));
+          }
+        });
+    } else {
+      // Create mode: call the create-project endpoint.
+      this.http.post('http://127.0.0.1:5000/api/create-project', projectData)
+        .subscribe({
+          next: (response: any) => {
+            alert('Project created successfully!');
+            const newProjectId = response.projectId;
+            this.invitedCollaborators.forEach(member => {
+              const invitationData = {
+                projectId: newProjectId,
+                projectName: this.projectName,
+                deadline: this.deadline,
+                ownerId: ownerId,
+                invitedUserId: member.uid
+              };
+              this.http.post('http://127.0.0.1:5000/api/invite-to-project', invitationData)
+                .subscribe({
+                  next: (resp: any) => {
+                    console.log(`Invitation sent to ${member.firstName} ${member.surname}`);
+                  },
+                  error: (err) => {
+                    console.error(`Error inviting ${member.firstName} ${member.surname}:`, err);
+                  }
+                });
+            });
+            this.router.navigate(['/home-page']);
+          },
+          error: (error) => {
+            alert('Error creating project: ' + (error.error?.error || error.message));
+          }
+        });
+    }
   }
 
-  // Navigate back to the Home page.
   goToHomePage(): void {
     this.router.navigate(['/home-page']);
   }

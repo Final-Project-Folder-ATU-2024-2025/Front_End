@@ -6,7 +6,9 @@
       <h2>{{ project.projectName }}</h2>
       <p>{{ project.description }}</p>
       <p><strong>Deadline:</strong> {{ project.deadline | date }}</p>
-      <!-- NEW: Display team members if available -->
+      <!-- Update Project button -->
+      <button (click)="updateProject(project)">Update Project</button>
+      <!-- Optionally, display team members if available -->
       <div *ngIf="project.team && project.team.length > 0">
         <h3>Team Members:</h3>
         <ul>
