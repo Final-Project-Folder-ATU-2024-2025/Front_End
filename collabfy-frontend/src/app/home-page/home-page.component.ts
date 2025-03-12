@@ -7,11 +7,11 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-home-page',
-    standalone: true, 
-    imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
-    templateUrl: './home-page.component.html',
-    styleUrls: ['./home-page.component.css']
+  selector: 'app-home-page',
+  standalone: true, 
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   options = ['Project Deadlines', 'Notifications'];
@@ -99,22 +99,26 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.searchResults = [];
       return;
     }
-    const currentUserId = localStorage.getItem('uid'); // Get the current user's UID
+    // Get the current user's UID from localStorage.
+    const currentUserId = localStorage.getItem('uid');
     this.http.post('http://127.0.0.1:5000/api/search-users', { 
-      query: this.searchQuery,
-      currentUserId: currentUserId // Pass it in the payload
-    }).subscribe({
-      next: (response: any) => {
-        this.searchResults = response.results || [];
-        console.log('Search results:', this.searchResults);
-      },
-      error: (error: any) => {
-        console.error('Error searching connections:', error);
-      },
-    });
+        query: this.searchQuery,
+        currentUserId: currentUserId 
+      })
+      .subscribe({
+        next: (response: any) => {
+          // Filter out any result where the uid equals the current user's uid.
+          this.searchResults = (response.results || []).filter(
+            (user: any) => user.uid !== currentUserId
+          );
+          console.log('Search results:', this.searchResults);
+        },
+        error: (error: any) => {
+          console.error('Error searching connections:', error);
+        }
+      });
   }
   
-
   removeSearchResult(user: any): void {
     this.searchResults = this.searchResults.filter((u) => u.email !== user.email);
   }
@@ -250,14 +254,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Updated: Accept Project Invitation method now refreshes My Projects list.
   acceptProjectInvitation(notif: any): void {
     const uid = localStorage.getItem('uid');
     this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {
       invitationId: notif.id,
       action: 'accepted',
       userId: uid,
-      projectId: notif.projectId,    // These fields come from the invitation notification
+      projectId: notif.projectId,
       projectName: notif.projectName,
       ownerId: notif.ownerId
     }).subscribe({

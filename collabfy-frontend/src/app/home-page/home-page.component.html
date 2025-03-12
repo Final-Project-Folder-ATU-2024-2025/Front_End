@@ -40,8 +40,7 @@
   </div>
 </div>
 
-<!-- Connections Section (Modified to include 3 phase-card containers) -->
-<!-- Added inline padding to ensure the containers don't touch the right and left borders -->
+<!-- Connections Section -->
 <div class="connections-container" style="padding: 0 20px;">
   <h2 class="connections-title">Connections</h2>
   <p class="connections-tagline">
@@ -53,16 +52,16 @@
     <img src="/assets/images/home_page/homep_img5.jpg" alt="Connection 2" class="phase-image">
     <img src="/assets/images/home_page/homep_img6.jpg" alt="Connection 3" class="phase-image">
   </div>
-  <!-- Updated connections-inner: using flex-direction row with reduced gap and centered content -->
+  <!-- Connections Inner Container -->
   <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
-    
     <!-- Create a New Connection Container -->
     <div class="phase-card connection-create">
       <h2 class="phase-title">Create a New Connection</h2>
       <hr class="phase-divider">
       <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
       <button class="search-button" (click)="searchConnections()">Search</button>
-      <div class="search-results" *ngIf="searchResults.length">
+      <!-- Search Results List -->
+      <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults">
             <div class="result-item">
@@ -91,8 +90,11 @@
           </li>
         </ul>
       </div>
+      <!-- "User not found" Message -->
+      <div class="search-results" *ngIf="searchQuery && searchResults && searchResults.length === 0">
+        <p>User not found</p>
+      </div>
     </div>
-    
     <!-- Your Connections Container -->
     <div class="phase-card connection-count">
       <h2 class="phase-title">Your Connections</h2>
@@ -118,7 +120,6 @@
         You have no connections.
       </div>
     </div>
-    
     <!-- Notifications Container -->
     <div class="phase-card connection-notifications">
       <h2 class="phase-title">Notifications</h2>
