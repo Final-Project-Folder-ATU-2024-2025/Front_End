@@ -46,4 +46,20 @@ export class MyProjectsPageComponent implements OnInit {
     // Navigate to the Create Project page with the projectId as a query parameter.
     this.router.navigate(['/create-project-page'], { queryParams: { projectId: project.projectId } });
   }
+
+  deleteProject(project: any): void {
+    if (confirm(`Are you sure you want to delete the project "${project.projectName}"?`)) {
+      this.apiService.deleteProject(project.projectId).subscribe({
+        next: (response: any) => {
+          alert(response.message);
+          // Refresh the project list after deletion.
+          this.fetchProjects();
+        },
+        error: (error: any) => {
+          console.error("Error deleting project:", error);
+          alert("Error deleting project: " + (error.error?.error || error.message));
+        }
+      });
+    }
+  }
 }

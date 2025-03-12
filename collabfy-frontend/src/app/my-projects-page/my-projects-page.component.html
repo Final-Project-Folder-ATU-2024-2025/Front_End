@@ -8,6 +8,8 @@
       <p><strong>Deadline:</strong> {{ project.deadline | date }}</p>
       <!-- Update Project button -->
       <button (click)="updateProject(project)">Update Project</button>
+      <!-- Delete Project button -->
+      <button (click)="deleteProject(project)">Delete Project</button>
       <!-- Optionally, display team members if available -->
       <div *ngIf="project.team && project.team.length > 0">
         <h3>Team Members:</h3>
