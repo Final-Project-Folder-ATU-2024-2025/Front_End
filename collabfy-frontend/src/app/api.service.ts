@@ -22,4 +22,14 @@ export class ApiService {
   updateTaskMilestones(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/update-task-milestones`, payload);
   }
+
+  // NEW: Delete project endpoint.
+  deleteProject(projectId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/delete-project`, { projectId });
+  }
+
+  // NEW: Update project endpoint.
+  updateProject(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/update-project`, payload);
+  }
 }
