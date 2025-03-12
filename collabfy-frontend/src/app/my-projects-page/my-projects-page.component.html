@@ -3,21 +3,25 @@
   <h1>My Projects</h1>
   <div class="projects-list">
     <div class="project-item" *ngFor="let project of projects">
-      <h2>{{ project.projectName }}</h2>
-      <p>{{ project.description }}</p>
-      <p><strong>Deadline:</strong> {{ project.deadline | date }}</p>
-      <!-- Update Project button -->
-      <button (click)="updateProject(project)">Update Project</button>
-      <!-- Delete Project button -->
-      <button (click)="deleteProject(project)">Delete Project</button>
-      <!-- Optionally, display team members if available -->
-      <div *ngIf="project.team && project.team.length > 0">
-        <h3>Team Members:</h3>
-        <ul>
-          <li *ngFor="let member of project.team">
-            {{ member.firstName }} {{ member.surname }}
-          </li>
-        </ul>
+      <!-- Project details on the left -->
+      <div class="project-details">
+        <h2>{{ project.projectName }}</h2>
+        <p>{{ project.description }}</p>
+        <p><strong>Deadline:</strong> {{ project.deadline | date }}</p>
+        <!-- Optionally, display team members if available -->
+        <div *ngIf="project.team && project.team.length > 0">
+          <h3>Team Members:</h3>
+          <ul>
+            <li *ngFor="let member of project.team">
+              {{ member.firstName }} {{ member.surname }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Buttons on the right -->
+      <div class="project-buttons">
+        <button (click)="updateProject(project)">Update Project</button>
+        <button (click)="deleteProject(project)">Delete Project</button>
       </div>
     </div>
   </div>
