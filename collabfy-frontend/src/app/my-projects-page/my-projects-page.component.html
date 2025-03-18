@@ -9,7 +9,7 @@
     </p>
   </div>
 
-  <!-- Projects board container -->
+  <!-- Board container for project list -->
   <div class="projects-board">
     <!-- Board header row -->
     <div class="board-header">
@@ -23,9 +23,13 @@
     <!-- Each project row -->
     <div class="project-item" *ngFor="let project of projects">
       <div class="row">
-        <!-- Project Name with image -->
+        <!-- Project Name with image that changes based on status -->
         <div class="column project-name">
-          <img class="project-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="Project Image">
+          <img
+            class="project-image"
+            [src]="project.status === 'Complete' ? '/assets/images/my_projects/myprojects_img4.jpg' : '/assets/images/my_projects/myprojects_img1.jpg'"
+            alt="Project Image"
+          />
           <span>{{ project.projectName }}</span>
         </div>
         <!-- Deadline -->
@@ -42,7 +46,7 @@
             </ul>
           </ng-container>
           <ng-template #noCollaborators>
-            <span>None</span>
+            <span>N/A</span>
           </ng-template>
         </div>
         <!-- Status -->
@@ -52,13 +56,12 @@
         <!-- Action Buttons -->
         <div class="column action">
           <button (click)="updateProject(project)">Update Project</button>
-          <button (click)="toggleProjectStatus(project)">
+          <button (click)="markStatusToggle(project)">
             {{ project.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete' }}
           </button>
           <button (click)="deleteProject(project)">Delete Project</button>
         </div>
       </div>
-      <hr class="separator">
     </div>
   </div>
 </div>

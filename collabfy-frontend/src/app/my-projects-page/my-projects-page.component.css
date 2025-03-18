@@ -22,20 +22,20 @@
   text-align: left;
 }
 
-/* Board container styling */
+/* Projects board container styling */
 .projects-board {
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 10px;
 }
 
-/* Board header row */
+/* Board header row with light gray background */
 .board-header {
   display: flex;
   font-weight: bold;
   padding: 10px;
   border-bottom: 2px solid #ccc;
-  background-color: #d5d3d3; /* Added light gray background */
+  background-color: #f2f2f2; /* Light gray */
 }
 
 .board-header .column {
@@ -43,7 +43,7 @@
   text-align: left;
 }
 
-/* Project row styling */
+/* Project item styling */
 .project-item {
   background-color: white;
   padding: 15px;
@@ -52,12 +52,14 @@
   margin-top: 10px;
 }
 
+/* Row styling */
 .row {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+/* Column styling */
 .column {
   flex: 1;
   padding: 5px;
@@ -66,8 +68,8 @@
 
 /* Project image styling */
 .project-image {
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -80,7 +82,7 @@
 }
 
 .column.action button {
-  width: 150px; /* Ensures all buttons are of the same width */
+  width: 150px; /* Ensures all buttons are the same width */
   text-align: center;
   background-color: rgb(250, 79, 0);
   color: white;
@@ -94,5 +96,3 @@
 .column.action button:hover {
   background-color: rgb(207, 77, 17);
 }
-
-

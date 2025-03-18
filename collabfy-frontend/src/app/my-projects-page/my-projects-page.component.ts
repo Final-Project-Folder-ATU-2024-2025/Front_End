@@ -63,27 +63,23 @@ export class MyProjectsPageComponent implements OnInit {
     }
   }
 
-  toggleProjectStatus(project: any): void {
-    // Determine new status based on current status (default "In Progress")
-    const currentStatus = project.status || 'In Progress';
-    const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
-
-    // Prepare the payload with projectId and new status.
+  markStatusToggle(project: any): void {
+    // Toggle status between "Complete" and "In Progress"
+    const newStatus = project.status === 'Complete' ? 'In Progress' : 'Complete';
+    // Prepare the payload (we assume the update-project endpoint can update a status field)
     const payload = {
       projectId: project.projectId,
       status: newStatus
     };
-
-    // Call the update-project endpoint via the API service.
     this.apiService.updateProject(payload).subscribe({
       next: (response: any) => {
-        alert(`Project status updated to ${newStatus}.`);
-        // Update the local project status.
+        alert('Project status updated successfully!');
+        // Update the project object locally so the view refreshes
         project.status = newStatus;
       },
       error: (error: any) => {
-        console.error("Error updating project status:", error);
-        alert("Error updating project status: " + (error.error?.error || error.message));
+        console.error('Error updating project status:', error);
+        alert('Error updating project status: ' + (error.error?.error || error.message));
       }
     });
   }
