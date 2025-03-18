@@ -9,9 +9,34 @@
     </p>
   </div>
 
+  <!-- New centered section for Organized Project Categories text -->
+  <div class="categories-text">
+    <h2>Organized Project Categories</h2>
+    <p>
+      Navigate through projects grouped by relevant categories for easy access.
+    </p>
+  </div>
+
+  <!-- Filter section (centered) -->
+  <div class="project-filters">
+    <div class="filter-container" (click)="filterInProgress()">
+      <img class="filter-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="In Progress">
+      <p>In Progress</p>
+    </div>
+    <div class="filter-container" (click)="filterComplete()">
+      <img class="filter-image" src="/assets/images/my_projects/myprojects_img4.jpg" alt="Complete">
+      <p>Complete</p>
+    </div>
+  </div>
+
+  <!-- Centered View All Projects button -->
+  <div class="view-all-container">
+    <button class="view-all-button" (click)="viewAllProjects()">View All Projects</button>
+  </div>
+
   <!-- Board container for project list -->
   <div class="projects-board">
-    <!-- Board header row -->
+    <!-- Board header row with light gray background -->
     <div class="board-header">
       <div class="column project-name">Project Name</div>
       <div class="column deadline">Deadline</div>
@@ -21,13 +46,13 @@
     </div>
 
     <!-- Each project row -->
-    <div class="project-item" *ngFor="let project of projects">
+    <div class="project-item" *ngFor="let project of getDisplayedProjects()">
       <div class="row">
-        <!-- Project Name with image that changes based on status -->
+        <!-- Project Name with image (changes based on status) -->
         <div class="column project-name">
           <img
             class="project-image"
-            [src]="project.status === 'Complete' ? '/assets/images/my_projects/myprojects_img4.jpg' : '/assets/images/my_projects/myprojects_img1.jpg'"
+            [src]="(project.status || 'In Progress') === 'Complete' ? '/assets/images/my_projects/myprojects_img4.jpg' : '/assets/images/my_projects/myprojects_img1.jpg'"
             alt="Project Image"
           />
           <span>{{ project.projectName }}</span>
@@ -49,7 +74,7 @@
             <span>N/A</span>
           </ng-template>
         </div>
-        <!-- Status -->
+        <!-- Status with colored background -->
         <div class="column status">
           <span
             [ngClass]="{
@@ -64,7 +89,7 @@
         <div class="column action">
           <button (click)="updateProject(project)">Update Project</button>
           <button (click)="markStatusToggle(project)">
-            {{ project.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete' }}
+            {{ (project.status || 'In Progress') === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete' }}
           </button>
           <button (click)="deleteProject(project)">Delete Project</button>
         </div>

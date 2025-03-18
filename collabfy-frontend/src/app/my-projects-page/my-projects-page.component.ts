@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class MyProjectsPageComponent implements OnInit {
   projects: any[] = [];
   uid: string = '';
+  filterStatus: string | null = null; // "In Progress", "Complete", or null (show all)
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -42,8 +43,17 @@ export class MyProjectsPageComponent implements OnInit {
     });
   }
 
+  // Returns projects filtered by the selected status (or all if no filter is set).
+  getDisplayedProjects(): any[] {
+    if (!this.filterStatus) {
+      return this.projects;
+    }
+    return this.projects.filter(
+      project => (project.status || 'In Progress') === this.filterStatus
+    );
+  }
+
   updateProject(project: any): void {
-    // Navigate to the Create Project page with the projectId as a query parameter.
     this.router.navigate(['/create-project-page'], { queryParams: { projectId: project.projectId } });
   }
 
@@ -52,7 +62,6 @@ export class MyProjectsPageComponent implements OnInit {
       this.apiService.deleteProject(project.projectId).subscribe({
         next: (response: any) => {
           alert(response.message);
-          // Refresh the project list after deletion.
           this.fetchProjects();
         },
         error: (error: any) => {
@@ -65,8 +74,8 @@ export class MyProjectsPageComponent implements OnInit {
 
   markStatusToggle(project: any): void {
     // Toggle status between "Complete" and "In Progress"
-    const newStatus = project.status === 'Complete' ? 'In Progress' : 'Complete';
-    // Prepare the payload (we assume the update-project endpoint can update a status field)
+    const currentStatus = project.status || 'In Progress';
+    const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
     const payload = {
       projectId: project.projectId,
       status: newStatus
@@ -74,7 +83,6 @@ export class MyProjectsPageComponent implements OnInit {
     this.apiService.updateProject(payload).subscribe({
       next: (response: any) => {
         alert('Project status updated successfully!');
-        // Update the project object locally so the view refreshes
         project.status = newStatus;
       },
       error: (error: any) => {
@@ -82,5 +90,18 @@ export class MyProjectsPageComponent implements OnInit {
         alert('Error updating project status: ' + (error.error?.error || error.message));
       }
     });
+  }
+
+  // Filter methods for the two filter containers.
+  filterInProgress(): void {
+    this.filterStatus = 'In Progress';
+  }
+
+  filterComplete(): void {
+    this.filterStatus = 'Complete';
+  }
+
+  viewAllProjects(): void {
+    this.filterStatus = null;
   }
 }
