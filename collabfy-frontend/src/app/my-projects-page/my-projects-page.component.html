@@ -51,7 +51,14 @@
         </div>
         <!-- Status -->
         <div class="column status">
-          <span>{{ project.status || 'In Progress' }}</span>
+          <span
+            [ngClass]="{
+              'in-progress-status': (project.status || 'In Progress') === 'In Progress',
+              'complete-status': project.status === 'Complete'
+            }"
+          >
+            {{ project.status || 'In Progress' }}
+          </span>
         </div>
         <!-- Action Buttons -->
         <div class="column action">
