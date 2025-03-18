@@ -146,14 +146,19 @@ export class KanbanBoardPageComponent implements OnInit {
   }
 
   updateMilestonesOnServer(): void {
+    // Only proceed if both a project and task have been selected.
     if (!this.selectedProjectId || !this.selectedTaskId) {
       return;
     }
+    
+    // Prepare the payload with the project ID, task name, and the updated milestones array.
     const payload = {
       projectId: this.selectedProjectId,
       taskName: this.selectedTaskId,
       milestones: this.milestones
     };
+  
+    // Call the API service to update the milestones on the server.
     this.apiService.updateTaskMilestones(payload).subscribe({
       next: (response: any) => {
         console.log("Milestones updated successfully on server", response);
@@ -162,5 +167,14 @@ export class KanbanBoardPageComponent implements OnInit {
         console.error("Error updating milestones on server", error);
       }
     });
+  }
+
+  deleteMilestone(milestoneToDelete: { text: string; status: string }): void {
+    // Remove the milestone from the full milestones array.
+    this.milestones = this.milestones.filter(m => m !== milestoneToDelete);
+    // Refresh the separate columns.
+    this.refreshMilestoneColumns();
+    // Update the server with the new milestones array.
+    this.updateMilestonesOnServer();
   }
 }

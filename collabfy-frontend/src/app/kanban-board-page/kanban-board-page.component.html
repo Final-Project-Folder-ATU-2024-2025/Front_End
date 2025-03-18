@@ -43,6 +43,7 @@
         <li *ngFor="let milestone of todoMilestones" cdkDrag>
           <div class="milestone-item">
             {{ milestone.text }}
+            <button type="button" class="delete-milestone-btn" (click)="deleteMilestone(milestone)">X</button>
           </div>
         </li>
       </ul>
@@ -59,6 +60,7 @@
         <li *ngFor="let milestone of inProgressMilestones" cdkDrag>
           <div class="milestone-item">
             {{ milestone.text }}
+            <button type="button" class="delete-milestone-btn" (click)="deleteMilestone(milestone)">X</button>
           </div>
         </li>
       </ul>
@@ -75,6 +77,7 @@
         <li *ngFor="let milestone of doneMilestones" cdkDrag>
           <div class="milestone-item">
             {{ milestone.text }}
+            <button type="button" class="delete-milestone-btn" (click)="deleteMilestone(milestone)">X</button>
           </div>
         </li>
       </ul>
