@@ -26,9 +26,16 @@ export class CreateAccountPageComponent {
       surname: ['', [Validators.required]],
       telephone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]{6,15}$/)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{10,}$/)
+        ]
+      ],
       confirmPassword: ['', [Validators.required]],
     });
+    
     console.log('CreateAccountPageComponent initialized');
   }
 
@@ -36,6 +43,17 @@ export class CreateAccountPageComponent {
     console.log('onSubmit called');
     if (this.form.invalid) {
       console.error('Form is invalid:', this.form.value);
+      // Check for password errors and show a specific alert if needed:
+    const passwordControl = this.form.get('password');
+    if (passwordControl && passwordControl.errors) {
+      if (passwordControl.errors['pattern']) {
+        alert('Password must be at least 10 characters long, include one capital letter, one number, and one special character.');
+      } else {
+        alert('Please fill in all required fields correctly.');
+      }
+    } else {
+      alert('Please fill in all required fields correctly.');
+    }
       return;
     }
     const { firstName, surname, telephone, email, password, confirmPassword } = this.form.value;
