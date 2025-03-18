@@ -9,7 +9,7 @@
     </p>
   </div>
 
-  <!-- Board container for project list -->
+  <!-- Projects board container -->
   <div class="projects-board">
     <!-- Board header row -->
     <div class="board-header">
@@ -19,7 +19,7 @@
       <div class="column status">Status</div>
       <div class="column action">Action</div>
     </div>
-    
+
     <!-- Each project row -->
     <div class="project-item" *ngFor="let project of projects">
       <div class="row">
@@ -42,16 +42,19 @@
             </ul>
           </ng-container>
           <ng-template #noCollaborators>
-            <span>N/A</span>
+            <span>None</span>
           </ng-template>
         </div>
         <!-- Status -->
         <div class="column status">
-          <span>{{ project.status || 'Active' }}</span>
+          <span>{{ project.status || 'In Progress' }}</span>
         </div>
         <!-- Action Buttons -->
         <div class="column action">
           <button (click)="updateProject(project)">Update Project</button>
+          <button (click)="toggleProjectStatus(project)">
+            {{ project.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete' }}
+          </button>
           <button (click)="deleteProject(project)">Delete Project</button>
         </div>
       </div>

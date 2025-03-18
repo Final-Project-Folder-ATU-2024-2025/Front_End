@@ -4,76 +4,83 @@
   min-height: 100vh;
 }
 
-/* Container for the My Projects page */
 .my-projects-container {
   padding: 20px;
   margin: 20px;
 }
 
 /* Page header styling */
-.page-header {
-  text-align: left;
-  margin-bottom: 20px;
-}
 .page-header h1 {
-  font-size: 2.5rem;
   font-weight: bold;
-  margin: 0;
+  margin-bottom: 5px;
+  text-align: left;
 }
+
 .page-subtitle {
-  font-size: 1rem;
-  color: #666;
-  margin-top: 5px;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 /* Board container styling */
 .projects-board {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #f9f9f9;
   border-radius: 8px;
+  padding: 10px;
 }
 
-/* Header row of the board */
+/* Board header row */
 .board-header {
   display: flex;
-  padding: 10px;
-  background-color: #f2f2f2;
   font-weight: bold;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
 }
+
 .board-header .column {
   flex: 1;
-  padding: 0 10px;
+  text-align: left;
 }
 
-/* Project item row styling */
+/* Project row styling */
 .project-item {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
+  background-color: white;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 10px;
 }
-.project-item .row {
+
+.row {
   display: flex;
   align-items: center;
-}
-.project-item .column {
-  flex: 1;
-  padding: 0 10px;
+  justify-content: space-between;
 }
 
-/* Styling for the project image */
+.column {
+  flex: 1;
+  padding: 5px;
+  text-align: left;
+}
+
+/* Project image styling */
 .project-image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
-  vertical-align: middle;
 }
 
-/* Action buttons styling */
+/* Action column styling */
+.column.action {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .column.action button {
-  display: block;
-  width: 150px;            
-  text-align: center; 
+  width: 150px; /* Ensures all buttons are of the same width */
+  text-align: center;
   background-color: rgb(250, 79, 0);
   color: white;
   border: none;
@@ -81,15 +88,10 @@
   padding: 5px 10px;
   font-size: 14px;
   cursor: pointer;
-  margin-bottom: 5px;
 }
+
 .column.action button:hover {
   background-color: rgb(207, 77, 17);
 }
 
-/* Separator line between project items */
-.separator {
-  border: none;
-  border-bottom: 1px solid #ccc;
-  margin: 10px 0;
-}
+
