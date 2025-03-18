@@ -1,25 +1,39 @@
 <app-header></app-header>
 <div class="my-projects-container">
   <h1>My Projects</h1>
+  
+  <!-- Header row for the projects board -->
+  <div class="projects-header">
+    <div class="header-col project-name">Project Name</div>
+    <div class="header-col deadline">Deadline</div>
+    <div class="header-col collaborators">Collaborators</div>
+    <div class="header-col status">Status</div>
+    <div class="header-col action">Action</div>
+  </div>
+  
+  <!-- Projects list -->
   <div class="projects-list">
-    <div class="project-item" *ngFor="let project of projects">
-      <!-- Project details on the left -->
-      <div class="project-details">
-        <h2>{{ project.projectName }}</h2>
-        <p>{{ project.description }}</p>
-        <p><strong>Deadline:</strong> {{ project.deadline | date }}</p>
-        <!-- Optionally, display team members if available -->
-        <div *ngIf="project.team && project.team.length > 0">
-          <h3>Team Members:</h3>
-          <ul>
-            <li *ngFor="let member of project.team">
-              {{ member.firstName }} {{ member.surname }}
-            </li>
-          </ul>
-        </div>
+    <div class="project-row" *ngFor="let project of projects">
+      <div class="project-col project-name">
+        <strong>{{ project.projectName }}</strong>
+        <p class="description">{{ project.description }}</p>
       </div>
-      <!-- Buttons on the right -->
-      <div class="project-buttons">
+      <div class="project-col deadline">
+        {{ project.deadline | date }}
+      </div>
+      <div class="project-col collaborators">
+        <ul *ngIf="project.team && project.team.length > 0">
+          <li *ngFor="let member of project.team">
+            {{ member.firstName }} {{ member.surname }}
+          </li>
+        </ul>
+        <p *ngIf="!project.team || project.team.length === 0">None</p>
+      </div>
+      <div class="project-col status">
+        <!-- You could set a status property on your project if available -->
+        {{ project.status || 'Pending' }}
+      </div>
+      <div class="project-col action">
         <button (click)="updateProject(project)">Update Project</button>
         <button (click)="deleteProject(project)">Delete Project</button>
       </div>
