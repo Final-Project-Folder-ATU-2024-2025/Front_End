@@ -35,6 +35,7 @@
   font-weight: bold;
   padding: 10px;
   border-bottom: 2px solid #ccc;
+  background-color: #d5d3d3; /* Added light gray background */
 }
 
 .board-header .column {
