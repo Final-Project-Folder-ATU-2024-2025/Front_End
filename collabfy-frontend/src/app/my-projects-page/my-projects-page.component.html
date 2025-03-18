@@ -1,43 +1,63 @@
 <app-header></app-header>
+
 <div class="my-projects-container">
-  <h1>My Projects</h1>
-  
-  <!-- Header row for the projects board -->
-  <div class="projects-header">
-    <div class="header-col project-name">Project Name</div>
-    <div class="header-col deadline">Deadline</div>
-    <div class="header-col collaborators">Collaborators</div>
-    <div class="header-col status">Status</div>
-    <div class="header-col action">Action</div>
+  <!-- Page header with title and subtitle -->
+  <div class="page-header">
+    <h1>Project Overview</h1>
+    <p class="page-subtitle">
+      Dive into the details of each project, including deadlines, collaborators, project status and more.
+    </p>
   </div>
-  
-  <!-- Projects list -->
-  <div class="projects-list">
-    <div class="project-row" *ngFor="let project of projects">
-      <div class="project-col project-name">
-        <strong>{{ project.projectName }}</strong>
-        <p class="description">{{ project.description }}</p>
+
+  <!-- Board container for project list -->
+  <div class="projects-board">
+    <!-- Board header row -->
+    <div class="board-header">
+      <div class="column project-name">Project Name</div>
+      <div class="column deadline">Deadline</div>
+      <div class="column collaborators">Collaborators</div>
+      <div class="column status">Status</div>
+      <div class="column action">Action</div>
+    </div>
+    
+    <!-- Each project row -->
+    <div class="project-item" *ngFor="let project of projects">
+      <div class="row">
+        <!-- Project Name with image -->
+        <div class="column project-name">
+          <img class="project-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="Project Image">
+          <span>{{ project.projectName }}</span>
+        </div>
+        <!-- Deadline -->
+        <div class="column deadline">
+          {{ project.deadline | date }}
+        </div>
+        <!-- Collaborators -->
+        <div class="column collaborators">
+          <ng-container *ngIf="project.team && project.team.length > 0; else noCollaborators">
+            <ul>
+              <li *ngFor="let member of project.team">
+                {{ member.firstName }} {{ member.surname }}
+              </li>
+            </ul>
+          </ng-container>
+          <ng-template #noCollaborators>
+            <span>N/A</span>
+          </ng-template>
+        </div>
+        <!-- Status -->
+        <div class="column status">
+          <span>{{ project.status || 'Active' }}</span>
+        </div>
+        <!-- Action Buttons -->
+        <div class="column action">
+          <button (click)="updateProject(project)">Update Project</button>
+          <button (click)="deleteProject(project)">Delete Project</button>
+        </div>
       </div>
-      <div class="project-col deadline">
-        {{ project.deadline | date }}
-      </div>
-      <div class="project-col collaborators">
-        <ul *ngIf="project.team && project.team.length > 0">
-          <li *ngFor="let member of project.team">
-            {{ member.firstName }} {{ member.surname }}
-          </li>
-        </ul>
-        <p *ngIf="!project.team || project.team.length === 0">None</p>
-      </div>
-      <div class="project-col status">
-        <!-- You could set a status property on your project if available -->
-        {{ project.status || 'Pending' }}
-      </div>
-      <div class="project-col action">
-        <button (click)="updateProject(project)">Update Project</button>
-        <button (click)="deleteProject(project)">Delete Project</button>
-      </div>
+      <hr class="separator">
     </div>
   </div>
 </div>
+
 <app-footer></app-footer>
