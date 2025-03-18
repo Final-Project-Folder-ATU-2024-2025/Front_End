@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-header-public',
+    standalone: true,
     imports: [CommonModule, RouterLink],
     templateUrl: './header-public.component.html',
     styleUrls: ['./header-public.component.css']

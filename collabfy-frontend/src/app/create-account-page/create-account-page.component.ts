@@ -7,21 +7,20 @@ import { Router } from '@angular/router';
 import { HeaderPublicComponent } from '../header-public/header-public.component';
 
 @Component({
-    selector: 'app-create-account-page',
-    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
-    templateUrl: './create-account-page.component.html',
-    styleUrls: ['./create-account-page.component.css']
+  selector: 'app-create-account-page',
+  standalone: true,           
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
+  templateUrl: './create-account-page.component.html',
+  styleUrls: ['./create-account-page.component.css']
 })
 export class CreateAccountPageComponent {
   form: FormGroup;
 
-  // Inject FormBuilder, HttpClient, and Router
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router
   ) {
-    // Initialize the reactive form with validation rules.
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: ['', [Validators.required]],
@@ -33,28 +32,19 @@ export class CreateAccountPageComponent {
     console.log('CreateAccountPageComponent initialized');
   }
 
-  // Called when the form is submitted.
   onSubmit() {
     console.log('onSubmit called');
-
-    // Check if the form is valid.
     if (this.form.invalid) {
       console.error('Form is invalid:', this.form.value);
       return;
     }
-
-    // Destructure the form values.
     const { firstName, surname, telephone, email, password, confirmPassword } = this.form.value;
     console.log('Form values:', this.form.value);
-
-    // Ensure password and confirmPassword match.
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-
     console.log('Sending POST request to create user at http://127.0.0.1:5000/api/create-user');
-    // Call the backend endpoint to create the user.
     this.http.post('http://127.0.0.1:5000/api/create-user', {
       firstName,
       surname,

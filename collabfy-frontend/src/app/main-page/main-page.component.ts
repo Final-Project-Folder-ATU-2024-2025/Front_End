@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-main-page',
+    standalone: true,
     imports: [CommonModule, HeaderPublicComponent, FooterComponent, FormsModule, HttpClientModule],
     templateUrl: './main-page.component.html',
     styleUrls: ['./main-page.component.css']
