@@ -72,6 +72,8 @@
 /* Action buttons styling */
 .column.action button {
   display: block;
+  width: 150px;            
+  text-align: center; 
   background-color: rgb(250, 79, 0);
   color: white;
   border: none;
