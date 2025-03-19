@@ -188,6 +188,8 @@
   border-radius: 4px;
 }
 
+
+
 .overview-container {
   display: flex;
   align-items: center;
@@ -209,14 +211,27 @@
 }
 
 .overview-text {
-  flex: 1;
   text-align: left;
+}
+
+.overview-text .hub-title {
+  font-size: 3rem; /* Bigger than the workflow title */
+  font-weight: bold;
+  margin: 0;
 }
 
 .overview-text h1 {
   margin: 0;
   font-size: 2rem;
   font-weight: bold;
+}
+
+.overview-text .workflow-title {
+  margin: 5px 0;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgb(242, 93, 60);  
+  font-weight: bold;      
 }
 
 .overview-text p {
