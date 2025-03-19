@@ -31,6 +31,20 @@
   background-color: #e0e0e0; /* Light gray */
 }
 
+/* Small image inside the Project Info board */
+.board-image {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.board-image img {
+  width: 100px; /* Same size as the small images in My Projects */
+  height: 100px;
+  border-radius: 50%;
+}
+
 .todo {
   background-color: #d0eaff; /* Light blue */
 }
