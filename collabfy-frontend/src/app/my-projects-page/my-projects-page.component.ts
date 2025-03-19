@@ -54,6 +54,11 @@ export class MyProjectsPageComponent implements OnInit {
         return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
       });
     }
+    if (this.filterStatus === 'Alphabetical') {
+      return this.projects.slice().sort((a, b) => {
+        return a.projectName.localeCompare(b.projectName);
+      });
+    }
     // Otherwise, filter by status equality.
     return this.projects.filter(
       project => (project.status || 'In Progress') === this.filterStatus
@@ -113,5 +118,9 @@ export class MyProjectsPageComponent implements OnInit {
 
   viewAllProjects(): void {
     this.filterStatus = null;
+  }
+
+  filterAlphabetical(): void {
+    this.filterStatus = 'Alphabetical';
   }
 }
