@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <div class="create-project-container">
   <!-- Header Section for Page Title and Subtitle -->
   <div class="project-hub-header">
@@ -54,69 +55,73 @@
     </div>
   </div>
 
-  <!-- New Image Beside Forms -->
-  <div class="project-side-image">
-    <img src="assets/images/create_project_page/create_project_img2.jpg" alt="Project Creation Guide" />
-  </div>
-  
-  <!-- Project Creation / Update Form -->
-  <form (ngSubmit)="createProject()">
-    <div>
-      <label for="projectName">Project Name:</label>
-      <input type="text" id="projectName" [(ngModel)]="projectName" name="projectName" required />
-    </div>
-    <div>
-      <label for="description">Project Description:</label>
-      <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
-    </div>
-    <div>
-      <label for="deadline">Project Deadline:</label>
-      <input type="date" id="deadline" [(ngModel)]="deadline" name="deadline" required />
-    </div>
-    <div>
-      <h3>Set project main tasks:</h3>
-      <div *ngFor="let task of tasks; let i = index" class="task-row">
-        <label>Task {{ i + 1 }}</label>
-        <div>
-          <input type="text" placeholder="Task Name" [(ngModel)]="tasks[i].taskName" name="taskName{{i}}" required />
-        </div>
-        <div>
-          <textarea placeholder="Task Description" [(ngModel)]="tasks[i].taskDescription" name="taskDescription{{i}}" required></textarea>
-        </div>
-        <button type="button" (click)="removeTask(i)" *ngIf="tasks.length > 1">Remove Task</button>
+  <!-- Form and Image Container (New Layout) -->
+  <div class="form-image-container">
+    <!-- Project Creation / Update Form -->
+    <form class="project-form" (ngSubmit)="createProject()">
+      <div>
+        <label for="projectName">Project Name:</label>
+        <input type="text" id="projectName" [(ngModel)]="projectName" name="projectName" required />
       </div>
-      <button type="button" (click)="addTask()">Add Task</button>
-    </div>
-    
-    <!-- Invite Collaborators Section -->
-    <div>
-      <h3>Invite collaborators</h3>
-      <div class="collaborators-list">
-        <div *ngFor="let member of connections" class="collaborator-item">
-          <div class="collaborator-details">
-            <div class="collaborator-name">
-              <i class="fa-solid fa-user"></i>
-              <span>{{ member.firstName }} {{ member.surname }}</span>
-            </div>
-            <div class="collaborator-email">
-              <i class="fa-solid fa-envelope"></i>
-              <span>{{ member.email }}</span>
-            </div>
-            <div class="collaborator-phone">
-              <i class="fa-solid fa-phone"></i>
-              <span>{{ member.telephone }}</span>
-            </div>
+      <div>
+        <label for="description">Project Description:</label>
+        <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
+      </div>
+      <div>
+        <label for="deadline">Project Deadline:</label>
+        <input type="date" id="deadline" [(ngModel)]="deadline" name="deadline" required />
+      </div>
+      <div>
+        <h3>Set project main tasks:</h3>
+        <div *ngFor="let task of tasks; let i = index" class="task-row">
+          <label>Task {{ i + 1 }}</label>
+          <div>
+            <input type="text" placeholder="Task Name" [(ngModel)]="tasks[i].taskName" name="taskName{{i}}" required />
           </div>
-          <button type="button" (click)="toggleCollaborator(member)">
-            {{ isCollaboratorInvited(member) ? 'Cancel' : 'Invite' }}
-          </button>
+          <div>
+            <textarea placeholder="Task Description" [(ngModel)]="tasks[i].taskDescription" name="taskDescription{{i}}" required></textarea>
+          </div>
+          <button type="button" (click)="removeTask(i)" *ngIf="tasks.length > 1">Remove Task</button>
         </div>
+        <button type="button" (click)="addTask()">Add Task</button>
+      </div>
+    </form>
+
+    <!-- Image Section (Properly Aligned to the Right of the Form) -->
+    <div class="project-side-image">
+      <img src="assets/images/create_project_page/create_project_img2.jpg" alt="Project Creation Guide" />
+    </div>
+  </div>
+
+  <!-- Invite Collaborators Section -->
+  <div>
+    <h3>Invite collaborators</h3>
+    <div class="collaborators-list">
+      <div *ngFor="let member of connections" class="collaborator-item">
+        <div class="collaborator-details">
+          <div class="collaborator-name">
+            <i class="fa-solid fa-user"></i>
+            <span>{{ member.firstName }} {{ member.surname }}</span>
+          </div>
+          <div class="collaborator-email">
+            <i class="fa-solid fa-envelope"></i>
+            <span>{{ member.email }}</span>
+          </div>
+          <div class="collaborator-phone">
+            <i class="fa-solid fa-phone"></i>
+            <span>{{ member.telephone }}</span>
+          </div>
+        </div>
+        <button type="button" (click)="toggleCollaborator(member)">
+          {{ isCollaboratorInvited(member) ? 'Cancel' : 'Invite' }}
+        </button>
       </div>
     </div>
-    
-    <div>
-      <button type="submit" class="button">{{ projectId ? 'Update Project' : 'Create Project' }}</button>
-    </div>
-  </form>
+  </div>
+
+  <div>
+    <button type="submit" class="button">{{ projectId ? 'Update Project' : 'Create Project' }}</button>
+  </div>
 </div>
+
 <app-footer></app-footer>
