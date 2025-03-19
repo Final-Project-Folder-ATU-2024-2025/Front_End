@@ -187,3 +187,41 @@
   padding: 4px 8px;
   border-radius: 4px;
 }
+
+.overview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;              /* 20px margin on all sides */
+  width: calc(100% - 40px);    /* Spans the full width minus left/right margins */
+}
+
+.overview-image {
+  margin-right: 20px;        /* Space between image and text */
+}
+
+.overview-image img {
+  width: 750px;   /* <-- Leave this unchanged if I want the same size */
+  height: auto;
+}
+
+.overview-text {
+  flex: 1;
+  text-align: left;
+}
+
+.overview-text h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.overview-text p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
