@@ -31,9 +31,37 @@
   background-color: #e0e0e0; /* Light gray */
 }
 
-/* Small image inside the Project Info board */
-.board-image {
+/* Project Info title with image */
+.board-header {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.board-image {
+  width: 100px; /* Match size with My Projects page images */
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover; /* Ensure it stays uniform */
+}
+
+.small-board-image {
+  width: 100px; /* Match size with My Projects page images */
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover; /* Ensure it stays uniform */
+}
+
+.board-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Small image inside the Project Info board */
+.image {
+  display:board- flex;
   justify-content: left;
   align-items: center;
   margin-bottom: 10px;
