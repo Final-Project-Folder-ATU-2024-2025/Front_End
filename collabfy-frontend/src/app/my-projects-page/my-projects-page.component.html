@@ -15,15 +15,18 @@
     </div>
   </div>
 
+  <!-- Add extra padding between overview and status-text -->
+  <div style="padding-bottom: 30px;"></div>
+
   <!-- New centered section for Organized Project status text -->
   <div class="status-text">
-    <h2>Display Projects by Status</h2>
+    <h2>Display Projects by Groups</h2>
     <p>
-      Navigate through projects grouped by relevant status for easy access.
+      Navigate through projects grouped by relevant fields for easy access.
     </p>
   </div>
 
-  <!-- Filter section (aligned left) -->
+  <!-- Filter section (aligned left) with three filter containers -->
   <div class="project-filters">
     <div class="filter-container" (click)="filterInProgress()">
       <img class="filter-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="In Progress">
@@ -32,6 +35,10 @@
     <div class="filter-container" (click)="filterComplete()">
       <img class="filter-image" src="/assets/images/my_projects/myprojects_img4.jpg" alt="Complete">
       <p>Complete</p>
+    </div>
+    <div class="filter-container" (click)="filterDeadline()">
+      <img class="filter-image" src="/assets/images/my_projects/myprojects_img6.jpg" alt="Deadline">
+      <p>Deadline</p>
     </div>
   </div>
 
@@ -42,7 +49,7 @@
 
   <!-- Projects board container -->
   <div class="projects-board">
-    <!-- Board header row with light gray background -->
+    <!-- Board header row -->
     <div class="board-header">
       <div class="column project-name">Project Name</div>
       <div class="column deadline">Deadline</div>

@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class MyProjectsPageComponent implements OnInit {
   projects: any[] = [];
   uid: string = '';
-  filterStatus: string | null = null; // "In Progress", "Complete", or null (show all)
+  filterStatus: string | null = null; // "In Progress", "Complete", "Deadline", or null (show all)
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -43,11 +43,18 @@ export class MyProjectsPageComponent implements OnInit {
     });
   }
 
-  // Returns projects filtered by the selected status (or all if no filter is set).
+  // Returns projects filtered based on the selected filter.
   getDisplayedProjects(): any[] {
     if (!this.filterStatus) {
       return this.projects;
     }
+    if (this.filterStatus === 'Deadline') {
+      // Return all projects sorted by deadline ascending (closest deadline first)
+      return this.projects.slice().sort((a, b) => {
+        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+      });
+    }
+    // Otherwise, filter by status equality.
     return this.projects.filter(
       project => (project.status || 'In Progress') === this.filterStatus
     );
@@ -73,7 +80,6 @@ export class MyProjectsPageComponent implements OnInit {
   }
 
   markStatusToggle(project: any): void {
-    // Toggle status between "Complete" and "In Progress"
     const currentStatus = project.status || 'In Progress';
     const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
     const payload = {
@@ -92,13 +98,17 @@ export class MyProjectsPageComponent implements OnInit {
     });
   }
 
-  // Filter methods for the two filter containers.
+  // Filter methods for the filter containers.
   filterInProgress(): void {
     this.filterStatus = 'In Progress';
   }
 
   filterComplete(): void {
     this.filterStatus = 'Complete';
+  }
+
+  filterDeadline(): void {
+    this.filterStatus = 'Deadline';
   }
 
   viewAllProjects(): void {
