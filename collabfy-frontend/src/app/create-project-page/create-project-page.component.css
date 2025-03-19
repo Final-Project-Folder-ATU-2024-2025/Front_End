@@ -187,9 +187,13 @@
 }
 
 .project-side-image img {
-  width: 220px;
+  width: 150%;
   height: auto;
-  border-radius: 8px;
+  margin-right: 250px;
+  border-top-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -298,4 +302,8 @@ button[type="submit"]:hover {
 
 .collaborator-item button:hover {
   background-color: #4cae4c;
+}
+
+.submit-button-container {
+  margin-top: 20px; /* Adjust as needed */
 }
