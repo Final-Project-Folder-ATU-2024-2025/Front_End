@@ -42,7 +42,10 @@
          [cdkDropListData]="todoMilestones"
          [cdkDropListConnectedTo]="['in-progress', 'done']"
          (cdkDropListDropped)="drop($event)">
+         <div class="board-header">
+          <img class="board-image" src="/assets/images/kanban-board/kanbanb_img3.jpg" alt="To Do Image">
       <h2>To Do</h2>
+    </div>
       <ul class="milestones-list">
         <li *ngFor="let milestone of todoMilestones" cdkDrag>
           <div class="milestone-item">
@@ -59,7 +62,10 @@
          [cdkDropListData]="inProgressMilestones"
          [cdkDropListConnectedTo]="['todo', 'done']"
          (cdkDropListDropped)="drop($event)">
-      <h2>In Progress</h2>
+         <div class="board-header">
+          <img class="board-image" src="/assets/images/kanban-board/kanbanb_img2.jpg" alt="In Progress Image">
+          <h2>In Progress</h2>
+        </div>
       <ul class="milestones-list">
         <li *ngFor="let milestone of inProgressMilestones" cdkDrag>
           <div class="milestone-item">
@@ -76,7 +82,10 @@
          [cdkDropListData]="doneMilestones"
          [cdkDropListConnectedTo]="['todo', 'in-progress']"
          (cdkDropListDropped)="drop($event)">
-      <h2>Done</h2>
+         <div class="board-header">
+          <img class="board-image" src="/assets/images/kanban-board/kanbanb_img4.jpg" alt="Done Image">
+          <h2>Done</h2>
+        </div>
       <ul class="milestones-list">
         <li *ngFor="let milestone of doneMilestones" cdkDrag>
           <div class="milestone-item">
