@@ -29,7 +29,7 @@
   text-align: left;
 }
 
-/* Categories text styling (centered) */
+/* Status text styling */
 .status-text {
   text-align: left;
   margin-bottom: 20px;
@@ -47,7 +47,7 @@
   color: #555;
 }
 
-/* Filter section styling (centered) */
+/* Filter section styling */
 .project-filters {
   display: flex;
   justify-content: left;
@@ -79,7 +79,7 @@
   font-weight: bold;
 }
 
-/* View All Projects button container (centered) */
+/* View All Projects button container */
 .view-all-container {
   display: flex;
   justify-content: left;
@@ -107,7 +107,7 @@
   padding: 10px;
 }
 
-/* Board header row with light gray background */
+/* Board header row */
 .board-header {
   display: flex;
   font-weight: bold;
@@ -133,7 +133,7 @@
 /* Row styling */
 .row {
   display: flex;
-  align-items: left;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -188,25 +188,23 @@
   border-radius: 4px;
 }
 
-
-
+/* Overview container styling */
 .overview-container {
   display: flex;
   align-items: center;
-  justify-content: center;
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
-  margin: 20px;              /* 20px margin on all sides */
-  width: calc(100% - 40px);    /* Spans the full width minus left/right margins */
+  margin: 20px 20px 40px 20px; /* 20px top/left/right and 40px bottom margin */
+  width: calc(100% - 40px);
 }
 
 .overview-image {
-  margin-right: 20px;        /* Space between image and text */
+  margin-right: 20px;
 }
 
 .overview-image img {
-  width: 750px;   /* <-- Leave this unchanged if I want the same size */
+  width: 750px; /* Leave unchanged */
   height: auto;
 }
 
@@ -215,23 +213,16 @@
 }
 
 .overview-text .hub-title {
-  font-size: 3rem; /* Bigger than the workflow title */
+  font-size: 3rem;
   font-weight: bold;
   margin: 0;
-}
-
-.overview-text h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: bold;
 }
 
 .overview-text .workflow-title {
   margin: 5px 0;
-  font-weight: normal;
-  font-size: 16px;
-  color: rgb(242, 93, 60);  
-  font-weight: bold;      
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(242, 93, 60);
 }
 
 .overview-text p {
@@ -239,4 +230,3 @@
   font-size: 1.2rem;
   color: #333;
 }
-

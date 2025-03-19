@@ -1,8 +1,7 @@
 <app-header></app-header>
 
 <div class="my-projects-container">
-  <!-- Page header with title and subtitle -->
-
+  <!-- Overview section -->
   <div class="overview-container">
     <div class="overview-image">
       <img src="/assets/images/my_projects/myprojects_img5.jpg" alt="Overview Image">
@@ -15,7 +14,6 @@
       </p>
     </div>
   </div>
-  
 
   <!-- New centered section for Organized Project status text -->
   <div class="status-text">
@@ -25,7 +23,7 @@
     </p>
   </div>
 
-  <!-- Filter section (centered) -->
+  <!-- Filter section (aligned left) -->
   <div class="project-filters">
     <div class="filter-container" (click)="filterInProgress()">
       <img class="filter-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="In Progress">
@@ -37,12 +35,12 @@
     </div>
   </div>
 
-  <!-- Centered View All Projects button -->
+  <!-- View All Projects button container (aligned left) -->
   <div class="view-all-container">
     <button class="view-all-button" (click)="viewAllProjects()">View All Projects &rarr;</button>
   </div>
 
-  <!-- Board container for project list -->
+  <!-- Projects board container -->
   <div class="projects-board">
     <!-- Board header row with light gray background -->
     <div class="board-header">
@@ -61,8 +59,7 @@
           <img
             class="project-image"
             [src]="(project.status || 'In Progress') === 'Complete' ? '/assets/images/my_projects/myprojects_img4.jpg' : '/assets/images/my_projects/myprojects_img1.jpg'"
-            alt="Project Image"
-          />
+            alt="Project Image">
           <span>{{ project.projectName }}</span>
         </div>
         <!-- Deadline -->
