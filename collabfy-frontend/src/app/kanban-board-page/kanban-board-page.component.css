@@ -177,3 +177,32 @@
   box-shadow: none !important;
   overflow: visible !important;
 }
+
+/* Ensure the milestone container is relatively positioned */
+.milestone-item {
+  position: relative;
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the delete button as a small "X" positioned at the top right */
+.delete-milestone-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+  color: #888;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Optional: Change color on hover */
+.delete-milestone-btn:hover {
+  color: #f00;
+}
