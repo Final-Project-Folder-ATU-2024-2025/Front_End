@@ -1,0 +1,33 @@
+<!-- Fixed Chat Button -->
+<div class="chat-button" (click)="toggleChatSidebar()">
+    <img src="assets/images/public/public_img1.jpg" alt="Chat">
+  </div>
+  
+  <!-- Chat Sidebar -->
+  <div class="chat-sidebar" [class.active]="chatSidebarActive">
+    <h4>Your Connections</h4>
+    <ul>
+      <li *ngFor="let conn of connections" (click)="openChat(conn)">
+        <img class="conn-avatar" src="assets/images/default_avatar.png" alt="User">
+        <span>{{ conn.firstName }} {{ conn.surname }}</span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Chat Window -->
+  <div class="chat-window" *ngIf="activeChat">
+    <div class="chat-header">
+      <h5>{{ activeChat.firstName }} {{ activeChat.surname }}</h5>
+      <button class="close-btn" (click)="closeChat()">X</button>
+    </div>
+    <div class="chat-messages">
+      <div *ngFor="let msg of chatMessages" [ngClass]="{'sent': msg.senderId === currentUserId, 'received': msg.senderId !== currentUserId}">
+        <span>{{ msg.messageText }}</span>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" [(ngModel)]="chatMessage" placeholder="Type a message...">
+      <button (click)="sendChatMessage()">Send</button>
+    </div>
+  </div>
+  

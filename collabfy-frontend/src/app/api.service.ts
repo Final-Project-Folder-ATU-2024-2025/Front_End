@@ -45,9 +45,7 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/update-project`, payload, this.httpOptions);
   }
 
-  // =====================
-  // Chat Endpoints Added
-  // =====================
+  // Chat endpoints
 
   // Get chat messages for a given conversation ID.
   getChatMessages(conversationId: string): Observable<any> {
@@ -58,4 +56,10 @@ export class ApiService {
   sendChatMessage(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/send-chat-message`, payload, this.httpOptions);
   }
+
+  // Get user connections for a given user.
+getUserConnections(userId: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/user-connections`, { userId }, this.httpOptions);
 }
+}
+

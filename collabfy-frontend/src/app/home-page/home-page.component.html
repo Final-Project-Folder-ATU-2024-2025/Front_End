@@ -46,21 +46,20 @@
   <p class="connections-tagline">
     Build a bridge to the future by connecting with others to unlock endless possibilities.
   </p>
-  <!-- New Images Under the Tagline -->
+  <!-- Connection Images -->
   <div class="connections-images">
     <img src="/assets/images/home_page/homep_img4.jpg" alt="Connection 1" class="phase-image">
     <img src="/assets/images/home_page/homep_img5.jpg" alt="Connection 2" class="phase-image">
     <img src="/assets/images/home_page/homep_img6.jpg" alt="Connection 3" class="phase-image">
   </div>
-  <!-- Connections Inner Container -->
+  <!-- Connections Inner Container (Search and List) -->
   <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
-    <!-- Create a New Connection Container -->
+    <!-- Create a New Connection -->
     <div class="phase-card connection-create">
       <h2 class="phase-title">Create a New Connection</h2>
       <hr class="phase-divider">
       <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
       <button class="search-button" (click)="searchConnections()">Search</button>
-      <!-- Search Results List -->
       <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults">
@@ -90,12 +89,11 @@
           </li>
         </ul>
       </div>
-      <!-- "User not found" Message -->
       <div class="search-results" *ngIf="searchQuery && searchResults && searchResults.length === 0">
         <p>User not found</p>
       </div>
     </div>
-    <!-- Your Connections Container -->
+    <!-- Your Connections List -->
     <div class="phase-card connection-count">
       <h2 class="phase-title">Your Connections</h2>
       <hr class="phase-divider">
@@ -113,14 +111,14 @@
             <i class="fa-solid fa-phone result-icon"></i>
             {{ conn.telephone }}
           </div>
-          <button class="disconnect-button" (click)="disconnectConnection(conn)">Disconnect</button>
+          <button class="disconnect-button" (click)="toggleConnection(conn)">Disconnect</button>
         </li>
       </ul>
       <div *ngIf="!connections || connections.length === 0">
         You have no connections.
       </div>
     </div>
-    <!-- Notifications Container -->
+    <!-- Notifications -->
     <div class="phase-card connection-notifications" style="max-height: 350px; overflow-y: auto;">
       <h2 class="phase-title">Notifications</h2>
       <hr class="phase-divider">
@@ -129,27 +127,22 @@
         <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
         <ul *ngIf="notificationsLoaded && notifications.length > 0" style="list-style-type: none; padding-left: 0;">
           <li *ngFor="let notif of notifications" class="notification-item">
-            <!-- Project Invitation Notification -->
             <div *ngIf="notif.type === 'project-invitation'">
               <strong>{{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} invited you to join their project: {{ notif.projectName }}</strong>
             </div>
-            <!-- Project Invitation Response Notification -->
             <div *ngIf="notif.type === 'project-invitation-response'">
               <strong>{{ notif.message }}</strong>
             </div>
-            <!-- Connection Request Notifications -->
             <div *ngIf="notif.type === 'request'">
               <strong>The following user wants to connect with you:</strong>
             </div>
             <div *ngIf="notif.type === 'response'">
               <strong>The following user accepted your connection request:</strong>
             </div>
-            <!-- Comment Notification: Use a comment icon and updated wording -->
             <div *ngIf="notif.type === 'comment'">
               <i class="fa-solid fa-comment" style="margin-right: 5px;"></i>
               <strong>{{ notif.message }}</strong>
             </div>
-            <!-- For non-comment notifications, show common details if available -->
             <div *ngIf="notif.type !== 'comment' && notif.fromUser" class="notification-line">
               <i class="fa-solid fa-user result-icon"></i>
               {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }}
@@ -162,24 +155,6 @@
               <i class="fa-solid fa-phone result-icon"></i>
               {{ notif.fromUser?.telephone }}
             </div>
-            <!-- Buttons for Notifications -->
-            <div class="notification-actions" *ngIf="notif.type === 'project-invitation'">
-              <button class="accept-button" (click)="acceptProjectInvitation(notif)">Accept</button>
-              <button class="reject-button" (click)="rejectProjectInvitation(notif)">Reject</button>
-            </div>
-            <div class="notification-actions" *ngIf="notif.type === 'project-invitation-response'">
-              <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
-            </div>
-            <div class="notification-actions" *ngIf="notif.type === 'request'">
-              <button class="accept-button" (click)="acceptNotification(notif)">Accept</button>
-              <button class="reject-button" (click)="rejectNotification(notif)">Reject</button>
-            </div>
-            <div class="notification-actions" *ngIf="notif.type === 'response' || notif.type === 'connection'">
-              <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
-            </div>
-            <div class="notification-actions" *ngIf="notif.type === 'comment'">
-              <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
-            </div>
           </li>
         </ul>
       </div>
@@ -187,7 +162,7 @@
   </div>
 </div>
 
-<!-- SLIDER SECTION (Bottom Images as Slides) -->
+<!-- Slider Section -->
 <div class="slider-container">
   <div class="slider-wrapper" [ngStyle]="{'transform': 'translateX(-' + currentSlideIndex * 100 + '%)'}">
     <div class="slide" *ngFor="let slide of sliderSlides">
@@ -200,47 +175,14 @@
       </div>
     </div>
   </div>
-  <!-- Pagination Dots -->
   <div class="pagination">
-    <span class="dot" 
-          *ngFor="let slide of sliderSlides; let i = index"
+    <span class="dot" *ngFor="let slide of sliderSlides; let i = index"
           [class.active]="i === currentSlideIndex"
           (click)="goToSlide(i)"></span>
   </div>
 </div>
 
-<!-- Chat System -->
-<!-- Fixed Chat Button at Bottom Right -->
-<div class="chat-button" (click)="toggleChatSidebar()">
-  <img src="assets/images/public/public_img1.jpg" alt="Chat">
-</div>
-
-<!-- Chat Sidebar: List of connections -->
-<div class="chat-sidebar" [class.active]="chatSidebarActive">
-  <h4>Your Connections</h4>
-  <ul>
-    <li *ngFor="let conn of connections" (click)="openChat(conn)">
-      <img class="conn-avatar" src="assets/images/default_avatar.png" alt="User">
-      <span>{{ conn.firstName }} {{ conn.surname }}</span>
-    </li>
-  </ul>
-</div>
-
-<!-- Chat Window -->
-<div class="chat-window" *ngIf="activeChat">
-  <div class="chat-header">
-    <h5>{{ activeChat.firstName }} {{ activeChat.surname }}</h5>
-    <button class="close-btn" (click)="closeChat()">X</button>
-  </div>
-  <div class="chat-messages">
-    <div *ngFor="let msg of chatMessages" [ngClass]="{'sent': msg.senderId === currentUserId, 'received': msg.senderId !== currentUserId}">
-      <span>{{ msg.messageText }}</span>
-    </div>
-  </div>
-  <div class="chat-input-area">
-    <input type="text" [(ngModel)]="chatMessage" placeholder="Type a message...">
-    <button (click)="sendChatMessage()">Send</button>
-  </div>
-</div>
+<!-- Include the Reusable Chat Component -->
+<app-chat></app-chat>
 
 <app-footer></app-footer>
