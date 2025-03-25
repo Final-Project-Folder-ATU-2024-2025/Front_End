@@ -4,11 +4,12 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { ChatComponent } from '../shared/chat/chat.component';
 
 @Component({
   selector: 'app-my-projects-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, CommonModule],
+  imports: [HeaderComponent, FooterComponent, CommonModule, ChatComponent],
   templateUrl: './my-projects-page.component.html',
   styleUrls: ['./my-projects-page.component.css']
 })

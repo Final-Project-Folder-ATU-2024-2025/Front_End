@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { ChatComponent } from '../shared/chat/chat.component';
 
 @Component({
   selector: 'app-kanban-board-page',
@@ -17,7 +18,8 @@ import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from 
     FooterComponent,
     FormsModule,
     HttpClientModule,
-    DragDropModule
+    DragDropModule,
+    ChatComponent 
   ],
   templateUrl: './kanban-board-page.component.html',
   styleUrls: ['./kanban-board-page.component.css']
