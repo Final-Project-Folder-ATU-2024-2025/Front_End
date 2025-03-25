@@ -127,34 +127,39 @@
         <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
         <ul *ngIf="notificationsLoaded && notifications.length > 0" style="list-style-type: none; padding-left: 0;">
           <li *ngFor="let notif of notifications" class="notification-item">
-            <div *ngIf="notif.type === 'project-invitation'">
-              <strong>{{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} invited you to join their project: {{ notif.projectName }}</strong>
+            <!-- Wrap notification content in its own container -->
+            <div class="notification-content">
+              <div *ngIf="notif.type === 'project-invitation'">
+                <strong>{{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} invited you to join their project: {{ notif.projectName }}</strong>
+              </div>
+              <div *ngIf="notif.type === 'project-invitation-response'">
+                <strong>{{ notif.message }}</strong>
+              </div>
+              <div *ngIf="notif.type === 'request'">
+                <strong>The following user wants to connect with you:</strong>
+              </div>
+              <div *ngIf="notif.type === 'response'">
+                <strong>The following user accepted your connection request:</strong>
+              </div>
+              <div *ngIf="notif.type === 'comment'">
+                <i class="fa-solid fa-comment" style="margin-right: 5px;"></i>
+                <strong>{{ notif.message }}</strong>
+              </div>
+              <div *ngIf="notif.type !== 'comment' && notif.fromUser" class="notification-line">
+                <i class="fa-solid fa-user result-icon"></i>
+                {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }}
+              </div>
+              <div *ngIf="notif.type !== 'comment' && notif.fromUser?.email" class="notification-line">
+                <i class="fa-solid fa-envelope result-icon"></i>
+                {{ notif.fromUser?.email }}
+              </div>
+              <div *ngIf="notif.type !== 'comment' && notif.fromUser?.telephone" class="notification-line">
+                <i class="fa-solid fa-phone result-icon"></i>
+                {{ notif.fromUser?.telephone }}
+              </div>
             </div>
-            <div *ngIf="notif.type === 'project-invitation-response'">
-              <strong>{{ notif.message }}</strong>
-            </div>
-            <div *ngIf="notif.type === 'request'">
-              <strong>The following user wants to connect with you:</strong>
-            </div>
-            <div *ngIf="notif.type === 'response'">
-              <strong>The following user accepted your connection request:</strong>
-            </div>
-            <div *ngIf="notif.type === 'comment'">
-              <i class="fa-solid fa-comment" style="margin-right: 5px;"></i>
-              <strong>{{ notif.message }}</strong>
-            </div>
-            <div *ngIf="notif.type !== 'comment' && notif.fromUser" class="notification-line">
-              <i class="fa-solid fa-user result-icon"></i>
-              {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }}
-            </div>
-            <div *ngIf="notif.type !== 'comment' && notif.fromUser?.email" class="notification-line">
-              <i class="fa-solid fa-envelope result-icon"></i>
-              {{ notif.fromUser?.email }}
-            </div>
-            <div *ngIf="notif.type !== 'comment' && notif.fromUser?.telephone" class="notification-line">
-              <i class="fa-solid fa-phone result-icon"></i>
-              {{ notif.fromUser?.telephone }}
-            </div>
+            <!-- Dismiss button appears as a block element below the notification content -->
+            <button class="dismiss-button" (click)="dismissNotification(notif)">Dismiss</button>
           </li>
         </ul>
       </div>

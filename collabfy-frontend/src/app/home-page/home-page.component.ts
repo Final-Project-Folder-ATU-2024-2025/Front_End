@@ -38,11 +38,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   myProjects: any[] = [];
   projectDeadlines: any[] = [];
 
-  // Removed all chat-related properties (chatSidebarActive, activeChat, chatMessages, chatMessage, currentUserId)
-
-  private notificationsInterval: any;
-  private sliderInterval: any;
-
   sliderSlides: Array<{ image: string; alt: string; header: string; subtext: string }> = [
     {
       image: '/assets/images/home_page/homep_img9.jpg',
@@ -64,6 +59,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   ];
   currentSlideIndex: number = 0;
+
+  private notificationsInterval: any;
+  private sliderInterval: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -177,6 +175,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
           this.notificationsLoaded = true;
         }
       });
+  }
+
+  dismissNotification(notif: any): void {
+    // Remove the dismissed notification from the notifications array
+    this.notifications = this.notifications.filter(n => n !== notif);
+    // Optionally, send an API request here to mark the notification as dismissed server-side.
   }
 
   fetchConnections(): void {

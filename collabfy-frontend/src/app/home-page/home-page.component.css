@@ -179,6 +179,7 @@
 .notification-item {
   border-bottom: 1px solid #ccc;
   padding: 5px 0;
+  position: relative;
 }
 .notification-line {
   display: block;
@@ -410,3 +411,22 @@
   background: #ccc;
   transform: translateX(-50%);
 }
+
+/* Dismiss Button styling for notifications */
+.dismiss-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  display: block;
+  text-align: left;
+}
+.dismiss-button:hover {
+  background-color: #c9302c;
+}
+
+
