@@ -99,15 +99,21 @@
 </main>
 
 <!-- Comment Section -->
-<div class="comment-section" style="margin: 20px; padding: 10px; background: #f0f0f0; border-radius: 8px;">
+<!-- Comment Section -->
+<div class="comment-section">
   <h3>Comments</h3>
-  <ul>
+  <ul class="comment-list">
     <li *ngFor="let comment of comments">
-       {{ comment.username }} commented: {{ comment.commentText }}
+      <div class="comment-display">
+        <i class="fa-solid fa-user comment-icon"></i>
+        <span class="comment-username">{{ comment.username }}</span>
+        <span class="comment-text"> commented: {{ comment.commentText }}</span>
+      </div>
     </li>
   </ul>
-  <input type="text" placeholder="Leave a comment..." [(ngModel)]="newComment" />
-  <button (click)="addComment()">Post Comment</button>
+  <textarea class="comment-input" placeholder="Leave a comment..." [(ngModel)]="newComment"></textarea>
+  <button class="post-button" (click)="addComment()">Post</button>
 </div>
+
 
 <app-footer></app-footer>
