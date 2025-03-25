@@ -11,7 +11,7 @@
   <div class="phase-card">
     <h2 class="phase-title">Phase 1</h2>
     <hr class="phase-divider">
-    <img src="/assets/images/home_page/homep_img1.jpg" alt="Phase 1" class="phase-image">
+    <img ngOptimizedImage src="/assets/images/home_page/homep_img1.jpg" width="120" height="120" alt="Phase 1" class="phase-image" loading="lazy">
     <h3 class="phase-heading">Building Foundations for Success</h3>
     <p class="phase-description">Initiating</p>
     <p class="phase-description">
@@ -21,7 +21,7 @@
   <div class="phase-card">
     <h2 class="phase-title">Phase 2</h2>
     <hr class="phase-divider">
-    <img src="/assets/images/home_page/homep_img2.jpg" alt="Phase 2" class="phase-image">
+    <img ngOptimizedImage src="/assets/images/home_page/homep_img2.jpg" width="120" height="120" alt="Phase 2" class="phase-image" loading="lazy">
     <h3 class="phase-heading">Uniting Creative Minds</h3>
     <p class="phase-description">Collaborating</p>
     <p class="phase-description">
@@ -31,7 +31,7 @@
   <div class="phase-card">
     <h2 class="phase-title">Phase 3</h2>
     <hr class="phase-divider">
-    <img src="/assets/images/home_page/homep_img3.jpg" alt="Phase 3" class="phase-image">
+    <img ngOptimizedImage src="/assets/images/home_page/homep_img3.jpg" width="120" height="120" alt="Phase 3" class="phase-image" loading="lazy">
     <h3 class="phase-heading">Exploring New Horizons</h3>
     <p class="phase-description">Innovating</p>
     <p class="phase-description">
@@ -48,9 +48,9 @@
   </p>
   <!-- Connection Images -->
   <div class="connections-images">
-    <img src="/assets/images/home_page/homep_img4.jpg" alt="Connection 1" class="phase-image">
-    <img src="/assets/images/home_page/homep_img5.jpg" alt="Connection 2" class="phase-image">
-    <img src="/assets/images/home_page/homep_img6.jpg" alt="Connection 3" class="phase-image">
+    <img ngOptimizedImage src="/assets/images/home_page/homep_img4.jpg" width="120" height="120" alt="Connection 1" class="phase-image" loading="lazy">
+    <img ngOptimizedImage src="/assets/images/home_page/homep_img5.jpg" width="120" height="120" alt="Connection 2" class="phase-image" loading="lazy">
+    <img ngOptimizedImage src="/assets/images/home_page/homep_img6.jpg" width="120" height="120" alt="Connection 3" class="phase-image" loading="lazy">
   </div>
   <!-- Connections Inner Container (Search and List) -->
   <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
@@ -168,7 +168,7 @@
     <div class="slide" *ngFor="let slide of sliderSlides">
       <div class="bottom-image-container">
         <div class="bottom-image-wrapper">
-          <img ngOptimizedImage [src]="slide.image" [alt]="slide.alt" class="bottom-image" />
+          <img ngOptimizedImage [src]="slide.image" [alt]="slide.alt" width="600" height="400" loading="lazy" class="bottom-image" />
           <h1 class="bottom-image-text header">{{ slide.header }}</h1>
           <h5 class="bottom-image-text subtext">{{ slide.subtext }}</h5>
         </div>

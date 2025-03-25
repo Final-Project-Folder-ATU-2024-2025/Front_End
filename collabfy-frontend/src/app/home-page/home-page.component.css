@@ -14,6 +14,7 @@
   width: 80%;
   position: relative;
   overflow: hidden;
+  margin: 0 auto; /* center it */
 }
 
 /* Slider wrapper styling */
@@ -32,65 +33,123 @@
   height: 100%;
 }
 
-/* Container styling */
-.container {
-  width: calc(100% - 50px);
-  height: calc(100% - 50px);
-  margin: 25px;
+/* Bottom image container and wrapper (for slider) */
+.bottom-image-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  border: 2px solid #050505;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-sizing: border-box;
-  text-align: center;
-  position: relative;
-}
-
-/* Project card styling */
-.project-card {
   width: 100%;
-  height: 100%;
-  background-image: url('/assets/images/idea_lamp.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  gap: 40px;
+}
+
+.bottom-image-wrapper {
   position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
-/* Image overlay styling */
-.image-overlay {
+/* Slider image styling: keep the original fixed height and size as before */
+.bottom-image {
+  max-inline-size: 100%;
+  block-size: auto;
+  width: 100%;
+  height: 600px;     /* Preserve original fixed height */
+  object-fit: fill;  /* Use fill to stretch to container */
+  border-radius: 60px;
+  margin: 0 auto;
+}
+
+/* Shared styles for text over the image */
+.bottom-image-text {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2rem;
-  color: #000;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  transform: translateX(-50%);
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+  pointer-events: none;
+}
+.bottom-image-text.header {
+  top: 70%;         /* Adjust as needed */
+  font-size: 3rem;
+}
+.bottom-image-text.subtext {
+  top: 80%;         /* Positioned below the header */
+  font-size: 1.5rem;
 }
 
-/* Connections slide styling */
+/* Phase Cards Section */
+.phases-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.phase-card {
+  flex: 1;
+  max-width: 400px;
+  min-height: 500px;  /* Increased minimum height for a longer container */
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.phase-card .phase-title {
+  margin: 0;
+  font-size: 1.8rem;
+}
+.phase-card .phase-divider {
+  border: none;
+  border-top: 2px solid #050505;
+  margin: 10px 0;
+}
+.phase-card .phase-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 10px 0;
+}
+.phase-card .phase-heading {
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+}
+.phase-card .phase-description {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Connections Section */
+.connections-container {
+  padding: 0 20px;
+}
 .connections-title {
   margin: 0;
   margin-bottom: 10px;
   font-size: 1.8rem;
-  text-align: center; /* Center the "Connections" text */
+  text-align: center;
 }
-
-/* Connections tagline styling */
 .connections-tagline {
   font-size: 1rem;
   color: #555;
   margin: 0 0 20px;
   text-align: center;
 }
-
-/* New container for the 3 connection images */
 .connections-images {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-bottom: 20px;
 }
-
-/* Reuse the phase-image styling for connection images */
 .phase-image {
   width: 120px;
   height: 120px;
@@ -98,8 +157,6 @@
   border-radius: 50%;
   margin: 10px 0;
 }
-
-/* Connections inner styling */
 .connections-inner {
   display: flex;
   flex-direction: column; /* Stack items vertically by default */
@@ -109,31 +166,23 @@
   padding-bottom: 20px;
 }
 
-/* Notifications slide styling */
+/* Notifications Section */
 .notifications-title {
   margin: 0;
   margin-bottom: 20px;
   font-size: 1.8rem;
 }
-
-/* Notifications inner styling */
 .notifications-inner {
   padding: 10px;
   text-align: left;
 }
-
-/* Notification item styling */
 .notification-item {
   border-bottom: 1px solid #ccc;
   padding: 5px 0;
 }
-
-/* Notification line styling */
 .notification-line {
   display: block;
 }
-
-/* Notification icon styling */
 .notification-icon {
   margin-right: 5px;
 }
@@ -150,33 +199,23 @@
   flex-direction: column;
   justify-content: flex-start;
 }
-
-/* Make "Create a New Connection" slide smaller, centered, and with slightly rounded borders */
 .connection-create {
   width: 33.33%;  /* One-third of the container width */
   border-radius: 8px; /* Slightly rounded borders */
 }
-
-/* Make "Your Connections" slide the same size and with the same rounded borders */
 .connection-count {
   width: 33.33%;
   border-radius: 8px;
 }
-
-/* Remove bullet points for Your Connections list */
 .connection-count ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
-/* Headers for connections squares */
 .connection-create h3,
 .connection-count h3 {
   margin: 0 0 10px 0;
 }
-
-/* Connection create input styling */
 .connection-create input[type="text"] {
   width: 100%;
   padding: 8px;
@@ -184,7 +223,7 @@
   box-sizing: border-box;
 }
 
-/* New Search Button styling */
+/* Search Button styling */
 .search-button {
   background-color: rgb(250, 79, 0);
   color: white;
@@ -199,7 +238,7 @@
   background-color: rgb(207, 77, 17);
 }
 
-/* New Delete Search Button styling */
+/* Delete Search Button styling */
 .delete-search-button {
   background: none;
   border: none;
@@ -225,16 +264,12 @@
 .search-results li {
   margin-bottom: 10px;
 }
-
-/* Flex container for each search result */
 .result-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
-
-/* Container for the details of a search result */
 .result-details {
   flex: 1;
 }
@@ -245,8 +280,6 @@
 .result-icon {
   margin-right: 5px;
 }
-
-/* Container for actions (delete & connect buttons) in a search result */
 .result-actions {
   display: flex;
   align-items: center;
@@ -273,24 +306,27 @@
   right: 10px;
 }
 
-/* Pagination dots styling */
+/* Pagination dots styling (keeping the original 3 lines look) */
 .pagination {
-  margin-top: 25px;
+  margin-bottom: 30px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin: 0 5px;
-  background-color: transparent;
-  border: 2px solid #6d92b9;
-  transition: background-color 0.3s ease;
+  width: 60px;
+  height: 5px;          
+  border-radius: 20px;
+  margin: 5px;
+  background-color: #e4e9ed;
+  border: 2px solid #e4e9ed;
+  transition: background-color 0.1s ease;
+  cursor: pointer;
 }
 .dot.active {
-  background-color: #6d92b9;
+  background-color: #869fbb;
+  border: 2px solid #869fbb;
 }
 
 /* Accept button styling */
@@ -359,183 +395,18 @@
   color: #555;
 }
 
-/* Phases Cards Section */
-.phases-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 40px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-.phase-card {
-  flex: 1;
-  max-width: 400px;
-  min-height: 500px;  /* Increased minimum height for a longer container */
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 25px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.phase-card .phase-title {
-  margin: 0;
-  font-size: 1.8rem;
-}
-.phase-card .phase-divider {
-  border: none;
-  border-top: 2px solid #050505;
-  margin: 10px 0;
-}
-.phase-card .phase-image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin: 10px 0;
-}
-.phase-card .phase-heading {
-  margin: 10px 0 5px;
-  font-size: 1.2rem;
-}
-.phase-card .phase-description {
-  margin: 0;
-  font-size: 1rem;
-  color: #555;
-}
-
-/* NEW: Divider line for each connection in "Your Connections" list */
+/* Additional styling for connection list dividers */
 .connection-count li {
   position: relative;
   padding-bottom: 20px;
 }
-
 .connection-count li::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 50%; /* half the width of the container */
+  width: 50%;
   height: 1px;
   background: #ccc;
   transform: translateX(-50%);
-}
-
-/* NEW: Divider line for each connection in "Your Connections" list */
-.connection-count li {
-  position: relative;
-  padding-bottom: 20px;
-}
-
-.connection-count li::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 50%; /* half the width of the container */
-  height: 1px;
-  background: #ccc;
-  transform: translateX(-50%);
-}
-
-/* Botton images secction */
-
-.bottom-image-container{
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  width: 100%;
-  gap: 40px; /* Consistent spacing between image and text */
-}
-
-.bottom-image-wrapper{
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.bottom-image {
-  max-inline-size: 100%;
-  block-size: auto;
-  width: 100%;       /* Image will fill the container's width */
-  height: 600px;     /* Fixed height for every image */
-  object-fit: fill;  /* Stretches the image to fill the container */
-  border-radius: 60px;
-  margin: 0 auto;
-}
-
-/* Shared styles for text over the image */
-.bottom-image-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-  pointer-events: none;
-}
-
-/* Modifier for main header text */
-.bottom-image-text.header {
-  top: 70%;         /* Adjust as needed */
-  font-size: 3rem;   /* Main title size */
-}
-
-/* Modifier for the smaller subtext */
-.bottom-image-text.subtext {
-  top: 80%;         /* Positioned below the header */
-  font-size: 1.5rem; /* Smaller size for subtext */
-}
-
-/* Slider container styling */
-.slider-container {
-  flex: 1;
-  width: 80%;
-  position: relative;
-  overflow: hidden;
-  margin: 0 auto; /* center it */
-}
-
-/* Slider wrapper styling */
-.slider-wrapper {
-  display: flex;
-  transition: transform 0.5s ease;
-  height: 100%;
-}
-
-/* Slide styling */
-.slide {
-  flex: 0 0 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-/* Pagination dots styling */
-.pagination {
-  margin-bottom: 30px;
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.dot {
-  width: 60px;
-  height: 5px;          
-  border-radius: 20px;
-  margin: 5px;
-  background-color: #e4e9ed;
-  border: 2px solid #e4e9ed;
-  transition: background-color 0.1s ease;
-  cursor: pointer;
-}
-.dot.active {
-  background-color: #869fbb;
-  border: 2px solid #869fbb;
 }
