@@ -58,8 +58,12 @@ export class ApiService {
   }
 
   // Get user connections for a given user.
-getUserConnections(userId: string): Observable<any> {
-  return this.http.post(`${this.apiUrl}/user-connections`, { userId }, this.httpOptions);
-}
-}
+  getUserConnections(userId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/user-connections`, { userId }, this.httpOptions);
+  }
 
+  // New: Dismiss notification endpoint
+  dismissNotification(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/dismiss-notification`, payload, this.httpOptions);
+  }
+}

@@ -7,6 +7,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 // Import the shared chat component (adjust the path as needed)
 import { ChatComponent } from '../shared/chat/chat.component';
+import { ApiService } from '../api.service';  // Import the ApiService
 
 @Component({
   selector: 'app-home-page',
@@ -63,7 +64,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private notificationsInterval: any;
   private sliderInterval: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {}
 
   ngOnInit(): void {
     const currentOption = this.options[this.currentIndex];
@@ -178,9 +179,22 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   dismissNotification(notif: any): void {
-    // Remove the dismissed notification from the notifications array
-    this.notifications = this.notifications.filter(n => n !== notif);
-    // Optionally, send an API request here to mark the notification as dismissed server-side.
+    const uid = localStorage.getItem('uid');
+    if (!uid || !notif.id) {
+      // Fallback if missing necessary info
+      this.notifications = this.notifications.filter(n => n !== notif);
+      return;
+    }
+    // Call the backend API to permanently delete the notification
+    this.apiService.dismissNotification({ userId: uid, notificationId: notif.id }).subscribe({
+      next: (res: any) => {
+        // Remove from local state only if deletion is successful
+        this.notifications = this.notifications.filter(n => n !== notif);
+      },
+      error: (err: any) => {
+        console.error('Error dismissing notification', err);
+      }
+    });
   }
 
   fetchConnections(): void {
