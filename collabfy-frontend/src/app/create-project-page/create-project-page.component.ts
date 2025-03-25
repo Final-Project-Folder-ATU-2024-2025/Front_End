@@ -5,11 +5,12 @@ import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ChatComponent } from '../shared/chat/chat.component'
 
 @Component({
   selector: 'app-create-project-page',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule, ChatComponent ],
   templateUrl: './create-project-page.component.html',
   styleUrls: ['./create-project-page.component.css']
 })
