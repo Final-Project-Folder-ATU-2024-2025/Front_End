@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; // Add FontAwesomeModule
+import { faUser } from '@fortawesome/free-solid-svg-icons';  // Import the person icon
 import { ApiService } from '../../api.service';
 import { Subscription } from 'rxjs';
 
@@ -20,7 +22,7 @@ interface ChatMessage {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],  // Include FontAwesomeModule here
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
@@ -33,7 +35,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentUserId: string = '';
 
   // Actual connections will be loaded from the API
-  connections: Connection[] = [];
+  connections: Connection[] = [
+    { uid: 'user2', firstName: 'Actual', surname: 'Connection1' },
+    { uid: 'user3', firstName: 'Actual', surname: 'Connection2' }
+  ];
+
+  // FontAwesome icon for user
+  faUser = faUser;
 
   // Subscription holder
   private subscriptions: Subscription = new Subscription();
@@ -42,7 +50,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Assume currentUserId is stored in localStorage
-    this.currentUserId = localStorage.getItem('uid') || '';
+    this.currentUserId = localStorage.getItem('uid') || 'user1';
     if (this.currentUserId) {
       this.loadConnections();
     }

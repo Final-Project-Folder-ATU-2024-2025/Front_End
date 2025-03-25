@@ -8,7 +8,7 @@
     <h4>Your Connections</h4>
     <ul>
       <li *ngFor="let conn of connections" (click)="openChat(conn)">
-        <img class="conn-avatar" src="assets/images/default_avatar.png" alt="User">
+        <fa-icon [icon]="faUser" class="conn-avatar"></fa-icon>
         <span>{{ conn.firstName }} {{ conn.surname }}</span>
       </li>
     </ul>
