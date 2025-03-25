@@ -121,7 +121,7 @@
       </div>
     </div>
     <!-- Notifications Container -->
-    <div class="phase-card connection-notifications">
+    <div class="phase-card connection-notifications" style="max-height: 350px; overflow-y: auto;">
       <h2 class="phase-title">Notifications</h2>
       <hr class="phase-divider">
       <div class="notifications-inner">
@@ -143,6 +143,10 @@
             </div>
             <div *ngIf="notif.type === 'response'">
               <strong>The following user accepted your connection request:</strong>
+            </div>
+            <!-- Comment Notification -->
+            <div *ngIf="notif.type === 'comment'">
+              <strong>{{ notif.message }}</strong>
             </div>
             <!-- Optional common details if fromUser exists -->
             <div class="notification-line" *ngIf="notif.fromUser">
@@ -172,6 +176,10 @@
               <button class="reject-button" (click)="rejectNotification(notif)">Reject</button>
             </div>
             <div class="notification-actions" *ngIf="notif.type === 'response' || notif.type === 'connection'">
+              <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
+            </div>
+            <!-- Buttons for Comment Notifications -->
+            <div class="notification-actions" *ngIf="notif.type === 'comment'">
               <button class="disconnect-button" (click)="dismissNotification(notif)">Dismiss</button>
             </div>
           </li>
