@@ -2,15 +2,22 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { FooterComponent } from '../footer/footer.component';
 import { Router } from '@angular/router';
 import { HeaderPublicComponent } from '../header-public/header-public.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-    selector: 'app-login-page',
-    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.css']
+  selector: 'app-login-page',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    HeaderPublicComponent,
+    FooterComponent
+  ],
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
   form: FormGroup;
@@ -47,6 +54,22 @@ export class LoginPageComponent {
             alert('Error logging in: ' + (error.error?.message || error.message));
           }
         });
+    }
+  }
+
+  onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
+    // Show password if left-click (button 0) is pressed
+    if (event.button === 0) {
+      input.type = 'text';
+      event.preventDefault();
+    }
+  }
+
+  onPasswordMouseUp(event: MouseEvent, input: HTMLInputElement): void {
+    // Hide password when left-click is released or mouse leaves the icon
+    if (event.button === 0) {
+      input.type = 'password';
+      event.preventDefault();
     }
   }
 }

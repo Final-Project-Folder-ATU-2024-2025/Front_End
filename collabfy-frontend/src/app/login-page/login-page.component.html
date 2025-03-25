@@ -9,9 +9,17 @@
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
-      <div class="form-group">
+      <!-- Password group with eye-slash icon -->
+      <div class="form-group password-group">
         <label for="password">Password</label>
-        <input type="password" id="password" formControlName="password" required>
+        <div class="password-container">
+          <input #passwordInput type="password" id="password" formControlName="password" required>
+          <!-- Bind events on the icon for left-click only -->
+          <i class="fa-solid fa-eye-slash password-icon"
+             (mousedown)="onPasswordMouseDown($event, passwordInput)"
+             (mouseup)="onPasswordMouseUp($event, passwordInput)"
+             (mouseleave)="onPasswordMouseUp($event, passwordInput)"></i>
+        </div>
       </div>
       <button type="submit">Log In</button>
     </form>

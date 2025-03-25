@@ -42,15 +42,13 @@
   font-size: 16px;
   color: rgb(242, 93, 60); /* Changed to red */
   margin: 0;
-  font-weight: bold;       /* Make it bold */
+  font-weight: bold;
 }
-
 .info-large {
   font-size: 32px;
   font-weight: bold;
   margin: 10px 0;
 }
-
 .info-description {
   font-size: 20px;
   color: #333;
@@ -64,11 +62,10 @@
   gap: 10px;
   margin-top: 20px;
 }
-
 .images-container img {
-  width: 100px;        /* Same size as the logo */
+  width: 100px;
   height: 100px;
-  border-radius: 50%;   /* Circular images */
+  border-radius: 50%;
   object-fit: cover;
 }
 
@@ -76,15 +73,13 @@
 .form-group {
   margin-bottom: 15px;
 }
-
 /* Label styling */
 .form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
-
-/* Input field styling: use full width of the container */
+/* Input field styling */
 .form-group input {
   width: 100%;
   padding: 6px;
@@ -92,7 +87,7 @@
   font-size: 14px;
 }
 
-/* Button styling for the Login button – make it the same width as inputs */
+/* Button styling for the Login button */
 button {
   width: 100%;
   padding: 10px 20px;
@@ -103,7 +98,27 @@ button {
   cursor: pointer;
   margin-top: 10px;
 }
-
 button:hover {
   background-color: rgb(207, 77, 17);
+}
+
+/* Password container styling */
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* space for icon */
+}
+
+/* Password icon styling */
+.password-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  cursor: pointer;
 }
