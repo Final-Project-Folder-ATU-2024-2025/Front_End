@@ -23,6 +23,16 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/update-task-milestones`, payload);
   }
 
+  // NEW: Get Comments method
+  getComments(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/get-comments`, payload);
+  }
+
+  // NEW: Add Comment method
+  addComment(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add-comment`, payload);
+  }
+
   // NEW: Delete project endpoint.
   deleteProject(projectId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/delete-project`, { projectId });

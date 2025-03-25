@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <main class="kanban-main">
   <div class="kanban-boards">
     <!-- Board 1: Project Info -->
@@ -7,7 +8,6 @@
         <img class="board-image" src="/assets/images/kanban-board/kanbanb_img1.jpg" alt="Project Info Image">
         <h2>Project Info</h2>
       </div>
-    
       <div class="projects-dropdown">
         <label for="projectSelect">Select Project:</label>
         <select id="projectSelect" (change)="onProjectChange($event)">
@@ -42,10 +42,10 @@
          [cdkDropListData]="todoMilestones"
          [cdkDropListConnectedTo]="['in-progress', 'done']"
          (cdkDropListDropped)="drop($event)">
-         <div class="board-header">
-          <img class="board-image" src="/assets/images/kanban-board/kanbanb_img3.jpg" alt="To Do Image">
-      <h2>To Do</h2>
-    </div>
+      <div class="board-header">
+        <img class="board-image" src="/assets/images/kanban-board/kanbanb_img3.jpg" alt="To Do Image">
+        <h2>To Do</h2>
+      </div>
       <ul class="milestones-list">
         <li *ngFor="let milestone of todoMilestones" cdkDrag>
           <div class="milestone-item">
@@ -62,10 +62,10 @@
          [cdkDropListData]="inProgressMilestones"
          [cdkDropListConnectedTo]="['todo', 'done']"
          (cdkDropListDropped)="drop($event)">
-         <div class="board-header">
-          <img class="board-image" src="/assets/images/kanban-board/kanbanb_img2.jpg" alt="In Progress Image">
-          <h2>In Progress</h2>
-        </div>
+      <div class="board-header">
+        <img class="board-image" src="/assets/images/kanban-board/kanbanb_img2.jpg" alt="In Progress Image">
+        <h2>In Progress</h2>
+      </div>
       <ul class="milestones-list">
         <li *ngFor="let milestone of inProgressMilestones" cdkDrag>
           <div class="milestone-item">
@@ -82,10 +82,10 @@
          [cdkDropListData]="doneMilestones"
          [cdkDropListConnectedTo]="['todo', 'in-progress']"
          (cdkDropListDropped)="drop($event)">
-         <div class="board-header">
-          <img class="board-image" src="/assets/images/kanban-board/kanbanb_img4.jpg" alt="Done Image">
-          <h2>Done</h2>
-        </div>
+      <div class="board-header">
+        <img class="board-image" src="/assets/images/kanban-board/kanbanb_img4.jpg" alt="Done Image">
+        <h2>Done</h2>
+      </div>
       <ul class="milestones-list">
         <li *ngFor="let milestone of doneMilestones" cdkDrag>
           <div class="milestone-item">
@@ -97,4 +97,17 @@
     </div>
   </div>
 </main>
+
+<!-- Comment Section -->
+<div class="comment-section" style="margin: 20px; padding: 10px; background: #f0f0f0; border-radius: 8px;">
+  <h3>Comments</h3>
+  <ul>
+    <li *ngFor="let comment of comments">
+      User {{ comment.username }} commented: {{ comment.commentText }}
+    </li>
+  </ul>
+  <input type="text" placeholder="Leave a comment..." [(ngModel)]="newComment" />
+  <button (click)="addComment()">Post Comment</button>
+</div>
+
 <app-footer></app-footer>

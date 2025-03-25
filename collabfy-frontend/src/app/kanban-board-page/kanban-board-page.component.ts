@@ -6,12 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
-import {
-  DragDropModule,
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem
-} from '@angular/cdk/drag-drop';
+import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-kanban-board-page',
@@ -28,17 +23,20 @@ import {
   styleUrls: ['./kanban-board-page.component.css']
 })
 export class KanbanBoardPageComponent implements OnInit {
+  // Variables for projects, tasks, and milestones
   projects: any[] = [];
   tasks: any[] = [];
-  // Full milestones for the selected task.
   milestones: { text: string; status: string }[] = [];
-  // Separate arrays for each board.
   todoMilestones: { text: string; status: string }[] = [];
   inProgressMilestones: { text: string; status: string }[] = [];
   doneMilestones: { text: string; status: string }[] = [];
   newMilestone: string = '';
   selectedProjectId: string = '';
   selectedTaskId: string = '';
+
+  // NEW variables for comments
+  newComment: string = '';
+  comments: any[] = [];
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -62,6 +60,7 @@ export class KanbanBoardPageComponent implements OnInit {
     }
   }
 
+  // Updated onProjectChange method to fetch comments when a new project is selected
   onProjectChange(event: any): void {
     this.selectedProjectId = event.target.value;
     console.log("Selected project:", this.selectedProjectId);
@@ -75,8 +74,11 @@ export class KanbanBoardPageComponent implements OnInit {
     this.milestones = [];
     this.clearMilestoneColumns();
     this.newMilestone = '';
+    // NEW: Fetch comments for the selected project
+    this.getComments();
   }
 
+  // onTaskChange method to update task and milestones
   onTaskChange(event: any): void {
     this.selectedTaskId = event.target.value;
     console.log("Selected task:", this.selectedTaskId);
@@ -94,11 +96,11 @@ export class KanbanBoardPageComponent implements OnInit {
     this.refreshMilestoneColumns();
   }
 
+  // addMilestone method to create a new milestone
   addMilestone(): void {
     if (this.newMilestone.trim() === '') {
       return;
     }
-    // New milestones are created with a default status of 'todo'
     const newMilestoneObj = { text: this.newMilestone.trim(), status: 'todo' };
     this.milestones.push(newMilestoneObj);
     this.newMilestone = '';
@@ -106,18 +108,21 @@ export class KanbanBoardPageComponent implements OnInit {
     this.updateMilestonesOnServer();
   }
 
+  // refreshMilestoneColumns method to update separate milestone arrays
   refreshMilestoneColumns(): void {
     this.todoMilestones = this.milestones.filter(m => m.status === 'todo');
     this.inProgressMilestones = this.milestones.filter(m => m.status === 'in-progress');
     this.doneMilestones = this.milestones.filter(m => m.status === 'done');
   }
 
+  // clearMilestoneColumns helper method
   clearMilestoneColumns(): void {
     this.todoMilestones = [];
     this.inProgressMilestones = [];
     this.doneMilestones = [];
   }
 
+  // drop method for drag-and-drop functionality
   drop(event: CdkDragDrop<{ text: string; status: string }[]>): void {
     let newStatus = '';
     if (event.container.id === 'todo') {
@@ -145,20 +150,16 @@ export class KanbanBoardPageComponent implements OnInit {
     this.updateMilestonesOnServer();
   }
 
+  // updateMilestonesOnServer method to sync milestones with the backend
   updateMilestonesOnServer(): void {
-    // Only proceed if both a project and task have been selected.
     if (!this.selectedProjectId || !this.selectedTaskId) {
       return;
     }
-    
-    // Prepare the payload with the project ID, task name, and the updated milestones array.
     const payload = {
       projectId: this.selectedProjectId,
       taskName: this.selectedTaskId,
       milestones: this.milestones
     };
-  
-    // Call the API service to update the milestones on the server.
     this.apiService.updateTaskMilestones(payload).subscribe({
       next: (response: any) => {
         console.log("Milestones updated successfully on server", response);
@@ -169,12 +170,47 @@ export class KanbanBoardPageComponent implements OnInit {
     });
   }
 
+  // deleteMilestone method to remove a milestone
   deleteMilestone(milestoneToDelete: { text: string; status: string }): void {
-    // Remove the milestone from the full milestones array.
     this.milestones = this.milestones.filter(m => m !== milestoneToDelete);
-    // Refresh the separate columns.
     this.refreshMilestoneColumns();
-    // Update the server with the new milestones array.
     this.updateMilestonesOnServer();
+  }
+
+  // NEW: Method to fetch comments for the selected project
+  getComments(): void {
+    if (!this.selectedProjectId) {
+      return;
+    }
+    this.apiService.getComments({ projectId: this.selectedProjectId }).subscribe({
+      next: (response: any) => {
+        this.comments = response.comments || [];
+      },
+      error: (error: any) => {
+        console.error("Error fetching comments", error);
+      }
+    });
+  }
+
+  // NEW: Method to add a comment
+  addComment(): void {
+    if (!this.newComment.trim() || !this.selectedProjectId) {
+      return;
+    }
+    const payload = {
+      projectId: this.selectedProjectId,
+      userId: localStorage.getItem('uid'),
+      commentText: this.newComment.trim()
+    };
+    this.apiService.addComment(payload).subscribe({
+      next: (response: any) => {
+        console.log("Comment added successfully", response);
+        this.newComment = '';
+        this.getComments(); // Refresh the comments list after adding
+      },
+      error: (error: any) => {
+        console.error("Error adding comment", error);
+      }
+    });
   }
 }
