@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,38 +8,54 @@ import { Observable } from 'rxjs';
 export class ApiService {
   private apiUrl = 'http://127.0.0.1:5000/api';
 
+  // Setting HTTP options explicitly so that the preflight request carries the Content-Type header
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   constructor(private http: HttpClient) {}
 
   createUser(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/create-user`, userData);
+    return this.http.post(`${this.apiUrl}/create-user`, userData, this.httpOptions);
   }
 
   getMyProjects(userId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/my-projects`, { userId });
+    return this.http.post(`${this.apiUrl}/my-projects`, { userId }, this.httpOptions);
   }
 
-  // Update task milestones endpoint.
   updateTaskMilestones(payload: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/update-task-milestones`, payload);
+    return this.http.post(`${this.apiUrl}/update-task-milestones`, payload, this.httpOptions);
   }
 
-  // NEW: Get Comments method
   getComments(payload: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/get-comments`, payload);
+    return this.http.post(`${this.apiUrl}/get-comments`, payload, this.httpOptions);
   }
 
-  // NEW: Add Comment method
   addComment(payload: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add-comment`, payload);
+    return this.http.post(`${this.apiUrl}/add-comment`, payload, this.httpOptions);
   }
 
-  // NEW: Delete project endpoint.
   deleteProject(projectId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/delete-project`, { projectId });
+    return this.http.post(`${this.apiUrl}/delete-project`, { projectId }, this.httpOptions);
   }
 
-  // NEW: Update project endpoint.
   updateProject(payload: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/update-project`, payload);
+    return this.http.post(`${this.apiUrl}/update-project`, payload, this.httpOptions);
+  }
+
+  // =====================
+  // Chat Endpoints Added
+  // =====================
+
+  // Get chat messages for a given conversation ID.
+  getChatMessages(conversationId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/get-chat-messages`, { conversationId }, this.httpOptions);
+  }
+
+  // Send a chat message.
+  sendChatMessage(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/send-chat-message`, payload, this.httpOptions);
   }
 }

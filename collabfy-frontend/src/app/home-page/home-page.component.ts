@@ -29,7 +29,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
   myProjects: any[] = [];
   projectDeadlines: any[] = [];
 
+  // Chat system variables
+  chatSidebarActive: boolean = false;
+  activeChat: any = null;
+  chatMessages: { senderId: string; messageText: string; timestamp?: any }[] = [];
+  chatMessage: string = '';
+  currentUserId: string = '';
+
   private notificationsInterval: any;
+  private sliderInterval: any;
 
   // Bottom slider properties
   sliderSlides: Array<{ image: string; alt: string; header: string; subtext: string }> = [
@@ -53,11 +61,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   ];
   currentSlideIndex: number = 0;
-  sliderInterval: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+    // Set current user ID from localStorage
+    this.currentUserId = localStorage.getItem('uid') || '';
+
     const currentOption = this.options[this.currentIndex];
     if (currentOption === 'Notifications') {
       this.fetchNotifications();
@@ -99,7 +109,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.searchResults = [];
       return;
     }
-    // Get the current user's UID from localStorage.
     const currentUserId = localStorage.getItem('uid');
     this.http.post('http://127.0.0.1:5000/api/search-users', { 
         query: this.searchQuery,
@@ -107,7 +116,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: (response: any) => {
-          // Filter out any result where the uid equals the current user's uid.
           this.searchResults = (response.results || []).filter(
             (user: any) => user.uid !== currentUserId
           );
@@ -127,8 +135,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     const fromUserId = localStorage.getItem('uid') || 'user1';
     const toUserId = user.uid;
     if (!this.pendingRequests[user.email]) {
-      this.http
-        .post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
+      this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
         .subscribe({
           next: (response: any) => {
             console.log('Connection request sent:', response);
@@ -139,8 +146,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.http
-        .post('http://127.0.0.1:5000/api/cancel-connection-request', { fromUserId, toUserId })
+      this.http.post('http://127.0.0.1:5000/api/cancel-connection-request', { fromUserId, toUserId })
         .subscribe({
           next: (response: any) => {
             console.log('Connection request cancelled:', response);
@@ -159,8 +165,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       console.error('User not logged in.');
       return;
     }
-    this.http
-      .post('http://127.0.0.1:5000/api/notifications', { userId: uid })
+    this.http.post('http://127.0.0.1:5000/api/notifications', { userId: uid })
       .subscribe({
         next: (response: any) => {
           this.notifications = response.notifications || [];
@@ -181,8 +186,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       console.error('User not logged in.');
       return;
     }
-    this.http
-      .post('http://127.0.0.1:5000/api/user-connections', { userId: uid })
+    this.http.post('http://127.0.0.1:5000/api/user-connections', { userId: uid })
       .subscribe({
         next: (response: any) => {
           this.connections = response.connections || [];
@@ -200,8 +204,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       console.error('User not logged in.');
       return;
     }
-    this.http
-      .post('http://127.0.0.1:5000/api/my-projects', { userId: uid })
+    this.http.post('http://127.0.0.1:5000/api/my-projects', { userId: uid })
       .subscribe({
         next: (response: any) => {
           this.myProjects = response.projects || [];
@@ -220,38 +223,34 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   // Methods for connection request notifications.
   acceptNotification(notif: any): void {
-    this.http
-      .post('http://127.0.0.1:5000/api/respond-connection-request', {
-        requestId: notif.connectionRequestId,
-        action: 'accepted',
-      })
-      .subscribe({
-        next: (response: any) => {
-          console.log('Connection request accepted:', response);
-          this.dismissNotification(notif);
-          this.fetchConnections();
-        },
-        error: (error: any) => {
-          console.error('Error accepting connection request:', error);
-        },
-      });
+    this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
+      requestId: notif.connectionRequestId,
+      action: 'accepted',
+    }).subscribe({
+      next: (response: any) => {
+        console.log('Connection request accepted:', response);
+        this.dismissNotification(notif);
+        this.fetchConnections();
+      },
+      error: (error: any) => {
+        console.error('Error accepting connection request:', error);
+      },
+    });
   }
 
   rejectNotification(notif: any): void {
-    this.http
-      .post('http://127.0.0.1:5000/api/respond-connection-request', {
-        requestId: notif.connectionRequestId,
-        action: 'rejected',
-      })
-      .subscribe({
-        next: (response: any) => {
-          console.log('Connection request rejected:', response);
-          this.dismissNotification(notif);
-        },
-        error: (error: any) => {
-          console.error('Error rejecting connection request:', error);
-        },
-      });
+    this.http.post('http://127.0.0.1:5000/api/respond-connection-request', {
+      requestId: notif.connectionRequestId,
+      action: 'rejected',
+    }).subscribe({
+      next: (response: any) => {
+        console.log('Connection request rejected:', response);
+        this.dismissNotification(notif);
+      },
+      error: (error: any) => {
+        console.error('Error rejecting connection request:', error);
+      },
+    });
   }
 
   acceptProjectInvitation(notif: any): void {
@@ -298,20 +297,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
       console.error('User not logged in.');
       return;
     }
-    this.http
-      .post('http://127.0.0.1:5000/api/dismiss-notification', {
-        userId: uid,
-        notificationId: notif.id,
-      })
-      .subscribe({
-        next: (response: any) => {
-          console.log('Notification dismissed:', response);
-          this.notifications = this.notifications.filter((n) => n.id !== notif.id);
-        },
-        error: (error: any) => {
-          console.error('Error dismissing notification:', error);
-        },
-      });
+    this.http.post('http://127.0.0.1:5000/api/dismiss-notification', {
+      userId: uid,
+      notificationId: notif.id,
+    }).subscribe({
+      next: (response: any) => {
+        console.log('Notification dismissed:', response);
+        this.notifications = this.notifications.filter((n) => n.id !== notif.id);
+      },
+      error: (error: any) => {
+        console.error('Error dismissing notification:', error);
+      },
+    });
   }
 
   disconnectConnection(conn: any): void {
@@ -320,8 +317,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       console.error('User not logged in.');
       return;
     }
-    this.http
-      .post('http://127.0.0.1:5000/api/disconnect', { userId: uid, disconnectUserId: conn.uid })
+    this.http.post('http://127.0.0.1:5000/api/disconnect', { userId: uid, disconnectUserId: conn.uid })
       .subscribe({
         next: (response: any) => {
           console.log('Disconnected successfully:', response);
@@ -330,6 +326,71 @@ export class HomePageComponent implements OnInit, OnDestroy {
         error: (error: any) => {
           console.error('Error disconnecting:', error);
         },
+      });
+  }
+
+  /////////// CHAT SYSTEM METHODS ///////////
+
+  // Toggle chat sidebar visibility
+  toggleChatSidebar(): void {
+    this.chatSidebarActive = !this.chatSidebarActive;
+  }
+
+  // Open chat window for a specific connection
+  openChat(connection: any): void {
+    this.activeChat = connection;
+    // Optionally, load existing chat messages here
+    this.loadChatMessages(connection.uid);
+  }
+
+  // Close the active chat window
+  closeChat(): void {
+    this.activeChat = null;
+    this.chatMessages = [];
+    this.chatMessage = '';
+  }
+
+  // Load chat messages between current user and selected connection
+  loadChatMessages(connectionId: string): void {
+    // Replace the URL with your chat messages endpoint
+    this.http.post('http://127.0.0.1:5000/api/get-chat-messages', { 
+      userId: this.currentUserId,
+      connectionId: connectionId
+    }).subscribe({
+      next: (response: any) => {
+        this.chatMessages = response.messages || [];
+      },
+      error: (error: any) => {
+        console.error('Error loading chat messages:', error);
+      }
+    });
+  }
+
+  // Send a chat message
+  sendChatMessage(): void {
+    if (!this.chatMessage.trim() || !this.activeChat) {
+      return;
+    }
+    const payload = {
+      senderId: this.currentUserId,
+      receiverId: this.activeChat.uid,
+      messageText: this.chatMessage.trim()
+    };
+    // Replace the URL with your send chat message endpoint
+    this.http.post('http://127.0.0.1:5000/api/send-chat-message', payload)
+      .subscribe({
+        next: (response: any) => {
+          // Optionally, update chatMessages with the new message
+          this.chatMessages.push({
+            senderId: this.currentUserId,
+            messageText: this.chatMessage.trim(),
+            timestamp: new Date()
+          });
+          this.chatMessage = '';
+        },
+        error: (error: any) => {
+          console.error('Error sending chat message:', error);
+        }
       });
   }
 }
