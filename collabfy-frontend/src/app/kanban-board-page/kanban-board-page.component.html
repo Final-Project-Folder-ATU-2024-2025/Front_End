@@ -103,7 +103,7 @@
   <h3>Comments</h3>
   <ul>
     <li *ngFor="let comment of comments">
-      User {{ comment.username }} commented: {{ comment.commentText }}
+       {{ comment.username }} commented: {{ comment.commentText }}
     </li>
   </ul>
   <input type="text" placeholder="Leave a comment..." [(ngModel)]="newComment" />
