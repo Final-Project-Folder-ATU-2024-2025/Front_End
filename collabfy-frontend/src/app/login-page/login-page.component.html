@@ -14,7 +14,6 @@
         <label for="password">Password</label>
         <div class="password-container">
           <input #passwordInput type="password" id="password" formControlName="password" required>
-          <!-- Bind events on the icon for left-click only -->
           <i class="fa-solid fa-eye-slash password-icon"
              (mousedown)="onPasswordMouseDown($event, passwordInput)"
              (mouseup)="onPasswordMouseUp($event, passwordInput)"
@@ -23,6 +22,10 @@
       </div>
       <button type="submit">Log In</button>
     </form>
+    <!-- Forgot Password Link -->
+    <div class="forgot-password">
+      <a (click)="resetPassword()">Forgot password?</a>
+    </div>
   </div>
 
   <!-- Right side: Informational text and images -->
@@ -32,7 +35,6 @@
     <p class="info-description">
       Log in to reconnect with your team and power forward together.
     </p>
-    <!-- Container for the three images -->
     <div class="images-container">
       <img src="/assets/images/login_page/loginp_img1.jpg" alt="Login Image 1">
       <img src="/assets/images/login_page/loginp_img2.jpg" alt="Login Image 2">

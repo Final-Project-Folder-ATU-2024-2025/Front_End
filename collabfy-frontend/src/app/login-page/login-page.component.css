@@ -34,13 +34,13 @@
   flex: 1;
   padding: 20px;
   text-align: left;
-  margin-left: 40px; /* Slight shift so text isn’t flush to the edge */
+  margin-left: 40px;
 }
 
 /* Info text styling */
 .info-small {
   font-size: 16px;
-  color: rgb(242, 93, 60); /* Changed to red */
+  color: rgb(242, 93, 60);
   margin: 0;
   font-weight: bold;
 }
@@ -73,13 +73,11 @@
 .form-group {
   margin-bottom: 15px;
 }
-/* Label styling */
 .form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
-/* Input field styling */
 .form-group input {
   width: 100%;
   padding: 6px;
@@ -121,4 +119,18 @@ button:hover {
   transform: translateY(-50%);
   color: #999;
   cursor: pointer;
+}
+
+/* Forgot password link styling */
+.forgot-password {
+  margin-top: 10px;
+  text-align: right;
+}
+.forgot-password a {
+  color: rgb(242, 93, 60);
+  text-decoration: none;
+  font-size: 14px;
+}
+.forgot-password a:hover {
+  text-decoration: underline;
 }

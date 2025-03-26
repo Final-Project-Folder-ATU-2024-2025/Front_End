@@ -5,6 +5,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { HeaderPublicComponent } from '../header-public/header-public.component';
 import { FooterComponent } from '../footer/footer.component';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { app } from '../firebase.config';
 
 @Component({
   selector: 'app-login-page',
@@ -42,7 +44,6 @@ export class LoginPageComponent {
       this.http.post('http://127.0.0.1:5000/api/login', { email, password })
         .subscribe({
           next: (response: any) => {
-            // Store token, firstName, surname, and uid in localStorage.
             localStorage.setItem('token', response.token || 'dummy-token');
             localStorage.setItem('firstName', response.firstName || 'John');
             localStorage.setItem('surname', response.surname || 'Doe');
@@ -58,7 +59,7 @@ export class LoginPageComponent {
   }
 
   onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
-    // Show password if left-click (button 0) is pressed
+    // Show password when left-click (button 0) is pressed
     if (event.button === 0) {
       input.type = 'text';
       event.preventDefault();
@@ -70,6 +71,25 @@ export class LoginPageComponent {
     if (event.button === 0) {
       input.type = 'password';
       event.preventDefault();
+    }
+  }
+
+  // NEW: Reset password function using Firebase client SDK.
+  resetPassword(): void {
+    const auth = getAuth(app);
+    const email = prompt("Please enter your registered email address:");
+    if (email) {
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          alert("Check your email to reset your password.");
+        })
+        .catch((error) => {
+          if (error.code === 'auth/user-not-found') {
+            alert("Email address not registered.");
+          } else {
+            alert("Error: " + error.message);
+          }
+        });
     }
   }
 }
