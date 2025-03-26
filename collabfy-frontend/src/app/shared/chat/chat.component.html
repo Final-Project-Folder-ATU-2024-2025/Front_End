@@ -1,6 +1,8 @@
-<!-- Fixed Chat Button -->
+<!-- Fixed Chat Button with Bell Overlay -->
 <div class="chat-button" (click)="toggleChatSidebar()">
     <img src="assets/images/public/public_img1.jpg" alt="Chat">
+    <!-- Bell icon appears only when hasNewMessage is true -->
+    <fa-icon *ngIf="hasNewMessage" [icon]="faBell" class="new-message-bell"></fa-icon>
   </div>
   
   <!-- Chat Sidebar -->

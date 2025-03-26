@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; // Add FontAwesomeModule
-import { faUser } from '@fortawesome/free-solid-svg-icons';  // Import the person icon
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUser, faBell } from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from '../../api.service';
 import { Subscription } from 'rxjs';
 
-// Define interfaces for type safety
 interface Connection {
   uid: string;
   firstName: string;
@@ -22,49 +21,50 @@ interface ChatMessage {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],  // Include FontAwesomeModule here
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  // Chat state variables
   chatSidebarActive: boolean = false;
   activeChat: Connection | null = null;
   chatMessages: ChatMessage[] = [];
   chatMessage: string = '';
   currentUserId: string = '';
-
-  // Actual connections will be loaded from the API
   connections: Connection[] = [
     { uid: 'user2', firstName: 'Actual', surname: 'Connection1' },
     { uid: 'user3', firstName: 'Actual', surname: 'Connection2' }
   ];
-
-  // FontAwesome icon for user
   faUser = faUser;
+  faBell = faBell;
+  
+  // For simulation: indicates there is an unread message
+  hasNewMessage: boolean = false;
 
-  // Subscription holder
   private subscriptions: Subscription = new Subscription();
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    // Assume currentUserId is stored in localStorage
     this.currentUserId = localStorage.getItem('uid') || 'user1';
     if (this.currentUserId) {
       this.loadConnections();
     }
+    // For testing: force hasNewMessage to true after 5 seconds if no chat is active.
+    setTimeout(() => {
+      if (!this.activeChat) {
+        this.hasNewMessage = true;
+      }
+    }, 5000);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  // Load the user's actual connections from the API
   loadConnections(): void {
     const sub = this.apiService.getUserConnections(this.currentUserId).subscribe({
       next: (response: any) => {
-        // Expecting the response to include a "connections" array
         this.connections = response.connections || [];
       },
       error: (error: any) => {
@@ -80,6 +80,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   openChat(connection: Connection): void {
     this.activeChat = connection;
+    // Mark messages as read when opening chat.
+    this.hasNewMessage = false;
     this.loadChatMessages(connection.uid);
   }
 
@@ -89,12 +91,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatMessage = '';
   }
 
-  // Generate the conversationId by sorting the two user IDs
   loadChatMessages(connectionId: string): void {
     const conversationId = [this.currentUserId, connectionId].sort().join('-');
     const sub = this.apiService.getChatMessages(conversationId).subscribe({
       next: (response: any) => {
         this.chatMessages = response.messages || [];
+        // Optionally: update hasNewMessage based on messages
       },
       error: (error: any) => {
         console.error('Error loading chat messages:', error);
@@ -114,7 +116,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     };
     const sub = this.apiService.sendChatMessage(payload).subscribe({
       next: (response: any) => {
-        // Update chat messages locally so the new message appears immediately.
         this.chatMessages.push({
           senderId: this.currentUserId,
           messageText: this.chatMessage.trim(),
