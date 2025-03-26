@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { faUser, faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-header',
-    imports: [CommonModule],
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css'],
-    standalone: true
+  selector: 'app-header',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   userName: string = '';
   userSurname: string = '';
   currentRoute: string = '';
+  showAccountDropdown: boolean = false;
+
+  faUser = faUser;
+  faGear = faGear;
 
   constructor(private router: Router) {}
 
@@ -56,5 +61,19 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('firstName');
     localStorage.removeItem('surname');
     this.router.navigate(['/']);
+  }
+
+  toggleAccountDropdown(): void {
+    this.showAccountDropdown = !this.showAccountDropdown;
+  }
+
+  goToAccountSettings(event: MouseEvent): void {
+    // Prevent default link behavior and stop propagation so the dropdown doesn’t toggle again
+    event.preventDefault();
+    event.stopPropagation();
+    // Navigate to the account settings page
+    this.router.navigate(['/account-settings']);
+    // Optionally, close the dropdown
+    this.showAccountDropdown = false;
   }
 }

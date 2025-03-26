@@ -6,7 +6,6 @@
   
   <!-- Center: Navigation Buttons -->
   <div class="nav-buttons">
-    <!-- Create Project / Home Button -->
     <button class="nav-button"
             (click)="onCreateProjectButtonClick()"
             [ngClass]="{'active': currentRoute === '/create-project-page'}">
@@ -14,8 +13,6 @@
         {{ currentRoute === '/create-project-page' ? 'Home' : 'Create project' }}
       </span>
     </button>
-    
-    <!-- My Projects / Home Button -->
     <button class="nav-button"
             (click)="onMyProjectsButtonClick()"
             [ngClass]="{'active': currentRoute === '/my-projects-page'}">
@@ -23,8 +20,6 @@
         {{ currentRoute === '/my-projects-page' ? 'Home' : 'My projects' }}
       </span>
     </button>
-    
-    <!-- Kanban Board / Home Button -->
     <button class="nav-button"
             (click)="onKanbanBoardButtonClick()"
             [ngClass]="{'active': currentRoute === '/kanban-board-page'}">
@@ -34,12 +29,21 @@
     </button>
   </div>
   
-  <!-- Right: Auth Links -->
-  <div class="auth-links">
-    <button (click)="logout()">Log Out</button>
-    <div class="user-info" *ngIf="userName || userSurname">
-      <i class="fa-solid fa-user user-icon"></i>
-      <span class="user-name">{{ userName }} {{ userSurname }}</span>
+  <!-- Right: Auth Links and User Info -->
+<div class="auth-links">
+  <button (click)="logout()">Log Out</button>
+  <div class="user-info" *ngIf="userName || userSurname">
+    <i class="fa-solid fa-user user-icon"></i>
+    <span class="user-name">{{ userName }} {{ userSurname }}</span>
+    <!-- Gear icon for account settings dropdown -->
+    <div class="gear-container" (click)="toggleAccountDropdown()">
+      <i class="fa-solid fa-gear gear-icon"></i>
+      <!-- Dropdown menu -->
+      <div class="account-dropdown" *ngIf="showAccountDropdown">
+        <a (click)="goToAccountSettings($event)">Account settings</a>
+      </div>
     </div>
   </div>
+</div>
+
 </header>

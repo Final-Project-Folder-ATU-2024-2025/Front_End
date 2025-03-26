@@ -6,13 +6,15 @@ import { CreateProjectPageComponent } from './create-project-page/create-project
 import { MainPageComponent } from './main-page/main-page.component';
 import { MyProjectsPageComponent } from './my-projects-page/my-projects-page.component';
 import { KanbanBoardPageComponent } from './kanban-board-page/kanban-board-page.component';
+import { AccountSettingsPageComponent } from './account-settings-page/account-settings-page.component';
 
 export const routes: Routes = [
-  { path: '', component: MainPageComponent },  
+  { path: '', component: MainPageComponent },
   { path: 'home-page', component: HomePageComponent },
   { path: 'create-account', component: CreateAccountPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'create-project-page', component: CreateProjectPageComponent },
   { path: 'my-projects-page', component: MyProjectsPageComponent },
-  { path: 'kanban-board-page', component: KanbanBoardPageComponent }
+  { path: 'kanban-board-page', component: KanbanBoardPageComponent },
+  { path: 'account-settings', component: AccountSettingsPageComponent }  // New route
 ];

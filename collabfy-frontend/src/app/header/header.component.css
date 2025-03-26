@@ -111,3 +111,43 @@ header {
 .user-name {
   font-weight: bold;
 }
+
+/* Gear icon container (wraps the gear icon and dropdown) */
+.gear-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Gear icon styling */
+.gear-icon {
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* Dropdown styling */
+.account-dropdown {
+  position: absolute;
+  top: 120%;  /* Adjust based on your header height */
+  right: 0;
+  background-color: #ffffff;
+  color: #333;
+  min-width: 150px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  z-index: 1200;
+  padding: 5px 0;
+}
+
+/* Dropdown link styling */
+.account-dropdown a {
+  display: block;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+}
+
+.account-dropdown a:hover {
+  background-color: #f0f0f0;
+}
