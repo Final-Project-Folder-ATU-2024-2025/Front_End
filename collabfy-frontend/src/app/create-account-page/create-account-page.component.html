@@ -19,7 +19,6 @@
   <!-- Right form section -->
   <div class="form-container">
     <h2>Create Account</h2>
-    <!-- Bind the reactive form and handle submission with onSubmit() -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- First Name Field -->
       <div class="form-group">
@@ -45,13 +44,17 @@
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" required>
+        <!-- Password specification text -->
+        <small class="password-specs">
+          Password must be at least 10 characters long, include one capital letter, one number, and one special character.
+        </small>
       </div>
       <!-- Confirm Password Field -->
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
       </div>
-      <!-- Submit Button updated to "Sign Up" -->
+      <!-- Submit Button -->
       <button type="submit">Sign Up</button>
     </form>
   </div>
