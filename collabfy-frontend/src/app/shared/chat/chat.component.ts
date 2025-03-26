@@ -6,13 +6,14 @@ import { faUser, faBell } from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from '../../api.service';
 import { Subscription } from 'rxjs';
 
-interface Connection {
+export interface Connection {
   uid: string;
   firstName: string;
   surname: string;
+  hasUnread: boolean;  // This should be provided by your API
 }
 
-interface ChatMessage {
+export interface ChatMessage {
   senderId: string;
   messageText: string;
   timestamp?: any;
@@ -31,26 +32,29 @@ export class ChatComponent implements OnInit, OnDestroy {
   chatMessages: ChatMessage[] = [];
   chatMessage: string = '';
   currentUserId: string = '';
-  connections: Connection[] = [
-    { uid: 'user2', firstName: 'Actual', surname: 'Connection1' },
-    { uid: 'user3', firstName: 'Actual', surname: 'Connection2' }
-  ];
+
+  // Load connections from your API (do not hard-code any test names)
+  connections: Connection[] = [];
+
+  // Global flag for the chat button bell
+  hasNewMessage: boolean = false;
+
   faUser = faUser;
   faBell = faBell;
-  
-  // For simulation: indicates there is an unread message
-  hasNewMessage: boolean = false;
 
   private subscriptions: Subscription = new Subscription();
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.currentUserId = localStorage.getItem('uid') || 'user1';
-    if (this.currentUserId) {
-      this.loadConnections();
+    this.currentUserId = localStorage.getItem('uid') || '';
+    if (!this.currentUserId) {
+      console.error('Current user ID not found in storage.');
+      return;
     }
-    // For testing: force hasNewMessage to true after 5 seconds if no chat is active.
+    this.loadConnections();
+    
+    // For testing: simulate a global unread flag after 5 seconds if no chat is active.
     setTimeout(() => {
       if (!this.activeChat) {
         this.hasNewMessage = true;
@@ -65,7 +69,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   loadConnections(): void {
     const sub = this.apiService.getUserConnections(this.currentUserId).subscribe({
       next: (response: any) => {
-        this.connections = response.connections || [];
+        // Expect your API to return an array of connection objects.
+        // For testing, if the API doesn't return a hasUnread property, you can simulate it like this:
+        this.connections = (response.connections || []).map((conn: any) => ({
+          ...conn,
+          hasUnread: conn.hasUnread === true  // Ensure boolean; adjust this line as needed
+        }));
       },
       error: (error: any) => {
         console.error('Error loading connections:', error);
@@ -80,7 +89,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   openChat(connection: Connection): void {
     this.activeChat = connection;
-    // Mark messages as read when opening chat.
+    // Mark this connection's messages as read.
+    connection.hasUnread = false;
+    // Optionally clear the global unread flag.
     this.hasNewMessage = false;
     this.loadChatMessages(connection.uid);
   }
@@ -96,7 +107,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     const sub = this.apiService.getChatMessages(conversationId).subscribe({
       next: (response: any) => {
         this.chatMessages = response.messages || [];
-        // Optionally: update hasNewMessage based on messages
       },
       error: (error: any) => {
         console.error('Error loading chat messages:', error);

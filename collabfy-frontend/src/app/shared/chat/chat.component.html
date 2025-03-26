@@ -1,7 +1,6 @@
-<!-- Fixed Chat Button with Bell Overlay -->
+<!-- Fixed Chat Button with Global Bell Overlay -->
 <div class="chat-button" (click)="toggleChatSidebar()">
     <img src="assets/images/public/public_img1.jpg" alt="Chat">
-    <!-- Bell icon appears only when hasNewMessage is true -->
     <fa-icon *ngIf="hasNewMessage" [icon]="faBell" class="new-message-bell"></fa-icon>
   </div>
   
@@ -11,7 +10,9 @@
     <ul>
       <li *ngFor="let conn of connections" (click)="openChat(conn)">
         <fa-icon [icon]="faUser" class="conn-avatar"></fa-icon>
-        <span>{{ conn.firstName }} {{ conn.surname }}</span>
+        <span class="conn-name">{{ conn.firstName }} {{ conn.surname }}</span>
+        <!-- Display the bell icon beside the name if there are unread messages -->
+        <fa-icon *ngIf="conn.hasUnread" [icon]="faBell" class="sidebar-bell"></fa-icon>
       </li>
     </ul>
   </div>
