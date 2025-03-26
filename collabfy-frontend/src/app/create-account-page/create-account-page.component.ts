@@ -8,7 +8,7 @@ import { HeaderPublicComponent } from '../header-public/header-public.component'
 
 @Component({
   selector: 'app-create-account-page',
-  standalone: true,           
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
   templateUrl: './create-account-page.component.html',
   styleUrls: ['./create-account-page.component.css']
@@ -24,7 +24,8 @@ export class CreateAccountPageComponent {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: ['', [Validators.required]],
-      telephone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]{6,15}$/)]],
+      // Telephone field is now optional. Pattern allows digits, plus, minus, spaces, and parentheses.
+      telephone: ['', [Validators.pattern(/^(?:[0-9\+\-\(\) ]{6,15})?$/)]],
       email: ['', [Validators.required, Validators.email]],
       password: [
         '',
@@ -44,16 +45,16 @@ export class CreateAccountPageComponent {
     if (this.form.invalid) {
       console.error('Form is invalid:', this.form.value);
       // Check for password errors and show a specific alert if needed:
-    const passwordControl = this.form.get('password');
-    if (passwordControl && passwordControl.errors) {
-      if (passwordControl.errors['pattern']) {
-        alert('Password must be at least 10 characters long, include one capital letter, one number, and one special character.');
+      const passwordControl = this.form.get('password');
+      if (passwordControl && passwordControl.errors) {
+        if (passwordControl.errors['pattern']) {
+          alert('Password must be at least 10 characters long, include one capital letter, one number, and one special character.');
+        } else {
+          alert('Please fill in all required fields correctly.');
+        }
       } else {
         alert('Please fill in all required fields correctly.');
       }
-    } else {
-      alert('Please fill in all required fields correctly.');
-    }
       return;
     }
     const { firstName, surname, telephone, email, password, confirmPassword } = this.form.value;
