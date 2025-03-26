@@ -73,7 +73,6 @@ export class HeaderComponent implements OnInit {
     event.stopPropagation();
     // Navigate to the account settings page
     this.router.navigate(['/account-settings']);
-    // Optionally, close the dropdown
     this.showAccountDropdown = false;
   }
 }
