@@ -8,7 +8,7 @@
 .kanban-main {
   flex: 1;
   padding: 20px;
-  background: #f5f5f5;
+  background: transparent;
 }
 
 /* Container for boards: 4 boards in one row */
@@ -29,6 +29,7 @@
 /* Specific board colors */
 .project-info {
   background-color: #e0e0e0; /* Light gray */
+  border: 1px solid black;
 }
 
 /* Project Info title with image */
@@ -75,14 +76,17 @@
 
 .todo {
   background-color: #d0eaff; /* Light blue */
+  border: 1px solid black;
 }
 
 .in-progress {
   background-color: #fff8a1; /* Light yellow */
+  border: 1px solid black;
 }
 
 .done {
   background-color: #c8f7c5; /* Light green */
+  border: 1px solid black;
 }
 
 /* Board title styling */
@@ -255,7 +259,6 @@
   margin-bottom: 10px;
   font-size: 1rem;
 }
-
 
 .post-button {
   padding: 5px 10px;
