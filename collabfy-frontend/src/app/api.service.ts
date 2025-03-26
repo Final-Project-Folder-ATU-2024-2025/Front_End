@@ -66,4 +66,18 @@ export class ApiService {
   dismissNotification(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/dismiss-notification`, payload, this.httpOptions);
   }
+
+  updateUserSettings(payload: { userId: string, telephone: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/update-user-settings`, payload, this.httpOptions);
+  }
+  
+  updateUserPassword(payload: { userId: string, newPassword: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/update-user-password`, payload, this.httpOptions);
+  }
+
+  updateUser(payload: { userId: string, telephone?: string, newPassword?: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/update-user`, payload, this.httpOptions);
+  }
+  
+  
 }
