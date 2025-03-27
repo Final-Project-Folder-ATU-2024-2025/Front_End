@@ -118,7 +118,7 @@
         You have no connections.
       </div>
     </div>
-    <!-- Notifications -->
+    <!-- Notifications Section -->
     <div class="phase-card connection-notifications" style="max-height: 350px; overflow-y: auto;">
       <h2 class="phase-title">Notifications</h2>
       <hr class="phase-divider">
@@ -127,39 +127,26 @@
         <div *ngIf="notificationsLoaded && notifications.length === 0">No notifications.</div>
         <ul *ngIf="notificationsLoaded && notifications.length > 0" style="list-style-type: none; padding-left: 0;">
           <li *ngFor="let notif of notifications" class="notification-item">
-            <!-- Wrap notification content in its own container -->
             <div class="notification-content">
-              <div *ngIf="notif.type === 'project-invitation'">
-                <strong>{{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} invited you to join their project: {{ notif.projectName }}</strong>
-              </div>
-              <div *ngIf="notif.type === 'project-invitation-response'">
-                <strong>{{ notif.message }}</strong>
-              </div>
+              <!-- For connection requests, show Accept and Reject buttons -->
               <div *ngIf="notif.type === 'request'">
-                <strong>The following user wants to connect with you:</strong>
+                <strong>
+                  {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} wants to connect with you.
+                </strong>
               </div>
-              <div *ngIf="notif.type === 'response'">
-                <strong>The following user accepted your connection request:</strong>
-              </div>
-              <div *ngIf="notif.type === 'comment'">
-                <i class="fa-solid fa-comment" style="margin-right: 5px;"></i>
-                <strong>{{ notif.message }}</strong>
-              </div>
-              <div *ngIf="notif.type !== 'comment' && notif.fromUser" class="notification-line">
-                <i class="fa-solid fa-user result-icon"></i>
-                {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }}
-              </div>
-              <div *ngIf="notif.type !== 'comment' && notif.fromUser?.email" class="notification-line">
-                <i class="fa-solid fa-envelope result-icon"></i>
-                {{ notif.fromUser?.email }}
-              </div>
-              <div *ngIf="notif.type !== 'comment' && notif.fromUser?.telephone" class="notification-line">
-                <i class="fa-solid fa-phone result-icon"></i>
-                {{ notif.fromUser?.telephone }}
+              <!-- For other types, just show the message -->
+              <div *ngIf="notif.type !== 'request'">
+                <span>{{ notif.message }}</span>
               </div>
             </div>
-            <!-- Dismiss button appears as a block element below the notification content -->
-            <button class="dismiss-button" (click)="dismissNotification(notif)">Dismiss</button>
+            <!-- Action buttons: for 'request' type, show Accept/Reject; otherwise, a dismiss button -->
+            <div *ngIf="notif.type === 'request'">
+              <button class="accept-button" (click)="respondToConnection(notif, 'accepted')">Accept</button>
+              <button class="reject-button" (click)="respondToConnection(notif, 'rejected')">Reject</button>
+            </div>
+            <div *ngIf="notif.type !== 'request'">
+              <button class="dismiss-button" (click)="dismissNotification(notif)">Dismiss</button>
+            </div>
           </li>
         </ul>
       </div>

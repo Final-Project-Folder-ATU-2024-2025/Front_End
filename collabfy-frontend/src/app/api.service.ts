@@ -46,23 +46,18 @@ export class ApiService {
   }
 
   // Chat endpoints
-
-  // Get chat messages for a given conversation ID.
   getChatMessages(conversationId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/get-chat-messages`, { conversationId }, this.httpOptions);
   }
 
-  // Send a chat message.
   sendChatMessage(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/send-chat-message`, payload, this.httpOptions);
   }
 
-  // Get user connections for a given user.
   getUserConnections(userId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/user-connections`, { userId }, this.httpOptions);
   }
 
-  // New: Dismiss notification endpoint
   dismissNotification(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/dismiss-notification`, payload, this.httpOptions);
   }
@@ -70,7 +65,7 @@ export class ApiService {
   updateUserSettings(payload: { userId: string, telephone: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/update-user-settings`, payload, this.httpOptions);
   }
-  
+
   updateUserPassword(payload: { userId: string, newPassword: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/update-user-password`, payload, this.httpOptions);
   }
@@ -78,6 +73,12 @@ export class ApiService {
   updateUser(payload: { userId: string, telephone?: string, newPassword?: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/update-user`, payload, this.httpOptions);
   }
+
+  markMessagesRead(conversationId: string, recipientId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/mark-messages-read`, { conversationId, recipientId }, this.httpOptions);
+  }
   
-  
+  respondConnectionRequest(payload: { requestId: string, action: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/respond-connection-request`, payload, this.httpOptions);
+  }
 }

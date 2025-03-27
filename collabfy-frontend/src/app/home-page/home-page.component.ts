@@ -5,9 +5,8 @@ import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-// Import the shared chat component (adjust the path as needed)
 import { ChatComponent } from '../shared/chat/chat.component';
-import { ApiService } from '../api.service';  // Import the ApiService
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +17,7 @@ import { ApiService } from '../api.service';  // Import the ApiService
     FooterComponent,
     FormsModule,
     HttpClientModule,
-    ChatComponent  // <-- new import here
+    ChatComponent
   ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
@@ -67,12 +66,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {}
 
   ngOnInit(): void {
-    const currentOption = this.options[this.currentIndex];
-    if (currentOption === 'Notifications') {
-      this.fetchNotifications();
-    } else if (currentOption === 'Project Deadlines') {
-      this.fetchProjectDeadlines();
-    }
+    // Initially load notifications, connections, projects, etc.
+    this.fetchNotifications();
     this.fetchConnections();
     this.notificationsInterval = setInterval(() => {
       this.fetchNotifications();
@@ -117,7 +112,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.searchResults = (response.results || []).filter(
           (user: any) => user.uid !== currentUserId
         );
-        console.log('Search results:', this.searchResults);
       },
       error: (error: any) => {
         console.error('Error searching connections:', error);
@@ -136,7 +130,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.http.post('http://127.0.0.1:5000/api/send-connection-request', { fromUserId, toUserId })
         .subscribe({
           next: (response: any) => {
-            console.log('Connection request sent:', response);
             this.pendingRequests[user.email] = true;
           },
           error: (error: any) => {
@@ -147,7 +140,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.http.post('http://127.0.0.1:5000/api/cancel-connection-request', { fromUserId, toUserId })
         .subscribe({
           next: (response: any) => {
-            console.log('Connection request cancelled:', response);
             this.pendingRequests[user.email] = false;
           },
           error: (error: any) => {
@@ -168,7 +160,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         next: (response: any) => {
           this.notifications = response.notifications || [];
           this.notificationsLoaded = true;
-          console.log('Notifications:', this.notifications);
         },
         error: (error: any) => {
           console.error('Error fetching notifications:', error);
@@ -178,17 +169,30 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
+  // New: Respond to connection request (Accept/Reject)
+  respondToConnection(notif: any, action: string): void {
+    // Call the API to respond to connection request
+    this.apiService.respondConnectionRequest({ requestId: notif.connectionRequestId, action })
+      .subscribe({
+        next: (response: any) => {
+          // Remove the notification from the list
+          this.notifications = this.notifications.filter(n => n.id !== notif.id);
+          // Optionally refresh connections here.
+        },
+        error: (error: any) => {
+          console.error('Error responding to connection request:', error);
+        }
+      });
+  }
+
   dismissNotification(notif: any): void {
     const uid = localStorage.getItem('uid');
     if (!uid || !notif.id) {
-      // Fallback if missing necessary info
       this.notifications = this.notifications.filter(n => n !== notif);
       return;
     }
-    // Call the backend API to permanently delete the notification
     this.apiService.dismissNotification({ userId: uid, notificationId: notif.id }).subscribe({
       next: (res: any) => {
-        // Remove from local state only if deletion is successful
         this.notifications = this.notifications.filter(n => n !== notif);
       },
       error: (err: any) => {
@@ -207,7 +211,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: any) => {
           this.connections = response.connections || [];
-          console.log('Connections:', this.connections);
         },
         error: (error: any) => {
           console.error('Error fetching connections:', error);
@@ -225,7 +228,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: any) => {
           this.myProjects = response.projects || [];
-          console.log('My Projects:', this.myProjects);
         },
         error: (error: any) => {
           console.error('Error fetching projects:', error);

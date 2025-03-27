@@ -89,12 +89,26 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   openChat(connection: Connection): void {
     this.activeChat = connection;
-    // Mark this connection's messages as read.
-    connection.hasUnread = false;
-    // Optionally clear the global unread flag.
-    this.hasNewMessage = false;
+    // Mark this connection's messages as read by calling the new endpoint.
+    this.apiService.markMessagesRead(
+      [this.currentUserId, connection.uid].sort().join('-'), // conversationId
+      this.currentUserId // assuming the current user is the recipient for incoming messages
+    ).subscribe({
+      next: (res: any) => {
+        console.log("Messages marked as read:", res);
+        // Update the connection flag to hide the bell icon.
+        connection.hasUnread = false;
+        // Optionally clear the global new message flag.
+        this.hasNewMessage = false;
+      },
+      error: (err: any) => {
+        console.error("Error marking messages as read:", err);
+      }
+    });
+    // Then load the chat messages for the conversation.
     this.loadChatMessages(connection.uid);
   }
+  
 
   closeChat(): void {
     this.activeChat = null;
