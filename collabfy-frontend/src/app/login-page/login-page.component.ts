@@ -23,6 +23,7 @@ import { app } from '../firebase.config';
 })
 export class LoginPageComponent {
   form: FormGroup;
+  errorMessage: string = '';  // New property for error messages
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +38,15 @@ export class LoginPageComponent {
   }
 
   onSubmit(): void {
+    // Clear previous error message.
+    this.errorMessage = '';
+    
+    // Check if password field is empty
+    if (!this.form.get('password')?.value) {
+      this.errorMessage = "Password must be entered";
+      return;
+    }
+    
     if (this.form.valid) {
       const { email, password } = this.form.value;
       
@@ -48,11 +58,12 @@ export class LoginPageComponent {
             localStorage.setItem('firstName', response.firstName || 'John');
             localStorage.setItem('surname', response.surname || 'Doe');
             localStorage.setItem('uid', response.uid || 'user1');
-            alert('Logged in successfully!');
+            // On success, navigate without showing a pop-up
             this.router.navigate(['/home-page']);
           },
           error: (error) => {
-            alert('Error logging in: ' + (error.error?.message || error.message));
+            // Instead of an alert, set errorMessage to show on the page.
+            this.errorMessage = "Password incorrect";
           }
         });
     }

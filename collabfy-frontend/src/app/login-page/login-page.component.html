@@ -22,6 +22,8 @@
       </div>
       <button type="submit">Log In</button>
     </form>
+    <!-- Error message displayed below the form -->
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     <!-- Forgot Password Link -->
     <div class="forgot-password">
       <a (click)="resetPassword()">Forgot password?</a>
