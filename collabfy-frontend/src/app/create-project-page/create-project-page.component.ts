@@ -189,7 +189,7 @@ export class CreateProjectPageComponent implements OnInit {
     }
   }
 
-  // Methods for Remove Collaborator confirmation modal
+  // Methods for Remove Collaborator confirmation modal using the custom modal style
   openRemoveCollaboratorModal(member: any): void {
     this.pendingRemovalCollaborator = member;
   }

@@ -135,10 +135,13 @@
   </div>
 </div>
 
-<!-- Remove Collaborator Confirmation Modal (using the same modal style as for deleting a user/project) -->
+<!-- Remove Collaborator Confirmation Modal (custom overlay modal) -->
 <div class="delete-modal" *ngIf="pendingRemovalCollaborator">
   <div class="delete-modal-content">
-    <p>Are you sure you want to remove <strong>{{ pendingRemovalCollaborator.firstName }} {{ pendingRemovalCollaborator.surname }}</strong> from project <strong>{{ projectName }}</strong>?</p>
+    <p>
+      Are you sure you want to remove <strong>{{ pendingRemovalCollaborator.firstName }} {{ pendingRemovalCollaborator.surname }}</strong>
+      from project <strong>{{ projectName }}</strong>?
+    </p>
     <div class="modal-icons">
       <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmRemoveCollaborator()"></fa-icon>
       <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelRemoveCollaborator()"></fa-icon>
