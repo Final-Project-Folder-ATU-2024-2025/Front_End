@@ -1,71 +1,80 @@
 <app-header></app-header>
 
-<main>
-  <h2>Account Settings</h2>
-  <p>Update Name, Surname, Telephone Number and Password</p>
+<!-- Wrapper for the Back Home button and the settings container -->
+<div class="account-settings-wrapper">
+  <!-- Top left Back Home button (outside the main container) -->
+  <div class="side-button">
+    <button class="nav-button" (click)="goHome()">
+      <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
+    </button>
+  </div>
 
-  <form (ngSubmit)="updateSettings()" #settingsForm="ngForm">
-    <div>
-      <label for="firstName">First Name:</label>
-      <input
-        type="text"
-        id="firstName"
-        name="firstName"
-        [(ngModel)]="firstName"
-        required>
-    </div>
-    <div>
-      <label for="surname">Surname:</label>
-      <input
-        type="text"
-        id="surname"
-        name="surname"
-        [(ngModel)]="surname"
-        required>
-    </div>
-    <div>
-      <label for="telephone">Telephone Number:</label>
-      <!-- This pattern allows numbers and symbols, but no letters -->
-      <input
-        type="text"
-        id="telephone"
-        name="telephone"
-        [(ngModel)]="telephone"
-        pattern="^[^A-Za-z]*$">
-    </div>
-    <div>
-      <label for="oldPassword">Current Password:</label>
-      <input
-        type="password"
-        id="oldPassword"
-        name="oldPassword"
-        [(ngModel)]="oldPassword">
-    </div>
-    <div>
-      <label for="newPassword">New Password:</label>
-      <input
-        type="password"
-        id="newPassword"
-        name="newPassword"
-        [(ngModel)]="newPassword">
-    </div>
-    <div>
-      <label for="confirmPassword">Confirm New Password:</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        [(ngModel)]="confirmPassword">
-    </div>
-    <button type="submit" [disabled]="!settingsForm.form.valid">Update Settings</button>
-  </form>
+  <!-- Main container for settings (centered) -->
+  <main>
+    <h2>Account Settings</h2>
+    <p>Update Name, Surname, Business Telephone and Password</p>
 
-  <p *ngIf="message">{{ message }}</p>
+    <form (ngSubmit)="updateSettings()" #settingsForm="ngForm">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          [(ngModel)]="firstName"
+          required>
+      </div>
+      <div>
+        <label for="surname">Surname:</label>
+        <input
+          type="text"
+          id="surname"
+          name="surname"
+          [(ngModel)]="surname"
+          required>
+      </div>
+      <div>
+        <label for="telephone">Business Telephone:</label>
+        <!-- This pattern allows numbers and symbols, but no letters -->
+        <input
+          type="text"
+          id="telephone"
+          name="telephone"
+          [(ngModel)]="telephone"
+          pattern="^[^A-Za-z]*$">
+      </div>
+      <div>
+        <label for="oldPassword">Current Password:</label>
+        <input
+          type="password"
+          id="oldPassword"
+          name="oldPassword"
+          [(ngModel)]="oldPassword">
+      </div>
+      <div>
+        <label for="newPassword">New Password:</label>
+        <input
+          type="password"
+          id="newPassword"
+          name="newPassword"
+          [(ngModel)]="newPassword">
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm New Password:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword">
+      </div>
+      <button type="submit" [disabled]="!settingsForm.form.valid">Update Settings</button>
+    </form>
 
-  <!-- Back Home button with orange styling -->
-  <button class="back-home-button" (click)="goHome()">
-    <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
-  </button>
-</main>
+    <p *ngIf="message">{{ message }}</p>
+
+    <!-- Cancel button inside the container – styled like the update button -->
+    <button class="back-home-button" (click)="goHome()">Cancel</button>
+  </main>
+</div>
 
 <app-footer></app-footer>
