@@ -40,10 +40,18 @@ export class LoginPageComponent {
   onSubmit(): void {
     // Clear previous error message.
     this.errorMessage = '';
+  
+    const passwordValue = this.form.get('password')?.value;
     
-    // Check if password field is empty
-    if (!this.form.get('password')?.value) {
+    // Check if password field is empty.
+    if (!passwordValue) {
       this.errorMessage = "Password must be entered";
+      return;
+    }
+    
+    // Check if password is too short.
+    if (passwordValue.length < 6) {
+      this.errorMessage = "Password incorrect";
       return;
     }
     
@@ -58,7 +66,7 @@ export class LoginPageComponent {
             localStorage.setItem('firstName', response.firstName || 'John');
             localStorage.setItem('surname', response.surname || 'Doe');
             localStorage.setItem('uid', response.uid || 'user1');
-            // On success, navigate without showing a pop-up
+            // On success, navigate without showing a pop-up.
             this.router.navigate(['/home-page']);
           },
           error: (error) => {
@@ -67,7 +75,7 @@ export class LoginPageComponent {
           }
         });
     }
-  }
+  }  
 
   onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
     // Show password when left-click (button 0) is pressed

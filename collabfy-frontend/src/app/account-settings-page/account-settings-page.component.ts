@@ -38,7 +38,6 @@ export class AccountSettingsPageComponent implements OnInit {
 
   ngOnInit(): void {
     // Pre-fill form fields with the current user data from localStorage.
-    // (Alternatively, you can fetch these values from an API.)
     this.firstName = localStorage.getItem('firstName') || '';
     this.surname = localStorage.getItem('surname') || '';
     this.telephone = localStorage.getItem('telephone') || '';
@@ -65,7 +64,6 @@ export class AccountSettingsPageComponent implements OnInit {
         this.message = 'New passwords do not match.';
         return;
       }
-      // Verify the current password by calling the login endpoint.
       const email = localStorage.getItem('email'); // Assumes email is stored in localStorage.
       if (!email) {
         this.message = 'User email not found.';
@@ -88,7 +86,6 @@ export class AccountSettingsPageComponent implements OnInit {
   }
 
   proceedUpdate(): void {
-    // Build payload with all provided fields.
     const payload: any = {
       userId: localStorage.getItem('uid') || '',
       firstName: this.firstName,
@@ -104,7 +101,6 @@ export class AccountSettingsPageComponent implements OnInit {
       next: (res: any) => {
         console.log(res);
         this.message = 'Settings updated successfully.';
-        // Optionally update localStorage with new values.
         localStorage.setItem('firstName', this.firstName);
         localStorage.setItem('surname', this.surname);
         localStorage.setItem('telephone', this.telephone);
@@ -119,5 +115,20 @@ export class AccountSettingsPageComponent implements OnInit {
   // Navigate back home when the Back Home button is clicked.
   goHome(): void {
     this.router.navigate(['/home-page']);
+  }
+
+  // Added methods for press-and-hold password visibility
+  onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
+    if (event.button === 0) {
+      input.type = 'text';
+      event.preventDefault();
+    }
+  }
+
+  onPasswordMouseUp(event: MouseEvent, input: HTMLInputElement): void {
+    if (event.button === 0) {
+      input.type = 'password';
+      event.preventDefault();
+    }
   }
 }
