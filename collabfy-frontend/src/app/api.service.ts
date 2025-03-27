@@ -77,8 +77,13 @@ export class ApiService {
   markMessagesRead(conversationId: string, recipientId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/mark-messages-read`, { conversationId, recipientId }, this.httpOptions);
   }
-  
+
   respondConnectionRequest(payload: { requestId: string, action: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/respond-connection-request`, payload, this.httpOptions);
   }
+
+  getNotifications(userId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/notifications`, { userId }, this.httpOptions);
+  }
+
 }
