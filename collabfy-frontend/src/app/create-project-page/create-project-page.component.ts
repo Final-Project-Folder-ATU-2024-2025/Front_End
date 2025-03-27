@@ -6,11 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
+// Import FontAwesomeModule and required icons:
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-create-project-page',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule, ChatComponent],
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule, ChatComponent, FontAwesomeModule],
   templateUrl: './create-project-page.component.html',
   styleUrls: ['./create-project-page.component.css']
 })
@@ -21,8 +24,17 @@ export class CreateProjectPageComponent implements OnInit {
   tasks: { taskName: string; taskDescription: string }[] = [{ taskName: '', taskDescription: '' }];
   connections: any[] = [];
   invitedCollaborators: any[] = [];
+  // Array of UIDs of users already in the project
+  currentTeamIds: string[] = [];
   uid: string = '';
   projectId: string = '';
+
+  // Property for pending removal of a collaborator
+  pendingRemovalCollaborator: any = null;
+
+  // Define icons for use in the template
+  faCheck = faCheck;
+  faCircleXmark = faCircleXmark;
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
@@ -47,7 +59,6 @@ export class CreateProjectPageComponent implements OnInit {
             const proj = response.project;
             this.projectName = proj.projectName;
             this.description = proj.description;
-            // If deadline is a Firestore timestamp, convert it
             if (proj.deadline && proj.deadline.seconds) {
               this.deadline = new Date(proj.deadline.seconds * 1000)
                 .toISOString()
@@ -56,6 +67,8 @@ export class CreateProjectPageComponent implements OnInit {
               this.deadline = proj.deadline;
             }
             this.tasks = proj.tasks || [];
+            // Load current team IDs from project data
+            this.currentTeamIds = proj.teamIds || [];
           }
         },
         error: (error: any) => {
@@ -100,14 +113,13 @@ export class CreateProjectPageComponent implements OnInit {
 
   createProject(): void {
     const ownerId = this.uid;
-    // Build the project object (note that deadline is passed as string)
     const projectData: any = {
       projectName: this.projectName,
       description: this.description,
       deadline: this.deadline,
       tasks: this.tasks,
       ownerId: ownerId,
-      team: []
+      team: []  // For new projects, team is updated via invitations
     };
 
     if (this.projectId) {
@@ -117,7 +129,7 @@ export class CreateProjectPageComponent implements OnInit {
         .subscribe({
           next: (response: any) => {
             alert('Project updated successfully!');
-            // Send invitations for each invited collaborator
+            // For each invited collaborator, send invitation
             this.invitedCollaborators.forEach(member => {
               const invitationData = {
                 projectId: this.projectId,
@@ -149,7 +161,7 @@ export class CreateProjectPageComponent implements OnInit {
           next: (response: any) => {
             alert('Project created successfully!');
             const newProjectId = response.projectId;
-            // Send invitations for each invited collaborator
+            // For each invited collaborator, send invitation
             this.invitedCollaborators.forEach(member => {
               const invitationData = {
                 projectId: newProjectId,
@@ -175,6 +187,38 @@ export class CreateProjectPageComponent implements OnInit {
           }
         });
     }
+  }
+
+  // Methods for Remove Collaborator confirmation modal
+  openRemoveCollaboratorModal(member: any): void {
+    this.pendingRemovalCollaborator = member;
+  }
+
+  confirmRemoveCollaborator(): void {
+    if (this.pendingRemovalCollaborator && this.projectId) {
+      const payload = {
+        projectId: this.projectId,
+        collaboratorId: this.pendingRemovalCollaborator.uid,
+        ownerId: this.uid
+      };
+      this.http.post('http://127.0.0.1:5000/api/remove-collaborator', payload)
+        .subscribe({
+          next: (response: any) => {
+            alert('Collaborator removed successfully.');
+            // Update currentTeamIds by removing the removed collaborator
+            this.currentTeamIds = this.currentTeamIds.filter(uid => uid !== this.pendingRemovalCollaborator.uid);
+            this.pendingRemovalCollaborator = null;
+          },
+          error: (error: any) => {
+            console.error('Error removing collaborator:', error);
+            this.pendingRemovalCollaborator = null;
+          }
+        });
+    }
+  }
+
+  cancelRemoveCollaborator(): void {
+    this.pendingRemovalCollaborator = null;
   }
 
   goToHomePage(): void {

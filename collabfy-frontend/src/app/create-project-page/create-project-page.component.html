@@ -58,7 +58,6 @@
   <!-- Form and Image Container -->
   <div class="form-image-container">
     <!-- Project Creation Form -->
-    <!-- Note: We add an id="projectForm" so that the submit button outside can reference it -->
     <form id="projectForm" class="project-form" (ngSubmit)="createProject()">
       <div>
         <label for="projectName">Project Name:</label>
@@ -113,15 +112,22 @@
             <span>{{ member.telephone }}</span>
           </div>
         </div>
-        <button type="button" (click)="toggleCollaborator(member)">
-          {{ isCollaboratorInvited(member) ? 'Cancel' : 'Invite' }}
-        </button>
+        <!-- If member is already in project (their UID is in currentTeamIds), show Remove button -->
+        <div class="result-extra">
+          <ng-container *ngIf="currentTeamIds.includes(member.uid); else inviteBlock">
+            <button class="reject-button" (click)="openRemoveCollaboratorModal(member)">Remove</button>
+          </ng-container>
+          <ng-template #inviteBlock>
+            <button type="button" (click)="toggleCollaborator(member)">
+              {{ isCollaboratorInvited(member) ? 'Cancel' : 'Invite' }}
+            </button>
+          </ng-template>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Submit Button Section: Placed below the Invite Collaborators section -->
-  <!-- This button is outside the <form> element but uses the form attribute to submit the form -->
+  <!-- Submit Button Section -->
   <div class="submit-button-container">
     <button type="submit" form="projectForm" class="button">
       {{ projectId ? 'Update Project' : 'Create Project' }}
@@ -129,6 +135,16 @@
   </div>
 </div>
 
-<app-chat></app-chat>
+<!-- Remove Collaborator Confirmation Modal (using the same modal style as for deleting a user/project) -->
+<div class="delete-modal" *ngIf="pendingRemovalCollaborator">
+  <div class="delete-modal-content">
+    <p>Are you sure you want to remove <strong>{{ pendingRemovalCollaborator.firstName }} {{ pendingRemovalCollaborator.surname }}</strong> from project <strong>{{ projectName }}</strong>?</p>
+    <div class="modal-icons">
+      <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmRemoveCollaborator()"></fa-icon>
+      <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelRemoveCollaborator()"></fa-icon>
+    </div>
+  </div>
+</div>
 
+<app-chat></app-chat>
 <app-footer></app-footer>
