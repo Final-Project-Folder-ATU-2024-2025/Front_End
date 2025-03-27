@@ -40,19 +40,30 @@
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
-      <!-- Password Field -->
+      <!-- Password Field with press-and-hold functionality -->
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" formControlName="password" required>
-        <!-- Password specification text -->
+        <div class="password-container">
+          <input #passwordInput type="password" id="password" formControlName="password" required>
+          <i class="fa-solid fa-eye-slash password-icon"
+             (mousedown)="onPasswordMouseDown($event, passwordInput)"
+             (mouseup)="onPasswordMouseUp($event, passwordInput)"
+             (mouseleave)="onPasswordMouseUp($event, passwordInput)"></i>
+        </div>
+      </div>
+      <!-- Confirm Password Field with press-and-hold functionality -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-container">
+          <input #confirmPasswordInput type="password" id="confirmPassword" formControlName="confirmPassword" required>
+          <i class="fa-solid fa-eye-slash password-icon"
+             (mousedown)="onPasswordMouseDown($event, confirmPasswordInput)"
+             (mouseup)="onPasswordMouseUp($event, confirmPasswordInput)"
+             (mouseleave)="onPasswordMouseUp($event, confirmPasswordInput)"></i>
+        </div>
         <small class="password-specs">
           Password must be at least 10 characters long, include one capital letter, one number, and one special character.
         </small>
-      </div>
-      <!-- Confirm Password Field -->
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
       </div>
       <!-- Submit Button -->
       <button type="submit">Sign Up</button>

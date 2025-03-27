@@ -120,3 +120,25 @@ button:hover {
   color: #555;
   margin-top: 5px;
 }
+
+/* Password container styling */
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Password icon positioned inside the input box on the right */
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* provides space for the icon */
+}
+
+.password-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  cursor: pointer;
+}

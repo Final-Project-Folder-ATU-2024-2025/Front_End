@@ -24,7 +24,7 @@ export class CreateAccountPageComponent {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: ['', [Validators.required]],
-      // Telephone field is now optional. Pattern allows digits, plus, minus, spaces, and parentheses.
+      // Telephone field is optional. Pattern allows digits, plus, minus, spaces, and parentheses.
       telephone: ['', [Validators.pattern(/^(?:[0-9\+\-\(\) ]{6,15})?$/)]],
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -83,5 +83,20 @@ export class CreateAccountPageComponent {
         alert('Error creating account: ' + (error.error?.message || error.message));
       },
     });
+  }
+
+  // Methods to implement press-and-hold to show password functionality.
+  onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
+    if (event.button === 0) {
+      input.type = 'text';
+      event.preventDefault();
+    }
+  }
+
+  onPasswordMouseUp(event: MouseEvent, input: HTMLInputElement): void {
+    if (event.button === 0) {
+      input.type = 'password';
+      event.preventDefault();
+    }
   }
 }
