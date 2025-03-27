@@ -30,20 +30,24 @@
   </div>
   
   <!-- Right: Auth Links and User Info -->
-<div class="auth-links">
-  <button (click)="logout()">Log Out</button>
-  <div class="user-info" *ngIf="userName || userSurname">
-    <i class="fa-solid fa-user user-icon"></i>
-    <span class="user-name">{{ userName }} {{ userSurname }}</span>
-    <!-- Gear icon for account settings dropdown -->
-    <div class="gear-container" (click)="toggleAccountDropdown()">
-      <i class="fa-solid fa-gear gear-icon"></i>
-      <!-- Dropdown menu -->
-      <div class="account-dropdown" *ngIf="showAccountDropdown">
-        <a (click)="goToAccountSettings($event)">Account settings</a>
+  <div class="auth-links">
+    <!-- Wrapped logout button in an orange container -->
+    <div class="orange-container">
+      <button class="logout-button" (click)="logout()">
+        Log Out <fa-icon [icon]="faRightFromBracket"></fa-icon>
+      </button>
+    </div>
+    <div class="user-info" *ngIf="userName || userSurname">
+      <i class="fa-solid fa-user user-icon"></i>
+      <span class="user-name">{{ userName }} {{ userSurname }}</span>
+      <!-- Gear icon for account settings dropdown -->
+      <div class="gear-container" (click)="toggleAccountDropdown()">
+        <i class="fa-solid fa-gear gear-icon"></i>
+        <!-- Dropdown menu -->
+        <div class="account-dropdown" *ngIf="showAccountDropdown">
+          <a (click)="goToAccountSettings($event)">Account settings</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
 </header>

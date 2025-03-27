@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { faUser, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit {
 
   faUser = faUser;
   faGear = faGear;
+  faRightFromBracket = faRightFromBracket;
 
   constructor(private router: Router) {}
 
@@ -68,10 +70,8 @@ export class HeaderComponent implements OnInit {
   }
 
   goToAccountSettings(event: MouseEvent): void {
-    // Prevent default link behavior and stop propagation so the dropdown doesn’t toggle again
     event.preventDefault();
     event.stopPropagation();
-    // Navigate to the account settings page
     this.router.navigate(['/account-settings']);
     this.showAccountDropdown = false;
   }

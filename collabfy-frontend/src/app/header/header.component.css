@@ -22,16 +22,15 @@ header {
   border-radius: 50%;
 }
 
-/* Navigation buttons container (centered)
-   Added margin-top to shift vertically to align with user name */
+/* Navigation buttons container (centered) */
 .nav-buttons {
   display: flex;
   gap: 20px;
   flex: 1;
   justify-content: center;
-  align-items: center; /* Vertically center items */
-  flex-wrap: wrap;     /* Allow items to wrap on smaller screens */
-  margin-top: 70px;    /* Keep your top margin */
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 70px; /* Adjust this if needed */
 }
 
 /* Nav button styling */
@@ -63,18 +62,13 @@ header {
   height: 2px;
   width: 100%;
   background: white;
-  /* Initially, clip away the entire line by setting right inset to 100% */
   clip-path: inset(0 100% 0 0);
   transition: clip-path 0.2s ease;
 }
 
 .nav-button:hover .button-text::after {
-  /* On hover, reveal the full underline */
   clip-path: inset(0 0 0 0);
 }
-
-/* When mouse leaves, the clip-path will animate back to inset(0 100% 0 0),
-   causing the underline to vanish from left to right. */
 
 /* Auth-links styling */
 .auth-links {
@@ -112,7 +106,7 @@ header {
   font-weight: bold;
 }
 
-/* Gear icon container (wraps the gear icon and dropdown) */
+/* Gear icon container */
 .gear-container {
   position: relative;
   display: inline-block;
@@ -129,7 +123,7 @@ header {
 /* Dropdown styling */
 .account-dropdown {
   position: absolute;
-  top: 120%;  /* Adjust based on your header height */
+  top: 120%; /* Adjust based on header height */
   right: 0;
   background-color: #ffffff;
   color: #333;
@@ -150,4 +144,28 @@ header {
 
 .account-dropdown a:hover {
   background-color: #f0f0f0;
+}
+
+/* Logout button styling updated to remove its own background */
+.logout-button {
+  background: transparent;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Orange container wrapping the logout button to match your “Go Home” button style */
+.orange-container {
+  background-color: rgb(250, 79, 0);
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+/* Hover effect for the orange container */
+.orange-container:hover {
+  background-color: rgb(207, 77, 17);
 }

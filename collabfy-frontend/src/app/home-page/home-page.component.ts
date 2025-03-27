@@ -7,6 +7,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
 import { ApiService } from '../api.service';
+import { Subscription, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -30,6 +32,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   searchQuery: string = '';
   searchResults: any[] = [];
+  searched: boolean = false; // Flag to indicate a search was performed
   pendingRequests: { [email: string]: boolean } = {};
   connections: any[] = [];
   notifications: any[] = [];
@@ -62,6 +65,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   private notificationsInterval: any;
   private sliderInterval: any;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {}
 
@@ -84,6 +88,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     if (this.sliderInterval) {
       clearInterval(this.sliderInterval);
     }
+    this.subscriptions.unsubscribe();
   }
 
   nextSlide(): void {
@@ -99,6 +104,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   searchConnections(): void {
+    this.searched = true;
     if (!this.searchQuery.trim()) {
       this.searchResults = [];
       return;
@@ -149,7 +155,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // UPDATED: fetchNotifications now passes excludeType "chat" to omit chat notifications
+  // Updated to pass excludeType "chat" so chat notifications are omitted
   fetchNotifications(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
@@ -170,7 +176,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
-  // New: Respond to connection request (Accept/Reject)
   respondToConnection(notif: any, action: string): void {
     this.apiService.respondConnectionRequest({ requestId: notif.connectionRequestId, action })
       .subscribe({
@@ -236,5 +241,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   fetchProjectDeadlines(): void {
     this.fetchMyProjects();
     this.projectDeadlines = this.myProjects;
+  }
+
+  goHome(): void {
+    this.router.navigate(['/home-page']);
   }
 }

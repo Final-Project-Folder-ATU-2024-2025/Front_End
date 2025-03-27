@@ -52,15 +52,16 @@
     <img ngOptimizedImage src="/assets/images/home_page/homep_img5.jpg" width="120" height="120" alt="Connection 2" class="phase-image" loading="lazy">
     <img ngOptimizedImage src="/assets/images/home_page/homep_img6.jpg" width="120" height="120" alt="Connection 3" class="phase-image" loading="lazy">
   </div>
-  <!-- Connections Inner Container (Search and List) -->
-  <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
-    <!-- Create a New Connection -->
-    <div class="phase-card connection-create">
-      <h2 class="phase-title">Create a New Connection</h2>
-      <hr class="phase-divider">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
-      <button class="search-button" (click)="searchConnections()">Search</button>
-      <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
+    <!-- Connections Inner Container (Search and List) -->
+    <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
+      <!-- Create a New Connection -->
+      <div class="phase-card connection-create">
+        <h2 class="phase-title">Create a New Connection</h2>
+          <hr class="phase-divider">
+            <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
+              <button class="search-button" (click)="searchConnections()">Search</button>
+            
+            <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults">
             <div class="result-item">
