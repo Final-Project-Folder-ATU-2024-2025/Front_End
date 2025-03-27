@@ -1,14 +1,12 @@
 <app-header></app-header>
 
-<!-- Wrapper for left images, the main container, and right images -->
+<!-- Wrapper for the side navigation button and the main container -->
 <div class="account-settings-wrapper">
-  <!-- Left Images Container (5 images) -->
-  <div class="account-images-left">
-    <img src="assets/images/account_settings_page/accountset_img1.jpg" alt="Account Image 1">
-    <img src="assets/images/account_settings_page/accountset_img2.jpg" alt="Account Image 2">
-    <img src="assets/images/account_settings_page/accountset_img3.jpg" alt="Account Image 3">
-    <img src="assets/images/account_settings_page/accountset_img4.jpg" alt="Account Image 4">
-    <img src="assets/images/account_settings_page/accountset_img5.jpg" alt="Account Image 5">
+  <!-- Side Navigation Button (Back Home) – appears to the left -->
+  <div class="side-button">
+    <button class="nav-button" (click)="goHome()">
+      <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
+    </button>
   </div>
 
   <!-- Main Container for Account Settings -->
@@ -77,15 +75,6 @@
     <!-- Cancel button inside the main container -->
     <button class="back-home-button" (click)="goHome()">Cancel</button>
   </main>
-
-  <!-- Right Images Container (5 images) -->
-  <div class="account-images-right">
-    <img src="assets/images/account_settings_page/accountset_img6.jpg" alt="Account Image 6">
-    <img src="assets/images/account_settings_page/accountset_img7.jpg" alt="Account Image 7">
-    <img src="assets/images/account_settings_page/accountset_img8.jpg" alt="Account Image 8">
-    <img src="assets/images/account_settings_page/accountset_img9.jpg" alt="Account Image 9">
-    <img src="assets/images/account_settings_page/accountset_img10.jpg" alt="Account Image 10">
-  </div>
 </div>
 
 <app-footer></app-footer>
