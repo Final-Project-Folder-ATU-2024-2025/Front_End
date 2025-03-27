@@ -26,7 +26,7 @@
     </p>
   </div>
 
-  <!-- Filter section (aligned left) with three filter containers -->
+  <!-- Filter section (aligned left) with filter containers -->
   <div class="project-filters">
     <div class="filter-container" (click)="filterInProgress()">
       <img class="filter-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="In Progress">
@@ -107,9 +107,20 @@
           <button (click)="markStatusToggle(project)">
             {{ (project.status || 'In Progress') === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete' }}
           </button>
-          <button (click)="deleteProject(project)">Delete Project</button>
+          <button (click)="openDeleteModal(project)">Delete Project</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Delete Confirmation Modal -->
+<div class="delete-modal" *ngIf="projectToDelete">
+  <div class="delete-modal-content">
+    <p>Are you sure you want to delete project <strong>{{ projectToDelete.projectName }}</strong>?</p>
+    <div class="modal-icons">
+      <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmDelete()"></fa-icon>
+      <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelDelete()"></fa-icon>
     </div>
   </div>
 </div>

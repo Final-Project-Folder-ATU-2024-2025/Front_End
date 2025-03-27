@@ -5,11 +5,13 @@ import { FooterComponent } from '../footer/footer.component';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-my-projects-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, CommonModule, ChatComponent],
+  imports: [HeaderComponent, FooterComponent, CommonModule, ChatComponent, FontAwesomeModule],
   templateUrl: './my-projects-page.component.html',
   styleUrls: ['./my-projects-page.component.css']
 })
@@ -17,6 +19,10 @@ export class MyProjectsPageComponent implements OnInit {
   projects: any[] = [];
   uid: string = '';
   filterStatus: string | null = null; // "In Progress", "Complete", "Deadline", or null (show all)
+  projectToDelete: any = null; // Holds the project pending deletion
+
+  faCheck = faCheck;
+  faCircleXmark = faCircleXmark;
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -51,38 +57,45 @@ export class MyProjectsPageComponent implements OnInit {
     }
     if (this.filterStatus === 'Deadline') {
       // Return all projects sorted by deadline ascending (closest deadline first)
-      return this.projects.slice().sort((a, b) => {
-        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
-      });
+      return this.projects.slice().sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
     }
     if (this.filterStatus === 'Alphabetical') {
-      return this.projects.slice().sort((a, b) => {
-        return a.projectName.localeCompare(b.projectName);
-      });
+      return this.projects.slice().sort((a, b) => a.projectName.localeCompare(b.projectName));
     }
     // Otherwise, filter by status equality.
-    return this.projects.filter(
-      project => (project.status || 'In Progress') === this.filterStatus
-    );
+    return this.projects.filter(project => (project.status || 'In Progress') === this.filterStatus);
   }
 
   updateProject(project: any): void {
     this.router.navigate(['/create-project-page'], { queryParams: { projectId: project.projectId } });
   }
 
-  deleteProject(project: any): void {
-    if (confirm(`Are you sure you want to delete the project "${project.projectName}"?`)) {
-      this.apiService.deleteProject(project.projectId).subscribe({
+  // Open custom delete confirmation modal
+  openDeleteModal(project: any): void {
+    this.projectToDelete = project;
+  }
+
+  // Confirm deletion from the modal (alert removed)
+  confirmDelete(): void {
+    if (this.projectToDelete) {
+      this.apiService.deleteProject(this.projectToDelete.projectId).subscribe({
         next: (response: any) => {
-          alert(response.message);
+          // Removed alert(response.message);
           this.fetchProjects();
+          this.projectToDelete = null;
         },
         error: (error: any) => {
           console.error("Error deleting project:", error);
           alert("Error deleting project: " + (error.error?.error || error.message));
+          this.projectToDelete = null;
         }
       });
     }
+  }
+
+  // Cancel deletion (close modal)
+  cancelDelete(): void {
+    this.projectToDelete = null;
   }
 
   markStatusToggle(project: any): void {

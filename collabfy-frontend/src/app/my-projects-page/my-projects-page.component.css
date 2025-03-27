@@ -1,3 +1,4 @@
+/* Overall layout */
 :host {
   display: flex;
   flex-direction: column;
@@ -228,5 +229,54 @@
 .overview-text p {
   margin-top: 10px;
   font-size: 1.2rem;
+  color: #333;
+}
+
+/* Custom Delete Confirmation Modal */
+.delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.delete-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-icons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.modal-icon {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.confirm-icon {
+  color: rgb(250, 79, 0);
+}
+
+.confirm-icon:hover {
+  color: rgb(207, 77, 17);
+}
+
+.cancel-icon {
+  color: #555;
+}
+
+.cancel-icon:hover {
   color: #333;
 }
