@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
 import { ApiService } from '../api.service';
 import { Subscription } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +20,8 @@ import { Subscription } from 'rxjs';
     FooterComponent,
     FormsModule,
     HttpClientModule,
-    ChatComponent
+    ChatComponent,
+    FontAwesomeModule
   ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
@@ -61,6 +64,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   ];
   currentSlideIndex: number = 0;
+
+  // Properties for disconnect confirmation modal
+  disconnectUser: any = null;
+  faCheck = faCheck;
+  faCircleXmark = faCircleXmark;
 
   private notificationsInterval: any;
   private sliderInterval: any;
@@ -105,6 +113,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   searchConnections(): void {
+    console.log('Search query:', this.searchQuery);
     this.searched = true;
     if (!this.searchQuery.trim()) {
       this.searchResults = [];
@@ -116,6 +125,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       currentUserId: currentUserId
     }).subscribe({
       next: (response: any) => {
+        console.log('Search response:', response);
         // Filter out the current user from results
         this.searchResults = (response.results || []).filter(
           (user: any) => user.uid !== currentUserId
@@ -251,5 +261,36 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   goHome(): void {
     this.router.navigate(['/home-page']);
+  }
+
+  // --- Disconnect Confirmation Modal Methods ---
+  openDisconnectModal(user: any): void {
+    console.log("openDisconnectModal triggered for", user);
+    this.disconnectUser = user;
+  }
+
+  confirmDisconnect(): void {
+    if (this.disconnectUser) {
+      const userId = localStorage.getItem('uid') || 'user1';
+      const disconnectUserId = this.disconnectUser.uid;
+      this.http.post('http://127.0.0.1:5000/api/disconnect', { userId, disconnectUserId })
+        .subscribe({
+          next: (response: any) => {
+            // After successful disconnect, remove the user from the connections list.
+            this.connections = this.connections.filter(conn => conn.email !== this.disconnectUser.email);
+            // Re-fetch connections to update search results.
+            this.fetchConnections();
+            this.disconnectUser = null;
+          },
+          error: (error: any) => {
+            console.error('Error disconnecting:', error);
+            this.disconnectUser = null;
+          }
+        });
+    }
+  }
+
+  cancelDisconnect(): void {
+    this.disconnectUser = null;
   }
 }
