@@ -82,8 +82,12 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/respond-connection-request`, payload, this.httpOptions);
   }
 
-  getNotifications(userId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/notifications`, { userId }, this.httpOptions);
+  // UPDATED: getNotifications now accepts an optional excludeType parameter.
+  getNotifications(userId: string, excludeType?: string): Observable<any> {
+    const payload: any = { userId };
+    if (excludeType) {
+      payload.excludeType = excludeType;
+    }
+    return this.http.post(`${this.apiUrl}/notifications`, payload, this.httpOptions);
   }
-
 }

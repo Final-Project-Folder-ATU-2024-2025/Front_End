@@ -149,13 +149,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
+  // UPDATED: fetchNotifications now passes excludeType "chat" to omit chat notifications
   fetchNotifications(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
       console.error('User not logged in.');
       return;
     }
-    this.http.post('http://127.0.0.1:5000/api/notifications', { userId: uid })
+    this.apiService.getNotifications(uid, "chat")
       .subscribe({
         next: (response: any) => {
           this.notifications = response.notifications || [];
@@ -171,13 +172,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   // New: Respond to connection request (Accept/Reject)
   respondToConnection(notif: any, action: string): void {
-    // Call the API to respond to connection request
     this.apiService.respondConnectionRequest({ requestId: notif.connectionRequestId, action })
       .subscribe({
         next: (response: any) => {
-          // Remove the notification from the list
           this.notifications = this.notifications.filter(n => n.id !== notif.id);
-          // Optionally refresh connections here.
         },
         error: (error: any) => {
           console.error('Error responding to connection request:', error);
