@@ -1,15 +1,15 @@
 <app-header></app-header>
 
-<!-- Wrapper for the Back Home button and the settings container -->
+<!-- Wrapper for the side navigation button and the main container -->
 <div class="account-settings-wrapper">
-  <!-- Top left Back Home button (outside the main container) -->
+  <!-- Side Navigation Button (Back Home) – appears above the container on the left -->
   <div class="side-button">
     <button class="nav-button" (click)="goHome()">
       <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
     </button>
   </div>
 
-  <!-- Main container for settings (centered) -->
+  <!-- Main container for Account Settings -->
   <main>
     <h2>Account Settings</h2>
     <p>Update Name, Surname, Business Telephone and Password</p>
@@ -72,7 +72,7 @@
 
     <p *ngIf="message">{{ message }}</p>
 
-    <!-- Cancel button inside the container – styled like the update button -->
+    <!-- Cancel button inside the main container (matches Update Settings button) -->
     <button class="back-home-button" (click)="goHome()">Cancel</button>
   </main>
 </div>
