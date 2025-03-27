@@ -52,16 +52,16 @@
     <img ngOptimizedImage src="/assets/images/home_page/homep_img5.jpg" width="120" height="120" alt="Connection 2" class="phase-image" loading="lazy">
     <img ngOptimizedImage src="/assets/images/home_page/homep_img6.jpg" width="120" height="120" alt="Connection 3" class="phase-image" loading="lazy">
   </div>
-    <!-- Connections Inner Container (Search and List) -->
-    <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
-      <!-- Create a New Connection -->
-      <div class="phase-card connection-create">
-        <h2 class="phase-title">Create a New Connection</h2>
-          <hr class="phase-divider">
-            <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
-              <button class="search-button" (click)="searchConnections()">Search</button>
-            
-            <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
+  <!-- Connections Inner Container (Search and List) -->
+  <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
+    <!-- Create a New Connection -->
+    <div class="phase-card connection-create">
+      <h2 class="phase-title">Create a New Connection</h2>
+      <hr class="phase-divider">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
+      <button class="search-button" (click)="searchConnections()">Search</button>
+
+      <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults">
             <div class="result-item">
@@ -80,7 +80,10 @@
                 </div>
               </div>
               <div class="result-actions">
-                <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
+                <!-- Check if the user is already in your connections -->
+                <span *ngIf="isConnected(user)">Already in Connections</span>
+                <button *ngIf="!isConnected(user)"
+                        [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
                         (click)="toggleConnection(user)">
                   {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
                 </button>
@@ -129,18 +132,15 @@
         <ul *ngIf="notificationsLoaded && notifications.length > 0" style="list-style-type: none; padding-left: 0;">
           <li *ngFor="let notif of notifications" class="notification-item">
             <div class="notification-content">
-              <!-- For connection requests, show Accept and Reject buttons -->
               <div *ngIf="notif.type === 'request'">
                 <strong>
                   {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} wants to connect with you.
                 </strong>
               </div>
-              <!-- For other types, just show the message -->
               <div *ngIf="notif.type !== 'request'">
                 <span>{{ notif.message }}</span>
               </div>
             </div>
-            <!-- Action buttons: for 'request' type, show Accept/Reject; otherwise, a dismiss button -->
             <div *ngIf="notif.type === 'request'">
               <button class="accept-button" (click)="respondToConnection(notif, 'accepted')">Accept</button>
               <button class="reject-button" (click)="respondToConnection(notif, 'rejected')">Reject</button>
@@ -175,7 +175,5 @@
   </div>
 </div>
 
-<!-- Include the Reusable Chat Component -->
 <app-chat></app-chat>
-
 <app-footer></app-footer>

@@ -7,8 +7,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
 import { ApiService } from '../api.service';
-import { Subscription, interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -32,7 +31,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   searchQuery: string = '';
   searchResults: any[] = [];
-  searched: boolean = false; // Flag to indicate a search was performed
+  searched: boolean = false;
   pendingRequests: { [email: string]: boolean } = {};
   connections: any[] = [];
   notifications: any[] = [];
@@ -70,12 +69,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {}
 
   ngOnInit(): void {
-    // Initially load notifications, connections, projects, etc.
+    // Initially load notifications and connections
     this.fetchNotifications();
     this.fetchConnections();
+
     this.notificationsInterval = setInterval(() => {
       this.fetchNotifications();
     }, 30000);
+
     this.sliderInterval = setInterval(() => {
       this.nextSlide();
     }, 4000);
@@ -115,6 +116,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       currentUserId: currentUserId
     }).subscribe({
       next: (response: any) => {
+        // Filter out the current user from results
         this.searchResults = (response.results || []).filter(
           (user: any) => user.uid !== currentUserId
         );
@@ -155,7 +157,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Updated to pass excludeType "chat" so chat notifications are omitted
+  // Helper function to check if a user is already connected
+  isConnected(user: any): boolean {
+    return this.connections.some(conn => conn.email === user.email);
+  }
+
   fetchNotifications(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
