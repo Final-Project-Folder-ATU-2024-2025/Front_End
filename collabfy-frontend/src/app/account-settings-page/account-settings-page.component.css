@@ -1,10 +1,27 @@
-/* Wrapper to hold the side navigation button and the main container */
+/* Wrapper to hold the left images, main container, and right images */
 .account-settings-wrapper {
     display: flex;
     align-items: flex-start;
     justify-content: center;
     gap: 20px;
     margin: 20px;
+  }
+  
+  /* Left Images Container styling */
+  .account-images-left,
+  .account-images-right {
+    flex: 0 0 auto;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .account-images-left img,
+  .account-images-right img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
   }
   
   /* Side button container – it sizes to its content */
