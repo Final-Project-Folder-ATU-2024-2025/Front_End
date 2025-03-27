@@ -79,15 +79,19 @@
                   {{ user.telephone || user.business_phone || '' }}
                 </div>
               </div>
-              <div class="result-actions">
-                <!-- Check if the user is already in your connections -->
-                <span *ngIf="isConnected(user)">Connection already made</span>
-                <button *ngIf="!isConnected(user)"
-                        [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
-                        (click)="toggleConnection(user)">
-                  {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
-                </button>
-                <button class="delete-search-button" (click)="removeSearchResult(user)">×</button>
+              <!-- New row for connection actions below telephone -->
+              <div class="result-extra">
+                <ng-container *ngIf="isConnected(user); else notConnected">
+                  <span class="connected-badge">Connected</span>
+                  <button class="delete-search-button" (click)="removeSearchResult(user)">×</button>
+                </ng-container>
+                <ng-template #notConnected>
+                  <button [ngClass]="pendingRequests[user.email] ? 'reject-button' : 'accept-button'"
+                          (click)="toggleConnection(user)">
+                    {{ pendingRequests[user.email] ? 'Cancel' : 'Connect' }}
+                  </button>
+                  <button class="delete-search-button" (click)="removeSearchResult(user)">×</button>
+                </ng-template>
               </div>
             </div>
           </li>
