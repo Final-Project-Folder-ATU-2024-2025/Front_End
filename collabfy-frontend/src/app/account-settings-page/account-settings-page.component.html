@@ -1,32 +1,68 @@
 <app-header></app-header>
 
-<main style="padding: 20px;">
+<main>
   <h2>Account Settings</h2>
-  <p>This is the account settings page. Customize it as needed.</p>
-  
+  <p>Update Name, Surname, Telephone Number and Password</p>
+
   <form (ngSubmit)="updateSettings()" #settingsForm="ngForm">
     <div>
-      <label for="oldPassword">Current Password:</label>
-      <input type="password" id="oldPassword" name="oldPassword" [(ngModel)]="oldPassword" required>
+      <label for="firstName">First Name:</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        [(ngModel)]="firstName"
+        required>
     </div>
     <div>
-      <label for="newPassword">New Password:</label>
-      <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
-    </div>
-    <div>
-      <label for="confirmPassword">Confirm New Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+      <label for="surname">Surname:</label>
+      <input
+        type="text"
+        id="surname"
+        name="surname"
+        [(ngModel)]="surname"
+        required>
     </div>
     <div>
       <label for="telephone">Telephone Number:</label>
-      <input type="text" id="telephone" name="telephone" [(ngModel)]="telephone">
+      <!-- This pattern allows numbers and symbols, but no letters -->
+      <input
+        type="text"
+        id="telephone"
+        name="telephone"
+        [(ngModel)]="telephone"
+        pattern="^[^A-Za-z]*$">
+    </div>
+    <div>
+      <label for="oldPassword">Current Password:</label>
+      <input
+        type="password"
+        id="oldPassword"
+        name="oldPassword"
+        [(ngModel)]="oldPassword">
+    </div>
+    <div>
+      <label for="newPassword">New Password:</label>
+      <input
+        type="password"
+        id="newPassword"
+        name="newPassword"
+        [(ngModel)]="newPassword">
+    </div>
+    <div>
+      <label for="confirmPassword">Confirm New Password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword">
     </div>
     <button type="submit" [disabled]="!settingsForm.form.valid">Update Settings</button>
   </form>
 
   <p *ngIf="message">{{ message }}</p>
 
-  <!-- Back Home button with FontAwesome arrow -->
+  <!-- Back Home button with orange styling -->
   <button class="back-home-button" (click)="goHome()">
     <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
   </button>

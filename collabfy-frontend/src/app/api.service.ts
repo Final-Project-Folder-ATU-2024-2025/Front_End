@@ -70,7 +70,7 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/update-user-password`, payload, this.httpOptions);
   }
 
-  updateUser(payload: { userId: string, telephone?: string, newPassword?: string }): Observable<any> {
+  updateUser(payload: { userId: string, telephone?: string, newPassword?: string, firstName?: string, surname?: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/update-user`, payload, this.httpOptions);
   }
 
@@ -89,5 +89,10 @@ export class ApiService {
       payload.excludeType = excludeType;
     }
     return this.http.post(`${this.apiUrl}/notifications`, payload, this.httpOptions);
+  }
+
+  // Add login method to support password verification in the settings page.
+  login(credentials: { email: string, password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials, this.httpOptions);
   }
 }
