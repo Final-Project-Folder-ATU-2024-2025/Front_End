@@ -94,7 +94,7 @@ export class MyProjectsPageComponent implements OnInit {
     };
     this.apiService.updateProject(payload).subscribe({
       next: (response: any) => {
-        alert('Project status updated successfully!');
+        // Update the project status inline without showing an alert.
         project.status = newStatus;
       },
       error: (error: any) => {
