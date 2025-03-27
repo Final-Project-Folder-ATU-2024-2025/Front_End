@@ -1,12 +1,20 @@
 <app-header></app-header>
 
-<!-- Wrapper for the side navigation button and the main container -->
+<!-- Wrapper for the left column (Back Home button and left images), the main container, and right images -->
 <div class="account-settings-wrapper">
-  <!-- Side Navigation Button (Back Home) – appears to the left -->
-  <div class="side-button">
-    <button class="nav-button" (click)="goHome()">
-      <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
-    </button>
+  <!-- Left Column: Back Home button and Left Images -->
+  <div class="side-column">
+    <!-- Back Home button (unchanged) -->
+    <div class="side-button">
+      <button class="nav-button" (click)="goHome()">
+        <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
+      </button>
+    </div>
+    <!-- Left Images Container (2 images) -->
+    <div class="account-images-left">
+      <img src="assets/images/account_settings_page/accountset_img1.jpg" alt="Account Image 1">
+      <img src="assets/images/account_settings_page/accountset_img2.jpg" alt="Account Image 2">
+    </div>
   </div>
 
   <!-- Main Container for Account Settings -->
@@ -17,55 +25,27 @@
     <form (ngSubmit)="updateSettings()" #settingsForm="ngForm">
       <div>
         <label for="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          [(ngModel)]="firstName"
-          required>
+        <input type="text" id="firstName" name="firstName" [(ngModel)]="firstName" required>
       </div>
       <div>
         <label for="surname">Surname:</label>
-        <input
-          type="text"
-          id="surname"
-          name="surname"
-          [(ngModel)]="surname"
-          required>
+        <input type="text" id="surname" name="surname" [(ngModel)]="surname" required>
       </div>
       <div>
         <label for="telephone">Business Telephone:</label>
-        <!-- This pattern allows numbers and symbols, but no letters -->
-        <input
-          type="text"
-          id="telephone"
-          name="telephone"
-          [(ngModel)]="telephone"
-          pattern="^[^A-Za-z]*$">
+        <input type="text" id="telephone" name="telephone" [(ngModel)]="telephone" pattern="^[^A-Za-z]*$">
       </div>
       <div>
         <label for="oldPassword">Current Password:</label>
-        <input
-          type="password"
-          id="oldPassword"
-          name="oldPassword"
-          [(ngModel)]="oldPassword">
+        <input type="password" id="oldPassword" name="oldPassword" [(ngModel)]="oldPassword">
       </div>
       <div>
         <label for="newPassword">New Password:</label>
-        <input
-          type="password"
-          id="newPassword"
-          name="newPassword"
-          [(ngModel)]="newPassword">
+        <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword">
       </div>
       <div>
         <label for="confirmPassword">Confirm New Password:</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          [(ngModel)]="confirmPassword">
+        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword">
       </div>
       <button type="submit" [disabled]="!settingsForm.form.valid">Update Settings</button>
     </form>
@@ -75,6 +55,13 @@
     <!-- Cancel button inside the main container -->
     <button class="back-home-button" (click)="goHome()">Cancel</button>
   </main>
+
+  <!-- Right Images Container (3 images) -->
+  <div class="account-images-right">
+    <img src="assets/images/account_settings_page/accountset_img3.jpg" alt="Account Image 3">
+    <img src="assets/images/account_settings_page/accountset_img4.jpg" alt="Account Image 4">
+    <img src="assets/images/account_settings_page/accountset_img5.jpg" alt="Account Image 5">
+  </div>
 </div>
 
 <app-footer></app-footer>
