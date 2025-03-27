@@ -5,12 +5,12 @@ import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ChatComponent } from '../shared/chat/chat.component'
+import { ChatComponent } from '../shared/chat/chat.component';
 
 @Component({
   selector: 'app-create-project-page',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule, ChatComponent ],
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, HttpClientModule, ChatComponent],
   templateUrl: './create-project-page.component.html',
   styleUrls: ['./create-project-page.component.css']
 })
@@ -18,18 +18,10 @@ export class CreateProjectPageComponent implements OnInit {
   projectName: string = '';
   description: string = '';
   deadline: string = ''; // Expected format: YYYY-MM-DD
-
-  // Dynamic tasks: each task has a taskName and taskDescription
   tasks: { taskName: string; taskDescription: string }[] = [{ taskName: '', taskDescription: '' }];
-
-  // For collaborators: list of available connections and invited collaborators.
   connections: any[] = [];
   invitedCollaborators: any[] = [];
-
-  // Current user ID
   uid: string = '';
-
-  // If updating, store the current projectId as a string (default to empty string)
   projectId: string = '';
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
@@ -38,7 +30,7 @@ export class CreateProjectPageComponent implements OnInit {
     this.uid = localStorage.getItem('uid') || '';
     this.fetchConnections();
 
-    // Check for projectId in query parameters (update mode)
+    // If projectId exists in query params, we are in update mode.
     this.route.queryParams.subscribe(params => {
       if (params['projectId']) {
         this.projectId = params['projectId'];
@@ -48,14 +40,14 @@ export class CreateProjectPageComponent implements OnInit {
   }
 
   loadProjectData(projectId: string): void {
-    this.http.post('http://127.0.0.1:5000/api/get-project', { projectId: projectId })
+    this.http.post('http://127.0.0.1:5000/api/get-project', { projectId })
       .subscribe({
         next: (response: any) => {
           if (response.project) {
             const proj = response.project;
             this.projectName = proj.projectName;
             this.description = proj.description;
-            // Convert deadline from Firestore timestamp if needed:
+            // If deadline is a Firestore timestamp, convert it
             if (proj.deadline && proj.deadline.seconds) {
               this.deadline = new Date(proj.deadline.seconds * 1000)
                 .toISOString()
@@ -108,17 +100,18 @@ export class CreateProjectPageComponent implements OnInit {
 
   createProject(): void {
     const ownerId = this.uid;
+    // Build the project object (note that deadline is passed as string)
     const projectData: any = {
       projectName: this.projectName,
       description: this.description,
       deadline: this.deadline,
       tasks: this.tasks,
       ownerId: ownerId,
-      team: []  // Initially empty; collaborators must accept invitation.
+      team: []
     };
 
     if (this.projectId) {
-      // Update mode: include projectId and call the update endpoint.
+      // Update mode
       projectData.projectId = this.projectId;
       this.http.post('http://127.0.0.1:5000/api/update-project', projectData)
         .subscribe({
@@ -150,12 +143,13 @@ export class CreateProjectPageComponent implements OnInit {
           }
         });
     } else {
-      // Create mode: call the create-project endpoint.
+      // Create mode
       this.http.post('http://127.0.0.1:5000/api/create-project', projectData)
         .subscribe({
           next: (response: any) => {
             alert('Project created successfully!');
             const newProjectId = response.projectId;
+            // Send invitations for each invited collaborator
             this.invitedCollaborators.forEach(member => {
               const invitationData = {
                 projectId: newProjectId,

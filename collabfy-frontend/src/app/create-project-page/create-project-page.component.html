@@ -19,7 +19,7 @@
         </div>
         <h2 class="objectives-title">Define Objectives</h2>
         <p class="objectives-description">
-          Clearly outline your project goals to ensure all team members are aligned and focused.
+          Clearly outline your project goals to ensure all team members are aligned.
         </p>
       </div>
       <!-- Set Milestones Section -->
@@ -29,7 +29,7 @@
         </div>
         <h2 class="milestones-title">Set Milestones</h2>
         <p class="milestones-description">
-          Plan and track key milestones to measure progress and maintain momentum throughout the project lifecycle.
+          Plan and track key milestones to measure progress.
         </p>
       </div>
       <!-- Assemble Team Section -->
@@ -39,7 +39,7 @@
         </div>
         <h2 class="team-title">Assemble Team</h2>
         <p class="team-description">
-          Select the right team members with the necessary skills to drive your project to success.
+          Select team members to drive your project.
         </p>
       </div>
       <!-- Keep Track Section -->
@@ -49,16 +49,17 @@
         </div>
         <h2 class="tracking-title">Keep Track</h2>
         <p class="tracking-description">
-          Track your projects efficiently to ensure timely progress and adjust your strategy when needed.
+          Monitor project progress efficiently.
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Form and Image Container (New Layout) -->
+  <!-- Form and Image Container -->
   <div class="form-image-container">
-    <!-- Project Creation / Update Form -->
-    <form class="project-form" (ngSubmit)="createProject()">
+    <!-- Project Creation Form -->
+    <!-- Note: We add an id="projectForm" so that the submit button outside can reference it -->
+    <form id="projectForm" class="project-form" (ngSubmit)="createProject()">
       <div>
         <label for="projectName">Project Name:</label>
         <input type="text" id="projectName" [(ngModel)]="projectName" name="projectName" required />
@@ -87,7 +88,7 @@
       </div>
     </form>
 
-    <!-- Image Section (Properly Aligned to the Right of the Form) -->
+    <!-- Image Section -->
     <div class="project-side-image">
       <img src="assets/images/create_project_page/create_project_img2.jpg" alt="Project Creation Guide" />
     </div>
@@ -119,8 +120,12 @@
     </div>
   </div>
 
+  <!-- Submit Button Section: Placed below the Invite Collaborators section -->
+  <!-- This button is outside the <form> element but uses the form attribute to submit the form -->
   <div class="submit-button-container">
-    <button type="submit" class="button">{{ projectId ? 'Update Project' : 'Create Project' }}</button>
+    <button type="submit" form="projectForm" class="button">
+      {{ projectId ? 'Update Project' : 'Create Project' }}
+    </button>
   </div>
 </div>
 
