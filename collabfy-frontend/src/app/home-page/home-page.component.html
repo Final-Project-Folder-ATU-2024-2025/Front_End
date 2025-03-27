@@ -97,7 +97,7 @@
           </li>
         </ul>
       </div>
-      <!-- "User not found" is shown only if the search button has been pressed -->
+      <!-- "User not found" is shown only if the search button has been pressed and there are no results -->
       <div class="search-results" *ngIf="searched && searchResults && searchResults.length === 0">
         <p>User not found</p>
       </div>
@@ -143,7 +143,10 @@
                   {{ notif.fromUser?.firstName }} {{ notif.fromUser?.surname }} wants to connect with you.
                 </strong>
               </div>
-              <div *ngIf="notif.type !== 'request'">
+              <div *ngIf="notif.type === 'project-invitation'">
+                <strong>{{ notif.message }}</strong>
+              </div>
+              <div *ngIf="notif.type !== 'request' && notif.type !== 'project-invitation'">
                 <span>{{ notif.message }}</span>
               </div>
             </div>
@@ -151,7 +154,11 @@
               <button class="accept-button" (click)="respondToConnection(notif, 'accepted')">Accept</button>
               <button class="reject-button" (click)="respondToConnection(notif, 'rejected')">Reject</button>
             </div>
-            <div *ngIf="notif.type !== 'request'">
+            <div *ngIf="notif.type === 'project-invitation'">
+              <button class="accept-button" (click)="respondToProjectInvitation(notif, 'accepted')">Accept</button>
+              <button class="reject-button" (click)="openDeclineInvitationModal(notif)">Decline</button>
+            </div>
+            <div *ngIf="notif.type !== 'request' && notif.type !== 'project-invitation'">
               <button class="dismiss-button" (click)="dismissNotification(notif)">Dismiss</button>
             </div>
           </li>
@@ -167,7 +174,7 @@
     <div class="slide" *ngFor="let slide of sliderSlides">
       <div class="bottom-image-container">
         <div class="bottom-image-wrapper">
-          <img ngOptimizedImage [src]="slide.image" [alt]="slide.alt" width="600" height="400" loading="lazy" class="bottom-image" />
+          <img ngOptimizedImage [src]="slide.image" [alt]="slide.alt" width="600" height="400" loading="lazy" class="bottom-image">
           <h1 class="bottom-image-text header">{{ slide.header }}</h1>
           <h5 class="bottom-image-text subtext">{{ slide.subtext }}</h5>
         </div>
@@ -188,6 +195,17 @@
     <div class="modal-icons">
       <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmDisconnect()"></fa-icon>
       <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelDisconnect()"></fa-icon>
+    </div>
+  </div>
+</div>
+
+<!-- Project Invitation Decline Confirmation Modal -->
+<div class="delete-modal" *ngIf="pendingProjectInvitation">
+  <div class="delete-modal-content">
+    <p>Are you sure you want to decline the invitation for <strong>{{ pendingProjectInvitation.projectName }}</strong>?</p>
+    <div class="modal-icons">
+      <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmDeclineInvitation()"></fa-icon>
+      <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelDeclineInvitation()"></fa-icon>
     </div>
   </div>
 </div>

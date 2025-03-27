@@ -70,6 +70,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   faCheck = faCheck;
   faCircleXmark = faCircleXmark;
 
+  // New property for project invitation decline confirmation
+  pendingProjectInvitation: any = null;
+
   private notificationsInterval: any;
   private sliderInterval: any;
   private subscriptions: Subscription = new Subscription();
@@ -292,5 +295,38 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   cancelDisconnect(): void {
     this.disconnectUser = null;
+  }
+
+  // --- Project Invitation Response Methods ---
+  respondToProjectInvitation(notif: any, action: string): void {
+    this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {
+      invitationId: notif.id,
+      action: action,
+      userId: localStorage.getItem('uid')
+    }).subscribe({
+      next: (response: any) => {
+        // Remove the processed invitation notification from the list.
+        this.notifications = this.notifications.filter(n => n.id !== notif.id);
+      },
+      error: (error: any) => {
+        console.error("Error responding to project invitation:", error);
+      }
+    });
+  }
+
+  openDeclineInvitationModal(notif: any): void {
+    // Open the same pop-up window for decline confirmation
+    this.pendingProjectInvitation = notif;
+  }
+
+  confirmDeclineInvitation(): void {
+    if (this.pendingProjectInvitation) {
+      this.respondToProjectInvitation(this.pendingProjectInvitation, 'declined');
+      this.pendingProjectInvitation = null;
+    }
+  }
+
+  cancelDeclineInvitation(): void {
+    this.pendingProjectInvitation = null;
   }
 }
