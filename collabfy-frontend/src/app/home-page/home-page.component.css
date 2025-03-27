@@ -525,4 +525,14 @@
 }
 
 
+.connected-badge {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-right: 10px;
+}
+
+
 

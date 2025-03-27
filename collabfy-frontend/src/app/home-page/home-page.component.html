@@ -97,7 +97,8 @@
           </li>
         </ul>
       </div>
-      <div class="search-results" *ngIf="searchQuery && searchResults && searchResults.length === 0">
+      <!-- "User not found" is shown only if the search button has been pressed -->
+      <div class="search-results" *ngIf="searched && searchResults && searchResults.length === 0">
         <p>User not found</p>
       </div>
     </div>
