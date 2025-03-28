@@ -18,7 +18,7 @@ import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 export class MyProjectsPageComponent implements OnInit {
   projects: any[] = [];
   uid: string = '';
-  filterStatus: string | null = null; // "In Progress", "Complete", "Deadline", or null (show all)
+  filterStatus: string | null = null; // "In Progress", "Complete", "Deadline", "Alphabetical", or null
   projectToDelete: any = null; // Holds the project pending deletion
 
   faCheck = faCheck;
@@ -50,37 +50,43 @@ export class MyProjectsPageComponent implements OnInit {
     });
   }
 
+  // Helper method: returns true if the logged-in user is the owner of the project.
+  currentUserIsOwner(project: any): boolean {
+    return project.ownerId === this.uid;
+  }
+
   // Returns projects filtered based on the selected filter.
   getDisplayedProjects(): any[] {
     if (!this.filterStatus) {
       return this.projects;
     }
     if (this.filterStatus === 'Deadline') {
-      // Return all projects sorted by deadline ascending (closest deadline first)
       return this.projects.slice().sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
     }
     if (this.filterStatus === 'Alphabetical') {
       return this.projects.slice().sort((a, b) => a.projectName.localeCompare(b.projectName));
     }
-    // Otherwise, filter by status equality.
     return this.projects.filter(project => (project.status || 'In Progress') === this.filterStatus);
   }
 
   updateProject(project: any): void {
-    this.router.navigate(['/create-project-page'], { queryParams: { projectId: project.projectId } });
+    // Only allow update if current user is the owner.
+    if (this.currentUserIsOwner(project)) {
+      this.router.navigate(['/create-project-page'], { queryParams: { projectId: project.projectId } });
+    }
   }
 
-  // Open custom delete confirmation modal
   openDeleteModal(project: any): void {
-    this.projectToDelete = project;
+    if (this.currentUserIsOwner(project)) {
+      this.projectToDelete = project;
+    }
   }
 
-  // Confirm deletion from the modal (alert removed)
   confirmDelete(): void {
     if (this.projectToDelete) {
+      // Pass the owner's uid as part of the delete request if needed
       this.apiService.deleteProject(this.projectToDelete.projectId).subscribe({
         next: (response: any) => {
-          // Removed alert(response.message);
           this.fetchProjects();
           this.projectToDelete = null;
         },
@@ -93,48 +99,45 @@ export class MyProjectsPageComponent implements OnInit {
     }
   }
 
-  // Cancel deletion (close modal)
   cancelDelete(): void {
     this.projectToDelete = null;
   }
 
   markStatusToggle(project: any): void {
-    const currentStatus = project.status || 'In Progress';
-    const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
-    const payload = {
-      projectId: project.projectId,
-      status: newStatus
-    };
-    this.apiService.updateProject(payload).subscribe({
-      next: (response: any) => {
-        // Update the project status inline without showing an alert.
-        project.status = newStatus;
-      },
-      error: (error: any) => {
-        console.error('Error updating project status:', error);
-        alert('Error updating project status: ' + (error.error?.error || error.message));
-      }
-    });
+    if (this.currentUserIsOwner(project)) {
+      const currentStatus = project.status || 'In Progress';
+      const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
+      const payload = {
+        projectId: project.projectId,
+        status: newStatus,
+        requesterId: this.uid  // Pass the requester’s uid for authorization check
+      };
+      this.apiService.updateProject(payload).subscribe({
+        next: (response: any) => {
+          project.status = newStatus;
+        },
+        error: (error: any) => {
+          console.error('Error updating project status:', error);
+          alert('Error updating project status: ' + (error.error?.error || error.message));
+        }
+      });
+    }
   }
 
-  // Filter methods for the filter containers.
+  // Filter methods.
   filterInProgress(): void {
     this.filterStatus = 'In Progress';
   }
-
   filterComplete(): void {
     this.filterStatus = 'Complete';
   }
-
   filterDeadline(): void {
     this.filterStatus = 'Deadline';
   }
-
-  viewAllProjects(): void {
-    this.filterStatus = null;
-  }
-
   filterAlphabetical(): void {
     this.filterStatus = 'Alphabetical';
+  }
+  viewAllProjects(): void {
+    this.filterStatus = null;
   }
 }
