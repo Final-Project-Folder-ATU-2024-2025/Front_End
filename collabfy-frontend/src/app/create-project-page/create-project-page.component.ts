@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
-// Import FontAwesomeModule and required icons:
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,7 +19,8 @@ import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 export class CreateProjectPageComponent implements OnInit {
   projectName: string = '';
   description: string = '';
-  deadline: string = ''; // Expected format: YYYY-MM-DD
+  // Now expecting deadline in DD-MM-YYYY format
+  deadline: string = ''; 
   tasks: { taskName: string; taskDescription: string }[] = [{ taskName: '', taskDescription: '' }];
   connections: any[] = [];
   invitedCollaborators: any[] = [];
@@ -31,6 +31,10 @@ export class CreateProjectPageComponent implements OnInit {
 
   // Property for pending removal of a collaborator
   pendingRemovalCollaborator: any = null;
+  
+  // Property for showing a custom modal when deadline format error occurs
+  showDeadlineErrorModal: boolean = false;
+  deadlineErrorMessage: string = '';
 
   // Define icons for use in the template
   faCheck = faCheck;
@@ -60,9 +64,12 @@ export class CreateProjectPageComponent implements OnInit {
             this.projectName = proj.projectName;
             this.description = proj.description;
             if (proj.deadline && proj.deadline.seconds) {
-              this.deadline = new Date(proj.deadline.seconds * 1000)
-                .toISOString()
-                .substring(0, 10);
+              // Convert Firestore timestamp to DD-MM-YYYY format
+              const d = new Date(proj.deadline.seconds * 1000);
+              const day = ('0' + d.getDate()).slice(-2);
+              const month = ('0' + (d.getMonth() + 1)).slice(-2);
+              const year = d.getFullYear();
+              this.deadline = `${day}-${month}-${year}`;
             } else {
               this.deadline = proj.deadline;
             }
@@ -151,7 +158,13 @@ export class CreateProjectPageComponent implements OnInit {
             this.router.navigate(['/home-page']);
           },
           error: (error) => {
-            alert('Error updating project: ' + (error.error?.error || error.message));
+            // Instead of an alert, if the error is due to deadline format, show our custom modal with a green check icon only.
+            if (error.error && error.error.error && error.error.error.includes("Deadline must be in")) {
+              this.deadlineErrorMessage = error.error.error;
+              this.showDeadlineErrorModal = true;
+            } else {
+              alert('Error updating project: ' + (error.error?.error || error.message));
+            }
           }
         });
     } else {
@@ -183,13 +196,18 @@ export class CreateProjectPageComponent implements OnInit {
             this.router.navigate(['/home-page']);
           },
           error: (error) => {
-            alert('Error creating project: ' + (error.error?.error || error.message));
+            if (error.error && error.error.error && error.error.error.includes("Deadline must be in")) {
+              this.deadlineErrorMessage = error.error.error;
+              this.showDeadlineErrorModal = true;
+            } else {
+              alert('Error creating project: ' + (error.error?.error || error.message));
+            }
           }
         });
     }
   }
 
-  // Methods for Remove Collaborator confirmation modal using the custom modal style
+  // Methods for Remove Collaborator confirmation modal
   openRemoveCollaboratorModal(member: any): void {
     this.pendingRemovalCollaborator = member;
   }
@@ -219,6 +237,11 @@ export class CreateProjectPageComponent implements OnInit {
 
   cancelRemoveCollaborator(): void {
     this.pendingRemovalCollaborator = null;
+  }
+
+  closeDeadlineErrorModal(): void {
+    this.showDeadlineErrorModal = false;
+    this.deadlineErrorMessage = '';
   }
 
   goToHomePage(): void {

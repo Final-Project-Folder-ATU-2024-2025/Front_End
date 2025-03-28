@@ -135,7 +135,17 @@
   </div>
 </div>
 
-<!-- Remove Collaborator Confirmation Modal (custom overlay modal) -->
+<!-- Custom Modal for Deadline Error (green check icon only) -->
+<div class="delete-modal" *ngIf="showDeadlineErrorModal">
+  <div class="delete-modal-content">
+    <p>{{ deadlineErrorMessage }}</p>
+    <div class="modal-icons">
+      <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="closeDeadlineErrorModal()"></fa-icon>
+    </div>
+  </div>
+</div>
+
+<!-- Remove Collaborator Confirmation Modal -->
 <div class="delete-modal" *ngIf="pendingRemovalCollaborator">
   <div class="delete-modal-content">
     <p>
