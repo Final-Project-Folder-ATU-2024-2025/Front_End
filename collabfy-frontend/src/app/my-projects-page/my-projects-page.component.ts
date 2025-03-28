@@ -20,6 +20,7 @@ export class MyProjectsPageComponent implements OnInit {
   uid: string = '';
   filterStatus: string | null = null; // "In Progress", "Complete", "Deadline", "Alphabetical", or null
   projectToDelete: any = null; // Holds the project pending deletion
+  projectToLeave: any = null; // Holds the project pending leave action
 
   faCheck = faCheck;
   faCircleXmark = faCircleXmark;
@@ -70,7 +71,6 @@ export class MyProjectsPageComponent implements OnInit {
   }
 
   updateProject(project: any): void {
-    // Only allow update if current user is the owner.
     if (this.currentUserIsOwner(project)) {
       this.router.navigate(['/create-project-page'], { queryParams: { projectId: project.projectId } });
     }
@@ -84,7 +84,6 @@ export class MyProjectsPageComponent implements OnInit {
 
   confirmDelete(): void {
     if (this.projectToDelete) {
-      // Pass the owner's uid as part of the delete request if needed
       this.apiService.deleteProject(this.projectToDelete.projectId).subscribe({
         next: (response: any) => {
           this.fetchProjects();
@@ -103,6 +102,36 @@ export class MyProjectsPageComponent implements OnInit {
     this.projectToDelete = null;
   }
 
+  // New: Open Leave Project modal (for collaborators only)
+  openLeaveProjectModal(project: any): void {
+    if (!this.currentUserIsOwner(project)) {
+      this.projectToLeave = project;
+    }
+  }
+
+  confirmLeaveProject(): void {
+    if (this.projectToLeave) {
+      this.apiService.leaveProject(this.projectToLeave.projectId, this.uid).subscribe({
+        next: (response: any) => {
+          // Refresh the projects list and hide the modal without an alert
+          this.fetchProjects();
+          this.projectToLeave = null;
+        },
+        error: (error: any) => {
+          console.error("Error leaving project:", error);
+          alert("Error leaving project: " + (error.error?.error || error.message));
+          this.projectToLeave = null;
+        }
+      });
+    }
+  }
+  
+
+  // New: Cancel Leave Project modal
+  cancelLeaveProject(): void {
+    this.projectToLeave = null;
+  }
+
   markStatusToggle(project: any): void {
     if (this.currentUserIsOwner(project)) {
       const currentStatus = project.status || 'In Progress';
@@ -110,7 +139,7 @@ export class MyProjectsPageComponent implements OnInit {
       const payload = {
         projectId: project.projectId,
         status: newStatus,
-        requesterId: this.uid  // Pass the requester’s uid for authorization check
+        requesterId: this.uid
       };
       this.apiService.updateProject(payload).subscribe({
         next: (response: any) => {

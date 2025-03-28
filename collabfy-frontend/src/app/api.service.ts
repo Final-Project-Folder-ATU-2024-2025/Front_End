@@ -95,4 +95,9 @@ export class ApiService {
   login(credentials: { email: string, password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials, this.httpOptions);
   }
+
+  leaveProject(projectId: string, userId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/leave-project`, { projectId, userId }, this.httpOptions);
+  }
+  
 }

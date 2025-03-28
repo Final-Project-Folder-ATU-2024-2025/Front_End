@@ -103,7 +103,7 @@
         </div>
         <!-- Action Buttons -->
         <div class="column action">
-          <!-- Buttons are enabled only if the current user is the project owner -->
+          <!-- For owners, enable update, mark complete, and delete buttons -->
           <button 
             (click)="currentUserIsOwner(project) ? updateProject(project) : null" 
             [disabled]="!currentUserIsOwner(project)"
@@ -122,6 +122,13 @@
             [ngStyle]="{'background-color': currentUserIsOwner(project) ? 'rgb(250, 79, 0)' : '#ccc'}">
             Delete Project
           </button>
+          <!-- Leave Project button: visible only when current user is NOT the owner -->
+          <button 
+            *ngIf="!currentUserIsOwner(project)" 
+            (click)="openLeaveProjectModal(project)"
+            style="background-color: rgb(250, 79, 0);">
+            Leave Project
+          </button>
         </div>
       </div>
     </div>
@@ -135,6 +142,17 @@
     <div class="modal-icons">
       <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmDelete()"></fa-icon>
       <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelDelete()"></fa-icon>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Modal for Leaving Project -->
+<div class="delete-modal" *ngIf="projectToLeave">
+  <div class="delete-modal-content">
+    <p>Are you sure you want to leave project <strong>{{ projectToLeave.projectName }}</strong>?</p>
+    <div class="modal-icons">
+      <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmLeaveProject()"></fa-icon>
+      <fa-icon [icon]="faCircleXmark" class="modal-icon cancel-icon" (click)="cancelLeaveProject()"></fa-icon>
     </div>
   </div>
 </div>
