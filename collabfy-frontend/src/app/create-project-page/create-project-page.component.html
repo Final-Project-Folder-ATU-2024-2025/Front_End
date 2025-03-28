@@ -69,6 +69,7 @@
       </div>
       <div>
         <label for="deadline">Project Deadline:</label>
+        <!-- Deadline input remains type="date" for calendar selection -->
         <input type="date" id="deadline" [(ngModel)]="deadline" name="deadline" required />
       </div>
       <div>
@@ -112,7 +113,6 @@
             <span>{{ member.telephone }}</span>
           </div>
         </div>
-        <!-- If member is already in project (their UID is in currentTeamIds), show Remove button -->
         <div class="result-extra">
           <ng-container *ngIf="currentTeamIds.includes(member.uid); else inviteBlock">
             <button class="reject-button" (click)="openRemoveCollaboratorModal(member)">Remove</button>
@@ -135,12 +135,22 @@
   </div>
 </div>
 
-<!-- Custom Modal for Deadline Error (green check icon only) -->
+<!-- Custom Modal for Deadline Error -->
 <div class="delete-modal" *ngIf="showDeadlineErrorModal">
   <div class="delete-modal-content">
     <p>{{ deadlineErrorMessage }}</p>
     <div class="modal-icons">
       <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="closeDeadlineErrorModal()"></fa-icon>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Modal for Project Created -->
+<div class="delete-modal" *ngIf="showProjectCreatedModal">
+  <div class="delete-modal-content">
+    <p>Project created</p>
+    <div class="modal-icons">
+      <fa-icon [icon]="faCheck" class="modal-icon confirm-icon"></fa-icon>
     </div>
   </div>
 </div>

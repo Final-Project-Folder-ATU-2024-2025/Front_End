@@ -19,8 +19,8 @@ import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 export class CreateProjectPageComponent implements OnInit {
   projectName: string = '';
   description: string = '';
-  // Now expecting deadline in DD-MM-YYYY format
-  deadline: string = ''; 
+  // Deadline remains as DD-MM-YYYY format from the date picker
+  deadline: string = '';
   tasks: { taskName: string; taskDescription: string }[] = [{ taskName: '', taskDescription: '' }];
   connections: any[] = [];
   invitedCollaborators: any[] = [];
@@ -32,9 +32,10 @@ export class CreateProjectPageComponent implements OnInit {
   // Property for pending removal of a collaborator
   pendingRemovalCollaborator: any = null;
   
-  // Property for showing a custom modal when deadline format error occurs
+  // Properties for showing custom modals
   showDeadlineErrorModal: boolean = false;
   deadlineErrorMessage: string = '';
+  showProjectCreatedModal: boolean = false; // New property for project created modal
 
   // Define icons for use in the template
   faCheck = faCheck;
@@ -158,7 +159,6 @@ export class CreateProjectPageComponent implements OnInit {
             this.router.navigate(['/home-page']);
           },
           error: (error) => {
-            // Instead of an alert, if the error is due to deadline format, show our custom modal with a green check icon only.
             if (error.error && error.error.error && error.error.error.includes("Deadline must be in")) {
               this.deadlineErrorMessage = error.error.error;
               this.showDeadlineErrorModal = true;
@@ -172,7 +172,8 @@ export class CreateProjectPageComponent implements OnInit {
       this.http.post('http://127.0.0.1:5000/api/create-project', projectData)
         .subscribe({
           next: (response: any) => {
-            alert('Project created successfully!');
+            // Show the custom "Project created" modal instead of an alert.
+            this.showProjectCreatedModal = true;
             const newProjectId = response.projectId;
             // For each invited collaborator, send invitation
             this.invitedCollaborators.forEach(member => {
@@ -193,7 +194,10 @@ export class CreateProjectPageComponent implements OnInit {
                   }
                 });
             });
-            this.router.navigate(['/home-page']);
+            // After a 2-second delay, navigate to the home page.
+            setTimeout(() => {
+              this.router.navigate(['/home-page']);
+            }, 2000);
           },
           error: (error) => {
             if (error.error && error.error.error && error.error.error.includes("Deadline must be in")) {
