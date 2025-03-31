@@ -5,16 +5,22 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FooterComponent } from '../footer/footer.component';
 import { Router } from '@angular/router';
 import { HeaderPublicComponent } from '../header-public/header-public.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-create-account-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, HeaderPublicComponent, FooterComponent, FontAwesomeModule],
   templateUrl: './create-account-page.component.html',
   styleUrls: ['./create-account-page.component.css']
 })
 export class CreateAccountPageComponent {
   form: FormGroup;
+  // New property to control display of our custom modal
+  showAccountCreatedModal: boolean = false;
+  // FontAwesome icon for the modal
+  faCheck = faCheck;
 
   constructor(
     private fb: FormBuilder,
@@ -24,7 +30,6 @@ export class CreateAccountPageComponent {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: ['', [Validators.required]],
-      // Telephone field is optional. Pattern allows digits, plus, minus, spaces, and parentheses.
       telephone: ['', [Validators.pattern(/^(?:[0-9\+\-\(\) ]{6,15})?$/)]],
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -44,7 +49,6 @@ export class CreateAccountPageComponent {
     console.log('onSubmit called');
     if (this.form.invalid) {
       console.error('Form is invalid:', this.form.value);
-      // Check for password errors and show a specific alert if needed:
       const passwordControl = this.form.get('password');
       if (passwordControl && passwordControl.errors) {
         if (passwordControl.errors['pattern']) {
@@ -73,10 +77,8 @@ export class CreateAccountPageComponent {
     }).subscribe({
       next: (response) => {
         console.log('Response from create-user:', response);
-        alert('Account created successfully!');
-        this.form.reset();
-        // Redirect to the Login page after successful account creation.
-        this.router.navigate(['/login']);
+        // Instead of an alert, show our custom modal
+        this.showAccountCreatedModal = true;
       },
       error: (error) => {
         console.error('Error creating account:', error);
@@ -85,7 +87,7 @@ export class CreateAccountPageComponent {
     });
   }
 
-  // Methods to implement press-and-hold to show password functionality.
+  // Press-and-hold functionality to temporarily show password text.
   onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
     if (event.button === 0) {
       input.type = 'text';
@@ -98,5 +100,12 @@ export class CreateAccountPageComponent {
       input.type = 'password';
       event.preventDefault();
     }
+  }
+
+  // When the user clicks the check icon in the modal, close the modal, reset the form, and navigate to login.
+  confirmAccountCreated(): void {
+    this.showAccountCreatedModal = false;
+    this.form.reset();
+    this.router.navigate(['/login']);
   }
 }
