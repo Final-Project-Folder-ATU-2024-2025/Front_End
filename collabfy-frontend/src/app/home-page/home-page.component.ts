@@ -1,16 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// =======================================================================
+// Import necessary Angular core modules and utilities
+// -----------------------------------------------------------------------
+import { Component, OnInit, OnDestroy } from '@angular/core'; // Component, lifecycle hooks
+import { CommonModule } from '@angular/common'; // Common directives (ngIf, ngFor, etc.)
+import { FormsModule } from '@angular/forms'; // Template-driven forms (ngModel)
+import { HttpClientModule, HttpClient } from '@angular/common/http'; // For HTTP requests
+import { Router } from '@angular/router'; // For navigation
+import { Subscription } from 'rxjs'; // For managing subscriptions
+
+// =======================================================================
+// Import custom components and services
+// -----------------------------------------------------------------------
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { ChatComponent } from '../shared/chat/chat.component';
 import { ApiService } from '../api.service';
-import { Subscription } from 'rxjs';
+
+// =======================================================================
+// Import FontAwesome modules and icons
+// -----------------------------------------------------------------------
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
+// =======================================================================
+// HomePageComponent:
+// This component controls the home page which includes a slider,
+// phases cards, connection search and list, notifications, and modals.
+// =======================================================================
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -27,6 +43,7 @@ import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
+  // Variables for slider options, connections, notifications, etc.
   options = ['Project Deadlines', 'Notifications'];
   currentIndex: number = 0;
   isAnimating: boolean = false;
@@ -65,14 +82,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
   ];
   currentSlideIndex: number = 0;
 
-  // Properties for disconnect confirmation modal
+  // Modal properties
   disconnectUser: any = null;
+  pendingProjectInvitation: any = null;
+
+  // FontAwesome icons for modals
   faCheck = faCheck;
   faCircleXmark = faCircleXmark;
 
-  // New property for project invitation decline confirmation
-  pendingProjectInvitation: any = null;
-
+  // Intervals and subscriptions for updating notifications and slider
   private notificationsInterval: any;
   private sliderInterval: any;
   private subscriptions: Subscription = new Subscription();
@@ -80,20 +98,23 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {}
 
   ngOnInit(): void {
-    // Initially load notifications and connections
+    // Load notifications and connections when component initializes
     this.fetchNotifications();
     this.fetchConnections();
 
+    // Refresh notifications every 30 seconds
     this.notificationsInterval = setInterval(() => {
       this.fetchNotifications();
     }, 30000);
 
+    // Start the slider auto-play every 4 seconds
     this.sliderInterval = setInterval(() => {
       this.nextSlide();
     }, 4000);
   }
 
   ngOnDestroy(): void {
+    // Clear intervals and unsubscribe to prevent memory leaks
     if (this.notificationsInterval) {
       clearInterval(this.notificationsInterval);
     }
@@ -103,10 +124,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  // Advances the slider to the next slide
   nextSlide(): void {
     this.currentSlideIndex = (this.currentSlideIndex + 1) % this.sliderSlides.length;
   }
 
+  // Navigates to a specific slide and resets the auto-play interval
   goToSlide(index: number): void {
     this.currentSlideIndex = index;
     clearInterval(this.sliderInterval);
@@ -115,6 +138,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
+  // Searches for users based on the search query
   searchConnections(): void {
     console.log('Search query:', this.searchQuery);
     this.searched = true;
@@ -129,7 +153,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }).subscribe({
       next: (response: any) => {
         console.log('Search response:', response);
-        // Filter out the current user from results
+        // Exclude the current user from search results
         this.searchResults = (response.results || []).filter(
           (user: any) => user.uid !== currentUserId
         );
@@ -140,10 +164,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Removes a user from the search results
   removeSearchResult(user: any): void {
     this.searchResults = this.searchResults.filter((u) => u.email !== user.email);
   }
 
+  // Toggles connection (send or cancel connection request)
   toggleConnection(user: any): void {
     const fromUserId = localStorage.getItem('uid') || 'user1';
     const toUserId = user.uid;
@@ -170,11 +196,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Helper function to check if a user is already connected
+  // Checks if the user is already connected
   isConnected(user: any): boolean {
     return this.connections.some(conn => conn.email === user.email);
   }
 
+  // Fetches notifications using the ApiService
   fetchNotifications(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
@@ -195,6 +222,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Sends a response to a connection request (accept or reject)
   respondToConnection(notif: any, action: string): void {
     this.apiService.respondConnectionRequest({ requestId: notif.connectionRequestId, action })
       .subscribe({
@@ -207,6 +235,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Dismisses a notification using the ApiService
   dismissNotification(notif: any): void {
     const uid = localStorage.getItem('uid');
     if (!uid || !notif.id) {
@@ -223,6 +252,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Fetches current connections from the API
   fetchConnections(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
@@ -240,6 +270,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Fetches user's projects from the API (used for deadlines)
   fetchMyProjects(): void {
     const uid = localStorage.getItem('uid');
     if (!uid) {
@@ -257,16 +288,20 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Retrieves project deadlines by reusing the myProjects data
   fetchProjectDeadlines(): void {
     this.fetchMyProjects();
     this.projectDeadlines = this.myProjects;
   }
 
+  // Navigate to the home page
   goHome(): void {
     this.router.navigate(['/home-page']);
   }
 
-  // --- Disconnect Confirmation Modal Methods ---
+  // =======================================================================
+  // Disconnect Confirmation Modal Methods
+  // =======================================================================
   openDisconnectModal(user: any): void {
     console.log("openDisconnectModal triggered for", user);
     this.disconnectUser = user;
@@ -279,9 +314,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
       this.http.post('http://127.0.0.1:5000/api/disconnect', { userId, disconnectUserId })
         .subscribe({
           next: (response: any) => {
-            // After successful disconnect, remove the user from the connections list.
+            // Remove the disconnected user from the connections list and refresh
             this.connections = this.connections.filter(conn => conn.email !== this.disconnectUser.email);
-            // Re-fetch connections to update search results.
             this.fetchConnections();
             this.disconnectUser = null;
           },
@@ -297,7 +331,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.disconnectUser = null;
   }
 
-  // --- Project Invitation Response Methods ---
+  // =======================================================================
+  // Project Invitation Response Methods
+  // =======================================================================
   respondToProjectInvitation(notif: any, action: string): void {
     this.http.post('http://127.0.0.1:5000/api/respond-project-invitation', {
       invitationId: notif.id,
@@ -305,7 +341,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
       userId: localStorage.getItem('uid')
     }).subscribe({
       next: (response: any) => {
-        // Remove the processed invitation notification from the list.
+        // Remove invitation notification after response
         this.notifications = this.notifications.filter(n => n.id !== notif.id);
       },
       error: (error: any) => {
@@ -315,7 +351,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   openDeclineInvitationModal(notif: any): void {
-    // Open the same pop-up window for decline confirmation
+    // Open modal to confirm invitation decline
     this.pendingProjectInvitation = notif;
   }
 

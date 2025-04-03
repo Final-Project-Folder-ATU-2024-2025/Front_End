@@ -1,3 +1,8 @@
+<!-- =======================================================================
+     Home Page Template
+     This template displays the mission section, phases cards, connections,
+     slider, and modals for disconnect and project invitation decline.
+======================================================================== -->
 <app-header></app-header>
 
 <!-- Mission Section -->
@@ -8,6 +13,7 @@
 
 <!-- Phases Cards Section -->
 <div class="phases-container">
+  <!-- Phase Card 1 -->
   <div class="phase-card">
     <h2 class="phase-title">Phase 1</h2>
     <hr class="phase-divider">
@@ -18,6 +24,7 @@
       Kickstarting our journey by establishing essential strategies and building core infrastructures that nurture innovation.
     </p>
   </div>
+  <!-- Phase Card 2 -->
   <div class="phase-card">
     <h2 class="phase-title">Phase 2</h2>
     <hr class="phase-divider">
@@ -28,6 +35,7 @@
       Harnessing diverse talents and fostering collaborative environments to spark fresh ideas and drive innovative solutions.
     </p>
   </div>
+  <!-- Phase Card 3 -->
   <div class="phase-card">
     <h2 class="phase-title">Phase 3</h2>
     <hr class="phase-divider">
@@ -52,15 +60,15 @@
     <img ngOptimizedImage src="/assets/images/home_page/homep_img5.jpg" width="120" height="120" alt="Connection 2" class="phase-image" loading="lazy">
     <img ngOptimizedImage src="/assets/images/home_page/homep_img6.jpg" width="120" height="120" alt="Connection 3" class="phase-image" loading="lazy">
   </div>
-  <!-- Connections Inner Container (Search and List) -->
+  <!-- Connections Inner Container: Contains search and connection list -->
   <div class="connections-inner" style="display: flex; flex-direction: row; justify-content: center; gap: 10px;">
-    <!-- Create a New Connection -->
+    <!-- New Connection Creation Card -->
     <div class="phase-card connection-create">
       <h2 class="phase-title">Create a New Connection</h2>
       <hr class="phase-divider">
       <input type="text" [(ngModel)]="searchQuery" placeholder="Name, surname, or email" />
       <button class="search-button" (click)="searchConnections()">Search</button>
-
+      <!-- Display search results if available -->
       <div class="search-results" *ngIf="searchResults && searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults">
@@ -79,7 +87,6 @@
                   {{ user.telephone || user.business_phone || '' }}
                 </div>
               </div>
-              <!-- New row for connection actions below telephone -->
               <div class="result-extra">
                 <ng-container *ngIf="isConnected(user); else notConnected">
                   <span class="connected-badge">Connected</span>
@@ -97,12 +104,12 @@
           </li>
         </ul>
       </div>
-      <!-- "User not found" is shown only if the search button has been pressed and there are no results -->
+      <!-- Display "User not found" if search yields no results -->
       <div class="search-results" *ngIf="searched && searchResults && searchResults.length === 0">
         <p>User not found</p>
       </div>
     </div>
-    <!-- Your Connections List -->
+    <!-- Connections List Card -->
     <div class="phase-card connection-count">
       <h2 class="phase-title">Your Connections</h2>
       <hr class="phase-divider">
@@ -120,7 +127,7 @@
             <i class="fa-solid fa-phone result-icon"></i>
             {{ conn.telephone }}
           </div>
-          <!-- Disconnect button now opens the confirmation modal -->
+          <!-- Disconnect button opens the confirmation modal -->
           <button class="disconnect-button" (click)="openDisconnectModal(conn)">Disconnect</button>
         </li>
       </ul>
@@ -128,7 +135,7 @@
         You have no connections.
       </div>
     </div>
-    <!-- Notifications Section -->
+    <!-- Notifications Card -->
     <div class="phase-card connection-notifications" style="max-height: 350px; overflow-y: auto;">
       <h2 class="phase-title">Notifications</h2>
       <hr class="phase-divider">
@@ -168,7 +175,7 @@
   </div>
 </div>
 
-<!-- Slider Section -->
+<!-- Slider Section: Displays a slider with images and overlay text -->
 <div class="slider-container">
   <div class="slider-wrapper" [ngStyle]="{'transform': 'translateX(-' + currentSlideIndex * 100 + '%)'}">
     <div class="slide" *ngFor="let slide of sliderSlides">
@@ -181,6 +188,7 @@
       </div>
     </div>
   </div>
+  <!-- Pagination dots for the slider -->
   <div class="pagination">
     <span class="dot" *ngFor="let slide of sliderSlides; let i = index"
           [class.active]="i === currentSlideIndex"

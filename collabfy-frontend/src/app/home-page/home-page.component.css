@@ -1,106 +1,142 @@
-/* Overall page styling */
+/* =======================================================================
+   Global Host Styles: Ensure the component fills the viewport and the 
+   footer stays at the bottom.
+======================================================================== */
+:host {
+  display: flex;                      /* Use Flexbox for layout */
+  flex-direction: column;             /* Stack child elements vertically */
+  min-height: 100vh;                  /* Minimum height equals the full viewport */
+}
+
+/* =======================================================================
+   Home Container: The main container for the home page.
+   Centers content vertically and horizontally.
+======================================================================== */
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: calc(100vh - 80px);
-  padding: 25px 0;
-  box-sizing: border-box;
+  display: flex;                      /* Flexbox layout */
+  flex-direction: column;             /* Stack children vertically */
+  align-items: center;                /* Center children horizontally */
+  height: calc(100vh - 80px);           /* Full height minus header/footer */
+  padding: 25px 0;                    /* Vertical padding */
+  box-sizing: border-box;             /* Include padding in the element’s dimensions */
 }
 
-/* Slider container styling */
+/* =======================================================================
+   Slider Container: Container that holds the sliding images.
+   Positioned relative to allow absolute positioning for inner elements.
+======================================================================== */
 .slider-container {
-  flex: 1;
-  width: 80%;
-  position: relative;
-  overflow: hidden;
-  margin: 0 auto; /* center it */
+  flex: 1;                            /* Allow the container to grow */
+  width: 80%;                         /* 80% of the available width */
+  position: relative;                 /* For absolute positioning of child elements */
+  overflow: hidden;                   /* Hide any overflow content */
+  margin: 0 auto;                     /* Center the container horizontally */
 }
 
-/* Slider wrapper styling */
+/* =======================================================================
+   Slider Wrapper: Holds all the slides and animates the slide transition.
+======================================================================== */
 .slider-wrapper {
-  display: flex;
-  transition: transform 0.5s ease;
-  height: 100%;
+  display: flex;                      /* Display slides in a row */
+  transition: transform 0.5s ease;    /* Smooth transition for sliding effect */
+  height: 100%;                       /* Full height of the slider container */
 }
 
-/* Slide styling */
+/* =======================================================================
+   Slide: Individual slide style.
+   Each slide takes up 100% width and centers its content.
+======================================================================== */
 .slide {
-  flex: 0 0 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  flex: 0 0 100%;                     /* Each slide occupies 100% width */
+  display: flex;                      /* Use flexbox for centering content */
+  justify-content: center;            /* Center content horizontally */
+  align-items: center;                /* Center content vertically */
+  height: 100%;                       /* Full height of the container */
 }
 
-/* Bottom image container and wrapper (for slider) */
+/* =======================================================================
+   Bottom Image Container & Wrapper: For slider images.
+   Centers the image and text overlays.
+======================================================================== */
 .bottom-image-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
+  max-width: 1200px;                  /* Maximum width for the container */
+  margin: 0 auto;                     /* Center horizontally */
+  display: flex;                      /* Use flexbox to center content */
   justify-content: center;
   align-items: center;
   padding: 20px;
   width: 100%;
-  gap: 40px;
+  gap: 40px;                         /* Space between any children */
 }
 
 .bottom-image-wrapper {
-  position: relative;
+  position: relative;                 /* Allows positioning of overlay text */
   display: inline-block;
   width: 100%;
 }
 
-/* Slider image styling: keep the original fixed height and size as before */
+/* =======================================================================
+   Bottom Image: Style for images in the slider.
+   Uses fixed height and fills the container.
+======================================================================== */
 .bottom-image {
-  max-inline-size: 100%;
+  max-inline-size: 100%;              /* Ensure image doesn't exceed container width */
   block-size: auto;
   width: 100%;
-  height: 600px;     /* Preserve original fixed height */
-  object-fit: fill;  /* Use fill to stretch to container */
-  border-radius: 60px;
-  margin: 0 auto;
+  height: 600px;                     /* Fixed height for the slider image */
+  object-fit: fill;                  /* Stretch image to fill container */
+  border-radius: 60px;               /* Rounded corners */
+  margin: 0 auto;                    /* Center image horizontally */
 }
 
-/* Shared styles for text over the image */
+/* =======================================================================
+   Bottom Image Text: Shared styling for overlay text on slider images.
+======================================================================== */
 .bottom-image-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-  pointer-events: none;
+  position: absolute;                /* Positioned over the image */
+  left: 50%;                         /* Center horizontally */
+  transform: translateX(-50%);       /* Adjust centering */
+  color: white;                      /* White text */
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7); /* Add shadow for readability */
+  pointer-events: none;              /* Disable mouse events */
 }
 .bottom-image-text.header {
-  top: 70%;         /* Adjust as needed */
-  font-size: 3rem;
+  top: 70%;                         /* Position header text */
+  font-size: 3rem;                  /* Large font size for header */
 }
 .bottom-image-text.subtext {
-  top: 80%;         /* Positioned below the header */
-  font-size: 1.5rem;
+  top: 80%;                         /* Position subtext below header */
+  font-size: 1.5rem;                /* Medium font size for subtext */
 }
 
-/* Phase Cards Section */
+/* =======================================================================
+   Phases Cards Section: Container for phase cards.
+   Arranged in a row with gaps.
+======================================================================== */
 .phases-container {
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  justify-content: space-between;   /* Evenly space phase cards */
+  align-items: stretch;             /* Stretch to match height */
   gap: 40px;
   width: 100%;
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 40px auto;                /* Center container with vertical margin */
   padding: 0 20px;
 }
+
+/* =======================================================================
+   Phase Card: Styling for each individual phase card.
+======================================================================== */
 .phase-card {
   flex: 1;
   max-width: 400px;
-  min-height: 500px;  /* Increased minimum height for a longer container */
-  background-color: rgba(255, 255, 255, 0.9);
+  min-height: 500px;                 /* Minimum height for consistency */
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 25px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Light drop shadow */
 }
 .phase-card .phase-title {
   margin: 0;
@@ -128,7 +164,10 @@
   color: #555;
 }
 
-/* Connections Section */
+/* =======================================================================
+   Connections Section: Container for user connections.
+   Includes a title, tagline, images, and inner sections.
+======================================================================== */
 .connections-container {
   padding: 0 20px;
 }
@@ -159,15 +198,17 @@
 }
 .connections-inner {
   display: flex;
-  flex-direction: column; /* Stack items vertically by default */
-  align-items: center;    /* Center items horizontally */
+  flex-direction: column;         /* Stack items vertically */
+  align-items: center;            /* Center horizontally */
   gap: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
-/* Notifications Section */
-/* Style the notifications container similar to the other connection boxes */
+/* =======================================================================
+   Notifications Section: Container for notifications.
+   Styled as a card with a fixed width.
+======================================================================== */
 .connection-notifications {
   flex: 1;
   padding: 10px;
@@ -178,17 +219,12 @@
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 8px;
-  width: 33.33%;
-  /* Remove any extra margins if needed */
-  margin: 0;
+  width: 33.33%;                   /* One-third width */
+  margin: 0;                       /* No extra margin */
 }
-
-/* Hide any HR element within the notifications container */
 .connection-notifications hr {
-  display: none;
+  display: none;                   /* Hide horizontal rules */
 }
-
-/* Style the header of the notifications container to match others */
 .connection-notifications .phase-title {
   margin: 0 0 10px 0;
   font-size: 1.8rem;
@@ -196,13 +232,10 @@
   border-bottom: 2px solid #050505;
   padding-bottom: 10px;
 }
-
-/* Notifications inner styling */
 .notifications-inner {
   padding: 10px;
   text-align: left;
 }
-
 .notification-item {
   border-bottom: 1px solid #ccc;
   padding: 5px 0;
@@ -215,7 +248,9 @@
   margin-right: 5px;
 }
 
-/* Connections inner squares styling */
+/* =======================================================================
+   Connections Inner Squares: Styles for connection creation and count.
+======================================================================== */
 .connection-create,
 .connection-count {
   flex: 1;
@@ -228,8 +263,8 @@
   justify-content: flex-start;
 }
 .connection-create {
-  width: 33.33%;  /* One-third of the container width */
-  border-radius: 8px; /* Slightly rounded borders */
+  width: 33.33%;                  /* One-third width */
+  border-radius: 8px;
 }
 .connection-count {
   width: 33.33%;
@@ -251,7 +286,9 @@
   box-sizing: border-box;
 }
 
-/* Search Button styling */
+/* =======================================================================
+   Search Button: Styling for search buttons in connection sections.
+======================================================================== */
 .search-button {
   background-color: rgb(250, 79, 0);
   color: white;
@@ -266,7 +303,9 @@
   background-color: rgb(207, 77, 17);
 }
 
-/* Delete Search Button styling */
+/* =======================================================================
+   Delete Search Button: Styling for the button to remove a search result.
+======================================================================== */
 .delete-search-button {
   background: none;
   border: none;
@@ -279,7 +318,9 @@
   color: #c9302c;
 }
 
-/* Search results styling */
+/* =======================================================================
+   Search Results: Styling for displaying search result lists.
+======================================================================== */
 .search-results {
   margin-top: 10px;
   text-align: left;
@@ -314,7 +355,9 @@
   gap: 10px;
 }
 
-/* Navigation arrow buttons styling */
+/* =======================================================================
+   Navigation Arrow Buttons: For slider navigation.
+======================================================================== */
 .arrow {
   position: absolute;
   top: 50%;
@@ -334,7 +377,9 @@
   right: 10px;
 }
 
-/* Pagination dots styling (keeping the original 3 lines look) */
+/* =======================================================================
+   Pagination Dots: Styling for the slider pagination indicators.
+======================================================================== */
 .pagination {
   margin-bottom: 30px;
   margin-top: 30px;
@@ -344,7 +389,7 @@
 }
 .dot {
   width: 60px;
-  height: 5px;          
+  height: 5px;
   border-radius: 20px;
   margin: 5px;
   background-color: #e4e9ed;
@@ -357,7 +402,9 @@
   border: 2px solid #869fbb;
 }
 
-/* Accept button styling */
+/* =======================================================================
+   Accept Button: For accepting connection requests.
+======================================================================== */
 .accept-button {
   background-color: #5cb85c;
   color: white;
@@ -372,7 +419,9 @@
   background-color: #4cae4c;
 }
 
-/* Reject button styling */
+/* =======================================================================
+   Reject Button: For rejecting connection requests.
+======================================================================== */
 .reject-button {
   background-color: #d9534f;
   color: white;
@@ -387,7 +436,9 @@
   background-color: #c9302c;
 }
 
-/* Disconnect button styling */
+/* =======================================================================
+   Disconnect Button: For disconnecting from a connection.
+======================================================================== */
 .disconnect-button {
   background-color: #d9534f;
   color: white;
@@ -399,14 +450,16 @@
   font-size: 0.9rem;
   display: block;
   text-align: left;
-  pointer-events: auto;  /* Ensure pointer events are enabled */
-  z-index: 100;          /* Bring it above overlapping elements */
+  pointer-events: auto;
+  z-index: 100;
 }
 .disconnect-button:hover {
   background-color: #c9302c;
 }
 
-/* Mission section styling */
+/* =======================================================================
+   Mission Section: Styling for the "Our Mission" section.
+======================================================================== */
 .mission-container {
   display: flex;
   flex-direction: column;
@@ -425,7 +478,9 @@
   color: #555;
 }
 
-/* Additional styling for connection list dividers */
+/* =======================================================================
+   Connection List Dividers: Additional styling for connection list items.
+======================================================================== */
 .connection-count li {
   position: relative;
   padding-bottom: 20px;
@@ -441,7 +496,9 @@
   transform: translateX(-50%);
 }
 
-/* Dismiss Button styling for notifications */
+/* =======================================================================
+   Dismiss Button for Notifications: Styling for dismissing notifications.
+======================================================================== */
 .dismiss-button {
   background-color: #d9534f;
   color: white;
@@ -458,17 +515,21 @@
   background-color: #c9302c;
 }
 
+/* =======================================================================
+   Custom Modal Styling: Used for deadline errors, project created, and 
+   remove collaborator confirmations.
+======================================================================== */
 .delete-modal {
-  position: fixed;
+  position: fixed;                   /* Overlay covering the entire viewport */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0,0,0,0.5); /* Semi-transparent background */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;  /* Very high to ensure it's on top */
+  z-index: 10000;                   /* High z-index to ensure it overlays other elements */
 }
 .delete-modal-content {
   background-color: #fff;
@@ -499,6 +560,9 @@
   color: #333;
 }
 
+/* =======================================================================
+   Connected Badge: Styling for displaying connection status badges.
+======================================================================== */
 .connected-badge {
   display: inline-block;
   border: 1px solid #ccc;
@@ -508,6 +572,9 @@
   margin-right: 10px;
 }
 
+/* =======================================================================
+   Result Extra: Additional container for extra details in search results.
+======================================================================== */
 .result-extra {
   margin-top: 10px;
   display: flex;
@@ -515,6 +582,9 @@
   justify-content: center;
 }
 
+/* =======================================================================
+   (Repeated) Connected Badge: Ensuring consistency in badge styling.
+======================================================================== */
 .connected-badge {
   display: inline-block;
   border: 1px solid #ccc;
@@ -523,16 +593,3 @@
   font-size: 0.9rem;
   margin-right: 10px;
 }
-
-
-.connected-badge {
-  display: inline-block;
-  border: 1px solid #ccc;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  margin-right: 10px;
-}
-
-
-
