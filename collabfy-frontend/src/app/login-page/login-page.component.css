@@ -1,143 +1,188 @@
-/* Ensure the page occupies the full viewport height */
+/* =======================================================================
+   Global Host Styles:
+   Ensure the component fills the full viewport height.
+======================================================================== */
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: flex;                   /* Use Flexbox layout */
+  flex-direction: column;          /* Stack children vertically */
+  min-height: 100vh;               /* Full viewport height */
 }
 
-/* Container that splits the page into two columns */
+/* =======================================================================
+   Main Container for Login Page:
+   Splits the page into two columns: the form (left) and the info section (right).
+======================================================================== */
 .login-page-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  display: flex;                   /* Use Flexbox for layout */
+  flex-direction: row;             /* Arrange children side-by-side */
+  justify-content: center;         /* Center horizontally */
+  align-items: center;             /* Center vertically */
+  flex: 1;                         /* Allow container to grow */
+  padding: 20px;                   /* Padding inside container */
+  width: 100%;                     /* Full width */
+  box-sizing: border-box;          /* Include padding in width calculation */
+  overflow-x: hidden;              /* Prevent horizontal scrolling */
 }
 
-/* Form container (left side) */
+/* =======================================================================
+   Form Container:
+   Left-side container for the login form with semi-transparent background.
+======================================================================== */
 .form-container {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-  margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.8);  /* Semi-transparent white */
+  padding: 20px;                               /* Internal spacing */
+  border-radius: 8px;                          /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);       /* Subtle shadow effect */
+  width: 100%;                                 /* Full width within limit */
+  max-width: 500px;                            /* Maximum width */
+  margin-right: 20px;                          /* Space to the right */
 }
 
-/* Info container (right side) */
+/* =======================================================================
+   Info Container:
+   Right-side container that provides promotional text and images.
+======================================================================== */
 .info-container {
-  flex: 1;
-  padding: 20px;
-  text-align: left;
-  margin-left: 40px;
+  flex: 1;                        /* Take up remaining space */
+  padding: 20px;                  /* Internal spacing */
+  text-align: left;               /* Left-align text */
+  margin-left: 40px;              /* Space to the left */
 }
 
-/* Info text styling */
+/* =======================================================================
+   Informational Text Styles:
+   Styling for small, large, and descriptive text in the info section.
+======================================================================== */
 .info-small {
-  font-size: 16px;
-  color: rgb(242, 93, 60);
-  margin: 0;
-  font-weight: bold;
+  font-size: 16px;                /* Small font size */
+  color: rgb(242, 93, 60);        /* Orange tone */
+  margin: 0;                      /* No margin */
+  font-weight: bold;              /* Bold text */
 }
+
 .info-large {
-  font-size: 32px;
-  font-weight: bold;
-  margin: 10px 0;
+  font-size: 32px;                /* Large heading text */
+  font-weight: bold;              /* Bold text */
+  margin: 10px 0;                /* Vertical spacing */
 }
+
 .info-description {
-  font-size: 20px;
-  color: #333;
-  margin: 10px 0;
+  font-size: 20px;                /* Medium-large font size */
+  color: #333;                    /* Dark gray text */
+  margin: 10px 0;                /* Vertical spacing */
 }
 
-/* Container for the three images arranged side by side */
+/* =======================================================================
+   Images Container:
+   Arranges the images horizontally with a gap.
+======================================================================== */
 .images-container {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  margin-top: 20px;
+  display: flex;                  /* Use Flexbox layout */
+  justify-content: flex-start;    /* Align images to the left */
+  gap: 10px;                      /* Space between images */
+  margin-top: 20px;               /* Top margin */
 }
+
 .images-container img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 100px;                   /* Fixed width */
+  height: 100px;                  /* Fixed height */
+  border-radius: 50%;             /* Circular images */
+  object-fit: cover;              /* Ensure images cover the container */
 }
 
-/* Spacing for each form group */
+/* =======================================================================
+   Form Group Styling:
+   Spacing and styling for each input field group in the form.
+======================================================================== */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 15px;            /* Space between form groups */
 }
+
 .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  display: block;                 /* Label occupies full width */
+  margin-bottom: 5px;             /* Margin below label */
+  font-weight: bold;              /* Bold label text */
 }
+
 .form-group input {
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
-  font-size: 14px;
+  width: 100%;                    /* Full-width input */
+  padding: 6px;                   /* Internal padding */
+  box-sizing: border-box;         /* Include padding in width calculation */
+  font-size: 14px;                /* Standard font size */
 }
 
-/* Button styling for the Login button */
+/* =======================================================================
+   Button Styling:
+   Styling for the primary Login button.
+======================================================================== */
 button {
-  width: 100%;
-  padding: 10px 20px;
-  background-color: rgb(250, 79, 0);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
+  width: 100%;                    /* Full width button */
+  padding: 10px 20px;             /* Padding inside button */
+  background-color: rgb(250, 79, 0);/* Orange background */
+  color: white;                   /* White text */
+  border: none;                   /* No border */
+  border-radius: 4px;             /* Rounded corners */
+  cursor: pointer;                /* Pointer cursor on hover */
+  margin-top: 10px;               /* Top margin */
 }
+
 button:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
 }
 
-/* Password container styling */
+/* =======================================================================
+   Password Container:
+   Holds the password input and a toggle icon for visibility.
+======================================================================== */
 .password-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+  position: relative;             /* Enable positioning for icon */
+  display: flex;                  /* Use Flexbox for alignment */
+  align-items: center;            /* Vertically center contents */
 }
+
 .password-container input {
-  width: 100%;
-  padding-right: 40px;
+  width: 100%;                    /* Full width input */
+  padding-right: 40px;            /* Space for the toggle icon */
 }
 
-/* Password icon styling */
+/* =======================================================================
+   Password Icon:
+   Styling for the icon that toggles password visibility.
+======================================================================== */
 .password-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  cursor: pointer;
+  position: absolute;             /* Position within container */
+  right: 10px;                    /* 10px from right */
+  top: 50%;                       /* Vertically centered */
+  transform: translateY(-50%);    /* Adjust vertical alignment */
+  color: #999;                    /* Gray color */
+  cursor: pointer;                /* Pointer on hover */
 }
 
-/* Forgot password link styling */
+/* =======================================================================
+   Forgot Password Link:
+   Styling for the "Forgot password?" link below the form.
+======================================================================== */
 .forgot-password {
-  margin-top: 10px;
-  text-align: right;
-}
-.forgot-password a {
-  color: rgb(242, 93, 60);
-  text-decoration: none;
-  font-size: 14px;
-}
-.forgot-password a:hover {
-  text-decoration: underline;
+  margin-top: 10px;               /* Top margin */
+  text-align: right;              /* Right-align text */
 }
 
-/* Error message styling */
+.forgot-password a {
+  color: rgb(242, 93, 60);        /* Orange text */
+  text-decoration: none;          /* No underline */
+  font-size: 14px;                /* Small font size */
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;     /* Underline on hover */
+}
+
+/* =======================================================================
+   Error Message:
+   Styling for inline error messages in the form.
+======================================================================== */
 .error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+  color: red;                     /* Red text for errors */
+  font-size: 14px;                /* Standard font size */
+  margin-top: 10px;               /* Top margin */
 }

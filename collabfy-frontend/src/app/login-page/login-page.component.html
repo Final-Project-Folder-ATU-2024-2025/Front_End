@@ -1,14 +1,23 @@
+<!-- =======================================================================
+     Login Page Template
+     Splits the page into two columns: the form and an info section with images.
+======================================================================== -->
 <app-header-public></app-header-public>
 
 <div class="login-page-container">
-  <!-- Left side: Login form -->
+  <!-- ======================================================
+       Left Side: Login Form
+       Contains the login form, including email and password fields.
+  ====================================================== -->
   <div class="form-container">
     <h2>Log In</h2>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Email Field -->
       <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
+      <!-- Password Field with Toggle Icon -->
       <div class="form-group password-group">
         <label for="password">Password</label>
         <div class="password-container">
@@ -19,9 +28,10 @@
              (mouseleave)="onPasswordMouseUp($event, passwordInput)"></i>
         </div>
       </div>
+      <!-- Submit Button -->
       <button type="submit">Log In</button>
     </form>
-    <!-- Inline error message displayed below the form -->
+    <!-- Display inline error message if login fails -->
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     
     <!-- Forgot Password Link -->
@@ -31,7 +41,7 @@
       </a>
     </div>
     
-    <!-- Inline Forgot Password Form -->
+    <!-- Inline Forgot Password Form (shown conditionally) -->
     <div *ngIf="showResetPasswordForm" class="form-group">
       <label for="resetEmail">Enter your registered email address</label>
       <input type="email" id="resetEmail" [(ngModel)]="resetEmail" name="resetEmail" required>
@@ -40,7 +50,10 @@
     </div>
   </div>
 
-  <!-- Right side: Informational text and images -->
+  <!-- ======================================================
+       Right Side: Informational Section
+       Displays promotional text and images to support the login theme.
+  ====================================================== -->
   <div class="info-container">
     <p class="info-small">Collaborate Seamlessly</p>
     <h2 class="info-large">Fuel Your Innovations</h2>
