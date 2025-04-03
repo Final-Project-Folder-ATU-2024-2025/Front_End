@@ -19,7 +19,8 @@ export class CreateAccountPageComponent {
   form: FormGroup;
   showAccountCreatedModal: boolean = false;
   faCheck = faCheck;
-  passwordMismatch: boolean = false; // Flag to control inline error display
+  passwordMismatch: boolean = false; // Flag to control inline password mismatch error
+  formError: string = ''; // Property to hold other inline error messages
 
   constructor(
     private fb: FormBuilder,
@@ -46,27 +47,28 @@ export class CreateAccountPageComponent {
 
   onSubmit() {
     console.log('onSubmit called');
-    // Clear previous inline error
+    // Clear previous inline errors
     this.passwordMismatch = false;
+    this.formError = '';
 
     if (this.form.invalid) {
       console.error('Form is invalid:', this.form.value);
       const passwordControl = this.form.get('password');
       if (passwordControl && passwordControl.errors) {
         if (passwordControl.errors['pattern']) {
-          alert('Password must be at least 10 characters long, include one capital letter, one number, and one special character.');
+          this.formError = 'Password must be at least 10 characters long, include one capital letter, one number, and one special character.';
         } else {
-          alert('Please fill in all required fields correctly.');
+          this.formError = 'Please fill in all required fields correctly.';
         }
       } else {
-        alert('Please fill in all required fields correctly.');
+        this.formError = 'Please fill in all required fields correctly.';
       }
       return;
     }
     const { firstName, surname, telephone, email, password, confirmPassword } = this.form.value;
     console.log('Form values:', this.form.value);
     if (password !== confirmPassword) {
-      // Instead of an alert, set the inline error flag.
+      // Set inline error flag for password mismatch
       this.passwordMismatch = true;
       return;
     }
@@ -84,7 +86,7 @@ export class CreateAccountPageComponent {
       },
       error: (error) => {
         console.error('Error creating account:', error);
-        alert('Error creating account: ' + (error.error?.message || error.message));
+        this.formError = 'Error creating account: ' + (error.error?.message || error.message);
       },
     });
   }
