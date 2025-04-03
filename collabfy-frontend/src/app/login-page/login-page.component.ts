@@ -59,7 +59,12 @@ export class LoginPageComponent {
       })
       .catch((error) => {
         console.error(error);
-        this.errorMessage = error.message;
+        // Check if error code indicates invalid credentials
+        if (error.code === 'auth/invalid-credential' || error.message.includes('invalid-credential')) {
+          this.errorMessage = "Password incorrect";
+        } else {
+          this.errorMessage = error.message;
+        }
       });
   }
 
