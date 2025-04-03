@@ -1,171 +1,232 @@
-/* Overall header styling */
+/* =======================================================================
+   Global header styling:
+   - Sets a dark background, white text, and uses Flexbox to layout the header.
+======================================================================== */
 header {
-  background-color: #313030;
-  color: white;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0;
+  background-color: #313030;       /* Dark gray background */
+  color: white;                    /* White text */
+  padding: 10px;                   /* Padding inside the header */
+  display: flex;                   /* Use Flexbox layout */
+  align-items: center;             /* Vertically center content */
+  justify-content: space-between;  /* Space between left, center, and right sections */
+  width: 100%;                     /* Full width */
+  margin: 0;                       /* Remove default margins */
 }
 
-/* Logo styling */
+/* =======================================================================
+   Logo Container:
+   - Contains the logo image and aligns it vertically.
+======================================================================== */
 .logo-container {
-  display: flex;
-  align-items: center;
+  display: flex;                   /* Flex layout for logo */
+  align-items: center;             /* Vertical centering */
 }
 
+/* =======================================================================
+   Logo Styling:
+   - Sets the logo height, margin, and rounded appearance.
+======================================================================== */
 .logo {
-  height: 100px;
-  margin-right: 10px;
-  border-radius: 50%;
+  height: 100px;                   /* Fixed height */
+  margin-right: 10px;              /* Spacing to the right */
+  border-radius: 50%;              /* Circular shape */
 }
 
-/* Navigation buttons container (centered) */
+/* =======================================================================
+   Navigation Buttons Container:
+   - Centers and spaces the navigation buttons.
+   - Allows wrapping for responsiveness.
+======================================================================== */
 .nav-buttons {
-  display: flex;
-  gap: 20px;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 70px; /* Adjust this if needed */
+  display: flex;                   /* Flex layout for buttons */
+  gap: 20px;                       /* Gap between buttons */
+  flex: 1;                         /* Take available space */
+  justify-content: center;         /* Center horizontally */
+  align-items: center;             /* Center vertically */
+  flex-wrap: wrap;                 /* Allow wrapping on smaller screens */
+  margin-top: 70px;                /* Space from the header top */
 }
 
-/* Nav button styling */
+/* =======================================================================
+   Navigation Button Styling:
+   - Base styles for navigation buttons.
+   - Uses relative positioning to support animated underline.
+======================================================================== */
 .nav-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  color: white;
-  position: relative;
-  padding: 5px 10px;
+  background: none;                /* Transparent background */
+  border: none;                    /* No border */
+  cursor: pointer;                 /* Pointer cursor on hover */
+  font-size: 1rem;                 /* Base font size */
+  color: white;                    /* White text */
+  position: relative;              /* For absolute positioning of child elements */
+  padding: 5px 10px;               /* Internal padding */
 }
 
+/* Active navigation button style: bold text */
 .nav-button.active {
   font-weight: bold;
 }
 
-/* Button text with animated underline using clip-path */
+/* =======================================================================
+   Animated Underline for Button Text:
+   - Uses a pseudo-element with clip-path to create an animated underline effect.
+======================================================================== */
 .button-text {
-  position: relative;
-  display: inline-block;
+  position: relative;              /* Position relative for pseudo-element */
+  display: inline-block;           /* Inline-block to allow width/height */
 }
 
 .button-text::after {
   content: "";
   position: absolute;
-  bottom: -3px;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background: white;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.2s ease;
+  bottom: -3px;                    /* Position below the text */
+  left: 0;                         /* Start from the left edge */
+  height: 2px;                     /* Underline thickness */
+  width: 100%;                     /* Full width of text */
+  background: white;               /* White underline */
+  clip-path: inset(0 100% 0 0);     /* Initially hidden using clip-path */
+  transition: clip-path 0.2s ease; /* Animate clip-path on hover */
 }
 
+/* Reveal the underline on hover */
 .nav-button:hover .button-text::after {
-  clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);         /* Fully reveal underline */
 }
 
-/* Auth-links styling */
+/* =======================================================================
+   Auth Links Container:
+   - Arranges logout and user info vertically.
+======================================================================== */
 .auth-links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 5px;
+  display: flex;                   /* Flex layout for auth links */
+  flex-direction: column;          /* Stack vertically */
+  align-items: flex-end;           /* Align items to the right */
+  gap: 5px;                        /* Gap between elements */
 }
 
+/* =======================================================================
+   Auth Links Button Styling:
+   - Style for auth buttons (e.g., Log Out) with hover effect.
+======================================================================== */
 .auth-links button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-size: inherit;
+  background: none;                /* No background */
+  border: none;                    /* No border */
+  cursor: pointer;                 /* Pointer cursor */
+  color: white;                    /* White text */
+  font-size: inherit;              /* Inherit font size */
 }
 
 .auth-links button:hover {
-  opacity: 0.8;
+  opacity: 0.8;                    /* Slightly fade on hover */
 }
 
+/* =======================================================================
+   User Info Section:
+   - Displays user icon and name in a row.
+======================================================================== */
 .user-info {
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
+  display: flex;                   /* Flex layout for user info */
+  align-items: center;             /* Vertically center content */
+  font-size: 0.9rem;               /* Slightly smaller text */
 }
 
-/* Updated user icon using FontAwesome */
+/* =======================================================================
+   User Icon Styling:
+   - Sets margin and size for the user icon.
+======================================================================== */
 .user-icon {
-  margin-right: 5px;
-  font-size: 1.2rem;
+  margin-right: 5px;               /* Space to the right of the icon */
+  font-size: 1.2rem;               /* Size of the icon */
 }
 
+/* =======================================================================
+   User Name Styling:
+   - Bold text for the user's name.
+======================================================================== */
 .user-name {
   font-weight: bold;
 }
 
-/* Gear icon container */
+/* =======================================================================
+   Gear Icon Container:
+   - Wraps the gear icon used for account settings.
+   - Uses relative positioning for dropdown placement.
+======================================================================== */
 .gear-container {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  margin-left: 10px;
+  position: relative;              /* Relative positioning for dropdown */
+  display: inline-block;           /* Inline block layout */
+  cursor: pointer;                 /* Pointer on hover */
+  margin-left: 10px;               /* Spacing to the left */
 }
 
-/* Gear icon styling */
+/* =======================================================================
+   Gear Icon Styling:
+   - Styles the gear icon (small size and white color).
+======================================================================== */
 .gear-icon {
-  font-size: .8rem;
-  color: white;
+  font-size: 0.8rem;               /* Smaller size */
+  color: white;                    /* White color */
 }
 
-/* Dropdown styling */
+/* =======================================================================
+   Account Dropdown:
+   - Styles the dropdown menu for account settings.
+   - Positioned absolutely relative to gear container.
+======================================================================== */
 .account-dropdown {
-  position: absolute;
-  top: 120%; /* Adjust based on header height */
-  right: 0;
-  background-color: #ffffff;
-  color: #333;
-  min-width: 150px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  z-index: 1200;
-  padding: 5px 0;
+  position: absolute;              /* Absolute positioning */
+  top: 120%;                      /* Position below the gear icon */
+  right: 0;                        /* Align to the right */
+  background-color: #ffffff;       /* White background */
+  color: #333;                     /* Dark text */
+  min-width: 150px;                /* Minimum width */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);  /* Shadow for depth */
+  border-radius: 4px;              /* Rounded corners */
+  z-index: 1200;                   /* Ensure on top */
+  padding: 5px 0;                  /* Vertical padding */
 }
 
-/* Dropdown link styling */
+/* =======================================================================
+   Account Dropdown Links:
+   - Styles the links within the dropdown.
+======================================================================== */
 .account-dropdown a {
-  display: block;
-  padding: 8px 12px;
-  color: #333;
-  text-decoration: none;
+  display: block;                  /* Block-level links */
+  padding: 8px 12px;               /* Padding inside links */
+  color: #333;                     /* Dark text */
+  text-decoration: none;           /* Remove underline */
 }
 
 .account-dropdown a:hover {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0;         /* Light background on hover */
 }
 
-/* Logout button styling updated to remove its own background */
+/* =======================================================================
+   Logout Button Styling:
+   - Removes default styling and rounds the button.
+======================================================================== */
 .logout-button {
-  background: transparent;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
+  background: transparent;         /* Transparent background */
+  color: white;                    /* White text */
+  border: none;                    /* No border */
+  border-radius: 4px;              /* Rounded corners */
+  padding: 5px 10px;               /* Padding */
+  cursor: pointer;                 /* Pointer on hover */
+  font-size: 0.9rem;               /* Slightly smaller text */
 }
 
-/* Orange container wrapping the logout button to match your “Go Home” button style */
+/* =======================================================================
+   Orange Container for Logout Button:
+   - Wraps the logout button in an orange background.
+======================================================================== */
 .orange-container {
-  background-color: rgb(250, 79, 0);
-  border-radius: 4px;
-  display: inline-block;
-  margin-top: 5px;
+  background-color: rgb(250, 79, 0); /* Orange background */
+  border-radius: 4px;              /* Rounded corners */
+  display: inline-block;           /* Inline block */
+  margin-top: 5px;                 /* Top margin */
 }
 
 /* Hover effect for the orange container */
 .orange-container:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
 }
