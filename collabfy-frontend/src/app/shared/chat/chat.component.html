@@ -1,36 +1,48 @@
-<!-- Fixed Chat Button with Global Bell Overlay -->
+<!-- =======================================================================
+     Chat Button: Fixed button to open/close the chat sidebar.
+======================================================================= -->
 <div class="chat-button" (click)="toggleChatSidebar()">
-    <img src="assets/images/public/public_img1.jpg" alt="Chat">
-    <fa-icon *ngIf="hasNewMessage" [icon]="faBell" class="new-message-bell"></fa-icon>
+  <img src="assets/images/public/public_img1.jpg" alt="Chat">
+  <!-- Display bell icon if there is a new message -->
+  <fa-icon *ngIf="hasNewMessage" [icon]="faBell" class="new-message-bell"></fa-icon>
+</div>
+
+<!-- =======================================================================
+     Chat Sidebar: Lists user's connections for initiating chats.
+======================================================================= -->
+<div class="chat-sidebar" [class.active]="chatSidebarActive">
+  <h4>Your Connections</h4>
+  <ul>
+    <!-- Iterate over connections to display each as a clickable list item -->
+    <li *ngFor="let conn of connections" (click)="openChat(conn)">
+      <fa-icon [icon]="faUser" class="conn-avatar"></fa-icon>
+      <span class="conn-name">{{ conn.firstName }} {{ conn.surname }}</span>
+      <!-- Show bell icon beside connection if there are unread messages -->
+      <fa-icon *ngIf="conn.hasUnread" [icon]="faBell" class="sidebar-bell"></fa-icon>
+    </li>
+  </ul>
+</div>
+
+<!-- =======================================================================
+     Chat Window: The active chat conversation window.
+======================================================================= -->
+<div class="chat-window" *ngIf="activeChat">
+  <!-- Header with contact name and close button -->
+  <div class="chat-header">
+    <h5>{{ activeChat.firstName }} {{ activeChat.surname }}</h5>
+    <button class="close-btn" (click)="closeChat()">X</button>
   </div>
-  
-  <!-- Chat Sidebar -->
-  <div class="chat-sidebar" [class.active]="chatSidebarActive">
-    <h4>Your Connections</h4>
-    <ul>
-      <li *ngFor="let conn of connections" (click)="openChat(conn)">
-        <fa-icon [icon]="faUser" class="conn-avatar"></fa-icon>
-        <span class="conn-name">{{ conn.firstName }} {{ conn.surname }}</span>
-        <!-- Display the bell icon beside the name if there are unread messages -->
-        <fa-icon *ngIf="conn.hasUnread" [icon]="faBell" class="sidebar-bell"></fa-icon>
-      </li>
-    </ul>
-  </div>
-  
-  <!-- Chat Window -->
-  <div class="chat-window" *ngIf="activeChat">
-    <div class="chat-header">
-      <h5>{{ activeChat.firstName }} {{ activeChat.surname }}</h5>
-      <button class="close-btn" (click)="closeChat()">X</button>
-    </div>
-    <div class="chat-messages">
-      <div *ngFor="let msg of chatMessages" [ngClass]="{'sent': msg.senderId === currentUserId, 'received': msg.senderId !== currentUserId}">
-        <span>{{ msg.messageText }}</span>
-      </div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" [(ngModel)]="chatMessage" placeholder="Type a message...">
-      <button (click)="sendChatMessage()">Send</button>
+  <!-- Chat messages area -->
+  <div class="chat-messages">
+    <!-- Iterate through chat messages and apply classes based on sender -->
+    <div *ngFor="let msg of chatMessages" 
+         [ngClass]="{'sent': msg.senderId === currentUserId, 'received': msg.senderId !== currentUserId}">
+      <span>{{ msg.messageText }}</span>
     </div>
   </div>
-  
+  <!-- Input area for sending new messages -->
+  <div class="chat-input-area">
+    <input type="text" [(ngModel)]="chatMessage" placeholder="Type a message...">
+    <button (click)="sendChatMessage()">Send</button>
+  </div>
+</div>

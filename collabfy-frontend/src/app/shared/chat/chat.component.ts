@@ -1,23 +1,34 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUser, faBell } from '@fortawesome/free-solid-svg-icons';
-import { ApiService } from '../../api.service';
-import { Subscription, interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+// =======================================================================
+// Chat Component
+// ------------------------------------------------------------
+// This component manages the chat functionality including:
+// - Displaying a fixed chat button with a new message notification bell.
+// - Toggling a sidebar that lists the user's connections.
+// - Displaying a chat window for an active conversation.
+// - Polling for unread chat notifications.
+// - Sending and receiving chat messages.
+// =======================================================================
+
+import { Component, OnInit, OnDestroy } from '@angular/core';  // Core Angular functionalities for component lifecycle.
+import { CommonModule } from '@angular/common';                   // Common directives like *ngIf, *ngFor.
+import { FormsModule } from '@angular/forms';                      // For two-way binding (ngModel).
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; // For FontAwesome icons.
+import { faUser, faBell } from '@fortawesome/free-solid-svg-icons'; // Import specific icons.
+import { ApiService } from '../../api.service';                   // Custom API service for backend calls.
+import { Subscription, interval } from 'rxjs';                     // For managing subscriptions and polling.
+import { switchMap } from 'rxjs/operators';                       // Operator for switching to new observable in polling.
 
 export interface Connection {
   uid: string;
   firstName: string;
   surname: string;
-  hasUnread: boolean;  // Expected to be provided by your API or computed from notifications
+  hasUnread: boolean;  // Flag indicating if there are unread messages.
 }
 
 export interface ChatMessage {
   senderId: string;
   messageText: string;
-  timestamp?: any;
+  timestamp?: any;  // Optional timestamp, as returned by the backend.
 }
 
 @Component({
@@ -28,26 +39,39 @@ export interface ChatMessage {
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  // Controls the visibility of the chat sidebar.
   chatSidebarActive: boolean = false;
+  // Holds the currently active chat connection.
   activeChat: Connection | null = null;
+  // Array of chat messages in the current conversation.
   chatMessages: ChatMessage[] = [];
+  // The current message text input by the user.
   chatMessage: string = '';
+  // Current user's ID from localStorage.
   currentUserId: string = '';
 
-  // Load connections from your API
+  // Array of user's connections loaded from the API.
   connections: Connection[] = [];
-
-  // Global flag for the chat button bell: true only if an unread chat notification exists
+  // Global flag to indicate if there are any new unread chat notifications.
   hasNewMessage: boolean = false;
 
+  // FontAwesome icons for user and bell.
   faUser = faUser;
   faBell = faBell;
 
+  // Subscriptions holder for cleaning up on component destruction.
   private subscriptions: Subscription = new Subscription();
+  // Subscription for polling notifications.
   private notificationPollingSub: Subscription | null = null;
 
+  // Inject the custom API service.
   constructor(private apiService: ApiService) {}
 
+  // =======================================================================
+  // ngOnInit:
+  // Initialization: sets the current user ID, loads connections, and
+  // starts polling for chat notifications every 10 seconds.
+  // =======================================================================
   ngOnInit(): void {
     this.currentUserId = localStorage.getItem('uid') || '';
     if (!this.currentUserId) {
@@ -55,12 +79,12 @@ export class ChatComponent implements OnInit, OnDestroy {
       return;
     }
     this.loadConnections();
-    // Start polling for unread chat notifications every 10 seconds
+    // Start polling every 10 seconds for unread chat notifications.
     this.notificationPollingSub = interval(10000)
       .pipe(switchMap(() => this.apiService.getNotifications(this.currentUserId)))
       .subscribe({
         next: (response: any) => {
-          // Assume that chat notifications have a type "chat"
+          // Filter chat notifications with unread status.
           const chatNotifs = (response.notifications || []).filter(
             (n: any) => n.type === 'chat' && n.status === 'unread'
           );
@@ -73,14 +97,22 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.notificationPollingSub);
   }
 
+  // =======================================================================
+  // ngOnDestroy:
+  // Cleanup: Unsubscribe from all subscriptions when the component is destroyed.
+  // =======================================================================
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
+  // =======================================================================
+  // loadConnections:
+  // Fetches the current user's connections from the backend API.
+  // =======================================================================
   loadConnections(): void {
     const sub = this.apiService.getUserConnections(this.currentUserId).subscribe({
       next: (response: any) => {
-        // Ensure that the hasUnread property is a boolean
+        // Ensure each connection has a boolean "hasUnread" property.
         this.connections = (response.connections || []).map((conn: any) => ({
           ...conn,
           hasUnread: !!conn.hasUnread
@@ -93,36 +125,54 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.subscriptions.add(sub);
   }
 
+  // =======================================================================
+  // toggleChatSidebar:
+  // Toggles the visibility of the chat sidebar.
+  // =======================================================================
   toggleChatSidebar(): void {
     this.chatSidebarActive = !this.chatSidebarActive;
   }
 
+  // =======================================================================
+  // openChat:
+  // Opens a chat window for the selected connection.
+  // Marks messages as read via the API and loads the chat messages.
+  // =======================================================================
   openChat(connection: Connection): void {
     this.activeChat = connection;
-    // Mark messages as read via the API; this will update the connection's hasUnread flag on success
+    // Mark messages as read for the conversation.
     this.apiService.markMessagesRead(
-      [this.currentUserId, connection.uid].sort().join('-'), // conversationId
-      this.currentUserId // current user as the recipient
+      [this.currentUserId, connection.uid].sort().join('-'), // Create conversationId by sorting user IDs.
+      this.currentUserId // Current user is the recipient.
     ).subscribe({
       next: (res: any) => {
         console.log("Messages marked as read:", res);
         connection.hasUnread = false;
-        // Update global flag after marking read
+        // Update global new message flag.
         this.hasNewMessage = false;
       },
       error: (err: any) => {
         console.error("Error marking messages as read:", err);
       }
     });
+    // Load the chat messages for the conversation.
     this.loadChatMessages(connection.uid);
   }
 
+  // =======================================================================
+  // closeChat:
+  // Closes the active chat window and resets related properties.
+  // =======================================================================
   closeChat(): void {
     this.activeChat = null;
     this.chatMessages = [];
     this.chatMessage = '';
   }
 
+  // =======================================================================
+  // loadChatMessages:
+  // Fetches chat messages for the conversation with a specific connection.
+  // =======================================================================
   loadChatMessages(connectionId: string): void {
     const conversationId = [this.currentUserId, connectionId].sort().join('-');
     const sub = this.apiService.getChatMessages(conversationId).subscribe({
@@ -136,6 +186,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.subscriptions.add(sub);
   }
 
+  // =======================================================================
+  // sendChatMessage:
+  // Sends a new chat message using the API service.
+  // Appends the message to the chatMessages array on success.
+  // =======================================================================
   sendChatMessage(): void {
     if (!this.chatMessage.trim() || !this.activeChat) {
       return;
@@ -147,6 +202,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     };
     const sub = this.apiService.sendChatMessage(payload).subscribe({
       next: (response: any) => {
+        // Append the sent message locally with a timestamp.
         this.chatMessages.push({
           senderId: this.currentUserId,
           messageText: this.chatMessage.trim(),

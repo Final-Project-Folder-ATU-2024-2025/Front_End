@@ -1,174 +1,236 @@
+/* =======================================================================
+   Chat Button:
+   Fixed circular button at the bottom-right corner of the viewport that opens the chat sidebar.
+======================================================================== */
 .chat-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    overflow: visible;
-    cursor: pointer;
-    z-index: 1000;
-  }
-  
-  .chat-button img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
-  /* Global bell on chat button */
-  .new-message-bell {
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    font-size: 1.5rem;
-    color: black;
-    z-index: 1100;
-  }
-  
-  /* Chat Sidebar styling */
-  .chat-sidebar {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 250px;
-    max-height: 400px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    display: none;
-    flex-direction: column;
-    z-index: 1000;
-  }
-  
-  .chat-sidebar.active {
-    display: flex;
-  }
-  
-  .chat-sidebar h4 {
-    margin: 0 0 10px;
-    text-align: center;
-  }
-  
-  .chat-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow-y: auto;
-  }
-  
-  .chat-sidebar li {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .chat-sidebar li:hover {
-    background: #f0f0f0;
-  }
-  
-  .conn-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
-  }
-  
-  /* Connection name takes up available space */
-  .conn-name {
-    flex: 1;
-  }
-  
-  /* Bell icon beside connection name */
-  .sidebar-bell {
-    font-size: 1rem;
-    color: black;
-    margin-left: 5px;
-  }
-  
-  /* Chat Window styling */
-  .chat-window {
-    position: fixed;
-    bottom: 90px;
-    right: 280px;
-    width: 300px;
-    height: 400px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-  }
-  
-  .chat-header {
-    padding: 10px;
-    background: #f5f5f5;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .chat-header h5 {
-    margin: 0;
-    font-size: 1rem;
-  }
-  
-  .close-btn {
-    background: transparent;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .chat-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background: #fafafa;
-  }
-  
-  .chat-messages .sent {
-    text-align: right;
-    margin-bottom: 8px;
-  }
-  
-  .chat-messages .received {
-    text-align: left;
-    margin-bottom: 8px;
-  }
-  
-  .chat-input-area {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-  }
-  
-  .chat-input-area input {
-    flex: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  .chat-input-area button {
-    margin-left: 5px;
-    padding: 5px 10px;
-    background-color: rgb(250, 79, 0);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .chat-input-area button:hover {
-    background-color: rgb(207, 77, 17);
-  }
-  
+  position: fixed;           /* Fix position relative to the viewport */
+  bottom: 20px;              /* 20px from the bottom */
+  right: 20px;               /* 20px from the right */
+  width: 65px;               /* Fixed width */
+  height: 65px;              /* Fixed height */
+  border-radius: 50%;        /* Makes the button circular */
+  overflow: visible;         /* Ensures child elements are fully visible */
+  cursor: pointer;           /* Changes cursor to pointer on hover */
+  z-index: 1000;             /* Ensures the button is above most other elements */
+}
+
+/* =======================================================================
+   Chat Button Image:
+   Styles the image inside the chat button.
+======================================================================== */
+.chat-button img {
+  width: 100%;               /* Image takes full width of container */
+  height: 100%;              /* Image takes full height of container */
+  object-fit: cover;         /* Scales image to cover container without distortion */
+  border-radius: 50%;        /* Ensures image is also circular */
+}
+
+/* =======================================================================
+   Global Bell Icon on Chat Button:
+   A bell icon overlay indicating new messages.
+======================================================================== */
+.new-message-bell {
+  position: absolute;        /* Position relative to the chat button */
+  top: -5px;                 /* Slightly above the top */
+  left: -5px;                /* Slightly to the left */
+  font-size: 1.5rem;         /* Large icon size */
+  color: black;              /* Black color for contrast */
+  z-index: 1100;             /* Ensures it appears above the chat button */
+}
+
+/* =======================================================================
+   Chat Sidebar:
+   A hidden sidebar that becomes visible when activated; displays connections.
+======================================================================== */
+.chat-sidebar {
+  position: fixed;           /* Fixed relative to viewport */
+  bottom: 90px;              /* Positioned above the chat button */
+  right: 20px;               /* Same right margin as chat button */
+  width: 250px;              /* Fixed width */
+  max-height: 400px;         /* Maximum height, scrollable if content exceeds */
+  background: #fff;          /* White background */
+  border: 1px solid #ccc;    /* Light gray border */
+  border-radius: 8px;        /* Rounded corners */
+  padding: 10px;             /* Internal padding */
+  display: none;             /* Hidden by default */
+  flex-direction: column;    /* Stack child elements vertically */
+  z-index: 1000;             /* Ensure it overlays content */
+}
+
+/* Activate the chat sidebar by adding the active class */
+.chat-sidebar.active {
+  display: flex;
+}
+
+/* =======================================================================
+   Chat Sidebar Header:
+   Styles the header inside the chat sidebar.
+======================================================================== */
+.chat-sidebar h4 {
+  margin: 0 0 10px;          /* Zero margin on top, 10px below */
+  text-align: center;        /* Centered text */
+}
+
+/* =======================================================================
+   Chat Sidebar List:
+   Styles the unordered list that holds each connection item.
+======================================================================== */
+.chat-sidebar ul {
+  list-style: none;          /* Removes default list bullets */
+  padding: 0;                /* Removes default padding */
+  margin: 0;                 /* Removes default margin */
+  overflow-y: auto;          /* Enables vertical scrolling if needed */
+}
+
+/* =======================================================================
+   Chat Sidebar List Items:
+   Styles each connection item in the chat sidebar.
+======================================================================== */
+.chat-sidebar li {
+  display: flex;             /* Uses flex layout */
+  align-items: center;       /* Center items vertically */
+  padding: 5px;              /* Padding for each item */
+  cursor: pointer;           /* Pointer cursor on hover */
+  position: relative;        /* For positioning any inner elements */
+}
+
+/* Highlight list item on hover */
+.chat-sidebar li:hover {
+  background: #f0f0f0;       /* Light gray background on hover */
+}
+
+/* =======================================================================
+   Connection Avatar:
+   Styles the avatar icon for each connection.
+======================================================================== */
+.conn-avatar {
+  width: 40px;               /* Fixed width */
+  height: 40px;              /* Fixed height */
+  border-radius: 50%;        /* Circular avatar */
+  margin-right: 10px;        /* Space between avatar and name */
+  object-fit: cover;         /* Ensure image covers the container */
+}
+
+/* =======================================================================
+   Connection Name:
+   Takes up remaining space in the connection item.
+======================================================================== */
+.conn-name {
+  flex: 1;                   /* Fills available space */
+}
+
+/* =======================================================================
+   Sidebar Bell Icon:
+   Icon beside connection name to indicate unread messages.
+======================================================================== */
+.sidebar-bell {
+  font-size: 1rem;           /* Standard font size */
+  color: black;              /* Black color */
+  margin-left: 5px;          /* Small margin from the name */
+}
+
+/* =======================================================================
+   Chat Window:
+   Main window for the chat conversation.
+======================================================================== */
+.chat-window {
+  position: fixed;           /* Fixed position relative to viewport */
+  bottom: 90px;              /* Positioned above the chat button */
+  right: 280px;             /* Positioned to the left of the sidebar */
+  width: 300px;              /* Fixed width */
+  height: 400px;             /* Fixed height */
+  background: #fff;          /* White background */
+  border: 1px solid #ccc;    /* Light border */
+  border-radius: 8px;        /* Rounded corners */
+  display: flex;             /* Flex layout for inner content */
+  flex-direction: column;    /* Stack header, messages, and input vertically */
+  z-index: 1000;             /* Overlay other elements */
+}
+
+/* =======================================================================
+   Chat Window Header:
+   Contains the chat title and close button.
+======================================================================== */
+.chat-header {
+  padding: 10px;             /* Padding inside header */
+  background: #f5f5f5;        /* Light background for header */
+  border-bottom: 1px solid #ccc; /* Divider below header */
+  display: flex;             /* Flex layout */
+  justify-content: space-between; /* Space between title and close button */
+  align-items: center;       /* Center items vertically */
+}
+
+/* Title inside chat header */
+.chat-header h5 {
+  margin: 0;                 /* No margin */
+  font-size: 1rem;           /* Standard font size */
+}
+
+/* =======================================================================
+   Close Button:
+   Button to close the chat window.
+======================================================================== */
+.close-btn {
+  background: transparent;   /* Transparent background */
+  border: none;              /* No border */
+  font-size: 1rem;           /* Standard font size */
+  cursor: pointer;           /* Pointer cursor */
+}
+
+/* =======================================================================
+   Chat Messages Area:
+   Scrollable area where chat messages are displayed.
+======================================================================== */
+.chat-messages {
+  flex: 1;                   /* Take up remaining space */
+  padding: 10px;             /* Padding around messages */
+  overflow-y: auto;          /* Enable vertical scrolling */
+  background: #fafafa;       /* Light background for messages */
+}
+
+/* Message alignment for sent messages */
+.chat-messages .sent {
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+/* Message alignment for received messages */
+.chat-messages .received {
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+/* =======================================================================
+   Chat Input Area:
+   Contains the text input and send button at the bottom of the chat window.
+======================================================================== */
+.chat-input-area {
+  display: flex;             /* Flex layout for input and button */
+  padding: 10px;             /* Padding around input area */
+  border-top: 1px solid #ccc; /* Divider on top */
+}
+
+/* Chat input field styling */
+.chat-input-area input {
+  flex: 1;                   /* Fills available space */
+  padding: 5px;              /* Padding inside input */
+  border: 1px solid #ccc;    /* Light border */
+  border-radius: 4px;        /* Rounded corners */
+  font-size: 1rem;           /* Standard font size */
+}
+
+/* Send button styling */
+.chat-input-area button {
+  margin-left: 5px;          /* Small gap between input and button */
+  padding: 5px 10px;         /* Padding inside button */
+  background-color: rgb(250, 79, 0); /* Orange background */
+  color: white;              /* White text */
+  border: none;              /* No border */
+  border-radius: 4px;        /* Rounded corners */
+  cursor: pointer;           /* Pointer cursor */
+}
+
+/* Hover effect for send button */
+.chat-input-area button:hover {
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
+}
