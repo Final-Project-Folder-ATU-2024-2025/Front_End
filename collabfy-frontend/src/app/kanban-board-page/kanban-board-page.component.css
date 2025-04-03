@@ -1,102 +1,156 @@
+/* =======================================================================
+   Global Host Styles:
+   Ensure the component fills the full viewport height.
+======================================================================== */
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: flex;                   /* Use flex layout */
+  flex-direction: column;          /* Stack children vertically */
+  min-height: 100vh;               /* Full viewport height */
 }
 
-/* Main content area */
+/* =======================================================================
+   Main Content Area:
+   Container for the main Kanban board content.
+======================================================================== */
 .kanban-main {
-  flex: 1;
-  padding: 20px;
-  background: transparent;
+  flex: 1;                         /* Allow main area to grow */
+  padding: 20px;                   /* Padding around content */
+  background: transparent;         /* Transparent background */
 }
 
-/* Container for boards: 4 boards in one row */
+/* =======================================================================
+   Boards Container:
+   Holds all the Kanban boards in one row.
+   Uses flex layout with wrapping for narrow screens.
+======================================================================== */
 .kanban-boards {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap; /* Wrap if screen is too narrow */
+  display: flex;                   /* Use flex layout */
+  gap: 20px;                       /* Gap between boards */
+  flex-wrap: wrap;                 /* Wrap boards if screen is too narrow */
 }
 
-/* Common board styling */
-/* Removed overflow-y: auto to disable inner scrolling */
+/* =======================================================================
+   Board Base Style:
+   Common styling for each board.
+   Each board is flexible with calculated width to allow 4 per row.
+======================================================================== */
 .board {
-  flex: 1 1 calc(25% - 20px); /* 4 boards per row */
-  padding: 20px;
-  border-radius: 8px;
+  flex: 1 1 calc(25% - 20px);       /* 4 boards per row with gap adjustment */
+  padding: 20px;                   /* Padding inside each board */
+  border-radius: 8px;              /* Rounded corners */
 }
 
-/* Specific board colors */
+/* =======================================================================
+   Specific Board Styles:
+   Color and border settings for the Project Info board.
+======================================================================== */
 .project-info {
-  background-color: #e0e0e0; /* Light gray */
-  border: 1px solid black;
+  background-color: #e0e0e0;        /* Light gray background */
+  border: 1px solid black;         /* Solid black border */
 }
 
-/* Project Info title with image */
+/* =======================================================================
+   Board Header Section:
+   Contains the board image and title.
+======================================================================== */
 .board-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  display: flex;                   /* Use flex layout */
+  align-items: center;             /* Center vertically */
+  gap: 10px;                       /* Gap between image and title */
+  margin-bottom: 10px;             /* Space below header */
 }
 
+/* =======================================================================
+   Board Image Styles:
+   Set fixed dimensions and styling for board images.
+======================================================================== */
 .board-image {
-  width: 100px; /* Match size with My Projects page images */
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover; /* Ensure it stays uniform */
+  width: 100px;                    /* Fixed width */
+  height: 100px;                   /* Fixed height */
+  border-radius: 50%;              /* Circular image */
+  object-fit: cover;               /* Ensure image covers the container */
 }
 
+/* Duplicate style for small board images */
 .small-board-image {
-  width: 100px; /* Match size with My Projects page images */
+  width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover; /* Ensure it stays uniform */
+  object-fit: cover;
 }
 
+/* =======================================================================
+   Board Title Text:
+   Styling for the title inside board header.
+======================================================================== */
 .board-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
+  margin: 0;                     /* Remove default margin */
+  font-size: 1.5rem;             /* Set font size */
+  font-weight: bold;             /* Bold text */
 }
 
-/* Small image inside the Project Info board */
+/* =======================================================================
+   Extra Image Container (inside a board):
+   This section appears to be intended for additional small images.
+======================================================================== */
 .image {
-  display:board- flex;
-  justify-content: left;
-  align-items: center;
-  margin-bottom: 10px;
+  display: board- flex;          /* (Typo in original, left unchanged) */
+  justify-content: left;         /* Align image to the left */
+  align-items: center;           /* Vertically center image */
+  margin-bottom: 10px;           /* Space below image */
 }
 
+/* =======================================================================
+   Additional Board Image Styling:
+   Ensures images inside .board-image element have fixed size.
+======================================================================== */
 .board-image img {
-  width: 100px; /* Same size as the small images in My Projects */
+  width: 100px;
   height: 100px;
   border-radius: 50%;
 }
 
+/* =======================================================================
+   To Do Board Style:
+   Specific background and border for the To Do board.
+======================================================================== */
 .todo {
-  background-color: #d0eaff; /* Light blue */
+  background-color: #d0eaff;     /* Light blue background */
   border: 1px solid black;
 }
 
+/* =======================================================================
+   In Progress Board Style:
+   Specific background and border for the In Progress board.
+======================================================================== */
 .in-progress {
-  background-color: #fff8a1; /* Light yellow */
+  background-color: #fff8a1;     /* Light yellow background */
   border: 1px solid black;
 }
 
+/* =======================================================================
+   Done Board Style:
+   Specific background and border for the Done board.
+======================================================================== */
 .done {
-  background-color: #c8f7c5; /* Light green */
+  background-color: #c8f7c5;     /* Light green background */
   border: 1px solid black;
 }
 
-/* Board title styling */
+/* =======================================================================
+   Board Title (General):
+   Applies to any board title element.
+======================================================================== */
 .board h2 {
   margin-top: 0;
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-/* Dropdown styling for project and task selection */
+/* =======================================================================
+   Dropdowns for Projects and Tasks:
+   Style the dropdowns used for selecting projects and tasks.
+======================================================================== */
 .projects-dropdown,
 .tasks-dropdown {
   margin-bottom: 20px;
@@ -116,7 +170,10 @@
   border: 1px solid #ccc;
 }
 
-/* Milestone section styling */
+/* =======================================================================
+   Milestone Section:
+   Container for creating milestones under a selected project/task.
+======================================================================== */
 .milestone-section {
   margin-top: 20px;
 }
@@ -136,33 +193,42 @@
   border-radius: 4px;
 }
 
+/* =======================================================================
+   Milestone Form Button:
+   Button styling for adding a new milestone.
+======================================================================== */
 .milestone-form button {
   padding: 5px 10px;
-  background-color: rgb(250, 79, 0); /* Orange color */
+  background-color: rgb(250, 79, 0);  /* Orange background */
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
 }
-
 .milestone-form button:hover {
-  background-color: rgb(207, 77, 17); /* Darker orange on hover */
+  background-color: rgb(207, 77, 17);  /* Darker orange on hover */
 }
 
-/* Milestone list styling: remove bullet points */
+/* =======================================================================
+   Milestones List:
+   List styling for milestone items.
+======================================================================== */
 .milestones-list {
-  list-style: none; /* no bullets */
+  list-style: none;         /* Remove bullet points */
   padding: 0;
   margin: 0;
 }
 .milestones-list li {
-  list-style-type: none; /* explicitly disable bullet type */
+  list-style-type: none;    /* Explicitly remove bullets */
   padding: 5px 0;
   border-bottom: 1px solid #ccc;
 }
 
-/* Milestone item container styling */
+/* =======================================================================
+   Milestone Item:
+   Container styling for individual milestone entries.
+======================================================================== */
 .milestone-item {
   background-color: #ffffff;
   padding: 5px 10px;
@@ -171,7 +237,10 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Additional styles to remove bullet points and scrollbars during drag operations */
+/* =======================================================================
+   Drag & Drop Placeholders/Previews:
+   Override default styles during drag operations.
+======================================================================== */
 .cdk-drag-placeholder,
 .cdk-drag-preview {
   list-style: none !important;
@@ -182,7 +251,11 @@
   overflow: visible !important;
 }
 
-/* Ensure the milestone container is relatively positioned */
+/* =======================================================================
+   Milestone Item Positioning:
+   Ensure the milestone item is positioned relatively so the delete
+   button can be absolutely positioned.
+======================================================================== */
 .milestone-item {
   position: relative;
   background-color: #ffffff;
@@ -192,7 +265,10 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Style the delete button as a small "X" positioned at the top right */
+/* =======================================================================
+   Delete Milestone Button:
+   Small "X" button at the top-right corner of each milestone item.
+======================================================================== */
 .delete-milestone-btn {
   position: absolute;
   top: 5px;
@@ -205,71 +281,79 @@
   padding: 0;
   line-height: 1;
 }
-
 .delete-milestone-btn:hover {
   color: #f00;
 }
 
-/* Botton comment section */
+/* =======================================================================
+   Comment Section:
+   Container for comments below the Kanban board.
+======================================================================== */
 .comment-section {
   margin: 20px;
   padding: 10px;
   background: #f0f0f0;
   border-radius: 8px;
 }
-
 .comment-section h3 {
   margin-bottom: 10px;
   font-size: 1.5rem;
 }
-
 .comment-list {
   list-style-type: none;
   padding-left: 0;
   margin-bottom: 10px;
 }
 
+/* =======================================================================
+   Comment Display:
+   Layout for each individual comment entry.
+======================================================================== */
 .comment-display {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
 }
-
 .comment-icon {
   font-size: 1.2rem;
   margin-right: 5px;
 }
-
 .comment-username {
   font-weight: bold;
   margin-right: 5px;
 }
-
 .comment-text {
   font-size: 1rem;
 }
 
+/* =======================================================================
+   Comment Input Area:
+   Textarea for writing new comments.
+======================================================================== */
 .comment-input {
   width: 100%;
   height: 100px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: none;  /* Disables resizing */
+  resize: none;              /* Disable manual resizing */
   margin-bottom: 10px;
   font-size: 1rem;
 }
 
+/* =======================================================================
+   Post Comment Button:
+   Button to submit a new comment.
+======================================================================== */
 .post-button {
   padding: 5px 10px;
-  background-color: rgb(250, 79, 0); /* Orange color */
+  background-color: rgb(250, 79, 0);  /* Orange background */
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
 }
-
 .post-button:hover {
-  background-color: rgb(207, 77, 17); /* Darker orange on hover */
+  background-color: rgb(207, 77, 17);  /* Darker orange on hover */
 }

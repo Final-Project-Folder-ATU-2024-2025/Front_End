@@ -1,8 +1,15 @@
+<!-- =======================================================================
+     Kanban Board Page Template
+     Contains boards for Project Info, To Do, In Progress, Done, and a comment section.
+======================================================================== -->
 <app-header></app-header>
 
 <main class="kanban-main">
   <div class="kanban-boards">
-    <!-- Board 1: Project Info -->
+    <!-- ======================================================
+         Board 1: Project Info
+         Allows selection of project and task, and milestone creation.
+    ====================================================== -->
     <div class="board project-info">
       <div class="board-header">
         <img class="board-image" src="/assets/images/kanban-board/kanbanb_img1.jpg" alt="Project Info Image">
@@ -26,7 +33,9 @@
           </option>
         </select>
       </div>
-      <!-- Milestone creation section -->
+      <!-- ======================================================
+           Milestone Section: Create a new milestone for the selected task.
+      ====================================================== -->
       <div class="milestone-section" *ngIf="selectedProjectId && selectedTaskId">
         <h3>Create Milestone for {{ selectedTaskId }}</h3>
         <div class="milestone-form">
@@ -36,7 +45,10 @@
       </div>
     </div>
 
-    <!-- Board 2: To Do -->
+    <!-- ======================================================
+         Board 2: To Do
+         Displays milestones with status "todo".
+    ====================================================== -->
     <div class="board todo" id="todo"
          cdkDropList 
          [cdkDropListData]="todoMilestones"
@@ -56,7 +68,10 @@
       </ul>
     </div>
 
-    <!-- Board 3: In Progress -->
+    <!-- ======================================================
+         Board 3: In Progress
+         Displays milestones with status "in-progress".
+    ====================================================== -->
     <div class="board in-progress" id="in-progress"
          cdkDropList 
          [cdkDropListData]="inProgressMilestones"
@@ -76,7 +91,10 @@
       </ul>
     </div>
 
-    <!-- Board 4: Done -->
+    <!-- ======================================================
+         Board 4: Done
+         Displays milestones with status "done".
+    ====================================================== -->
     <div class="board done" id="done"
          cdkDropList 
          [cdkDropListData]="doneMilestones"
@@ -98,7 +116,10 @@
   </div>
 </main>
 
-<!-- Comment Section -->
+<!-- ======================================================
+     Comment Section:
+     Displays list of comments and a form to add a new comment.
+======================================================================== -->
 <div class="comment-section">
   <h3>Comments</h3>
   <ul class="comment-list">
@@ -107,7 +128,7 @@
         <i class="fa-solid fa-user comment-icon"></i>
         <span class="comment-username">{{ comment.username }}</span>
         <span class="comment-text"> commented: {{ comment.commentText }}</span>
-        <!-- Show delete icon if the comment belongs to the current user -->
+        <!-- Show delete icon if the comment was authored by the current user -->
         <i *ngIf="comment.userId === currentUserId"
            class="fa-solid fa-xmark"
            style="cursor:pointer; margin-left:10px;"

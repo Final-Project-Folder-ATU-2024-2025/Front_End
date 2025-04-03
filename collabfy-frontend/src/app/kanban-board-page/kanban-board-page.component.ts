@@ -1,16 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// =======================================================================
+// Import Angular core and common modules, and necessary services.
+// -----------------------------------------------------------------------
+import { Component, OnInit } from '@angular/core';  // Component decorator and OnInit lifecycle hook
+import { CommonModule } from '@angular/common';       // Common directives (ngIf, ngFor, etc.)
+import { FormsModule } from '@angular/forms';         // Template-driven forms (ngModel)
+import { HttpClientModule } from '@angular/common/http';// HTTP client for API calls
+import { Router } from '@angular/router';             // Router for navigation
+
+// =======================================================================
+// Import custom components and services used in this component.
+// -----------------------------------------------------------------------
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { ApiService } from '../api.service';
-import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChatComponent } from '../shared/chat/chat.component';
+import { ApiService } from '../api.service';
+
+// =======================================================================
+// Import Angular CDK Drag & Drop module and functions for drag operations.
+// -----------------------------------------------------------------------
+import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
+// =======================================================================
+// Import FontAwesome module and specific icons used in the template.
+// -----------------------------------------------------------------------
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
+// =======================================================================
+// KanbanBoardPageComponent:
+// This component handles the Kanban board interface, including projects,
+// tasks, milestones, and comments. It supports drag-and-drop for milestone
+// reordering, project/task selection, and comment management.
+// =======================================================================
 @Component({
   selector: 'app-kanban-board-page',
   standalone: true,
@@ -28,9 +49,10 @@ import { faCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./kanban-board-page.component.css']
 })
 export class KanbanBoardPageComponent implements OnInit {
-  // Variables for projects, tasks, and milestones
+  // Project and Task data arrays
   projects: any[] = [];
   tasks: any[] = [];
+  // All milestones and separated arrays for different status categories
   milestones: { text: string; status: string }[] = [];
   todoMilestones: { text: string; status: string }[] = [];
   inProgressMilestones: { text: string; status: string }[] = [];
@@ -39,19 +61,26 @@ export class KanbanBoardPageComponent implements OnInit {
   selectedProjectId: string = '';
   selectedTaskId: string = '';
 
-  // Variables for comments
+  // Comment functionality variables
   newComment: string = '';
   comments: any[] = [];
 
-  // Current user's UID from localStorage
+  // Get the current user's ID from localStorage
   currentUserId: string = localStorage.getItem('uid') || '';
 
-  // FontAwesome icons
+  // FontAwesome icons for use in the template
   faCheck = faCheck;
   faCircleXmark = faCircleXmark;
 
+  // -----------------------------------------------------------------------
+  // Constructor: Injects the ApiService and Router
+  // -----------------------------------------------------------------------
   constructor(private apiService: ApiService, private router: Router) {}
 
+  // -----------------------------------------------------------------------
+  // ngOnInit: Lifecycle hook called once the component is initialized.
+  // Retrieves projects for the current user.
+  // -----------------------------------------------------------------------
   ngOnInit(): void {
     const uid = localStorage.getItem('uid');
     if (uid) {
@@ -72,6 +101,10 @@ export class KanbanBoardPageComponent implements OnInit {
     }
   }
 
+  // -----------------------------------------------------------------------
+  // onProjectChange: Triggered when a new project is selected.
+  // Updates the tasks list and resets milestone data.
+  // -----------------------------------------------------------------------
   onProjectChange(event: any): void {
     this.selectedProjectId = event.target.value;
     const project = this.projects.find(p => p.projectId === this.selectedProjectId);
@@ -87,6 +120,10 @@ export class KanbanBoardPageComponent implements OnInit {
     this.getComments();
   }
 
+  // -----------------------------------------------------------------------
+  // onTaskChange: Triggered when a task is selected.
+  // Updates the milestones list based on the selected task.
+  // -----------------------------------------------------------------------
   onTaskChange(event: any): void {
     this.selectedTaskId = event.target.value;
     const project = this.projects.find(p => p.projectId === this.selectedProjectId);
@@ -99,6 +136,9 @@ export class KanbanBoardPageComponent implements OnInit {
     this.refreshMilestoneColumns();
   }
 
+  // -----------------------------------------------------------------------
+  // addMilestone: Adds a new milestone to the milestones array.
+  // -----------------------------------------------------------------------
   addMilestone(): void {
     if (!this.newMilestone.trim()) { return; }
     const newMilestoneObj = { text: this.newMilestone.trim(), status: 'todo' };
@@ -108,18 +148,28 @@ export class KanbanBoardPageComponent implements OnInit {
     this.updateMilestonesOnServer();
   }
 
+  // -----------------------------------------------------------------------
+  // refreshMilestoneColumns: Updates the separate arrays for each milestone status.
+  // -----------------------------------------------------------------------
   refreshMilestoneColumns(): void {
     this.todoMilestones = this.milestones.filter(m => m.status === 'todo');
     this.inProgressMilestones = this.milestones.filter(m => m.status === 'in-progress');
     this.doneMilestones = this.milestones.filter(m => m.status === 'done');
   }
 
+  // -----------------------------------------------------------------------
+  // clearMilestoneColumns: Clears all milestone status arrays.
+  // -----------------------------------------------------------------------
   clearMilestoneColumns(): void {
     this.todoMilestones = [];
     this.inProgressMilestones = [];
     this.doneMilestones = [];
   }
 
+  // -----------------------------------------------------------------------
+  // drop: Handles drag-and-drop events for milestones.
+  // Updates milestone status based on drop target.
+  // -----------------------------------------------------------------------
   drop(event: CdkDragDrop<{ text: string; status: string }[]>): void {
     let newStatus = '';
     if (event.container.id === 'todo') {
@@ -141,10 +191,14 @@ export class KanbanBoardPageComponent implements OnInit {
         event.currentIndex
       );
     }
+    // Merge status-specific arrays back into the main milestones array
     this.milestones = [...this.todoMilestones, ...this.inProgressMilestones, ...this.doneMilestones];
     this.updateMilestonesOnServer();
   }
 
+  // -----------------------------------------------------------------------
+  // updateMilestonesOnServer: Sends the updated milestones data to the server.
+  // -----------------------------------------------------------------------
   updateMilestonesOnServer(): void {
     if (!this.selectedProjectId || !this.selectedTaskId) { return; }
     const payload = {
@@ -162,14 +216,22 @@ export class KanbanBoardPageComponent implements OnInit {
     });
   }
 
+  // -----------------------------------------------------------------------
+  // deleteMilestone: Deletes a milestone from the array and updates the server.
+  // -----------------------------------------------------------------------
   deleteMilestone(milestoneToDelete: { text: string; status: string }): void {
     this.milestones = this.milestones.filter(m => m !== milestoneToDelete);
     this.refreshMilestoneColumns();
     this.updateMilestonesOnServer();
   }
 
+  // =======================================================================
   // COMMENT FUNCTIONS
+  // =======================================================================
 
+  // -----------------------------------------------------------------------
+  // getComments: Retrieves comments for the selected project from the server.
+  // -----------------------------------------------------------------------
   getComments(): void {
     if (!this.selectedProjectId) { return; }
     this.apiService.getComments({ projectId: this.selectedProjectId }).subscribe({
@@ -182,6 +244,9 @@ export class KanbanBoardPageComponent implements OnInit {
     });
   }
 
+  // -----------------------------------------------------------------------
+  // addComment: Adds a new comment by sending data to the server.
+  // -----------------------------------------------------------------------
   addComment(): void {
     if (!this.newComment.trim() || !this.selectedProjectId) { return; }
     const payload = {
@@ -201,12 +266,14 @@ export class KanbanBoardPageComponent implements OnInit {
     });
   }
 
-  // Immediately delete the comment when the X icon is clicked.
+  // -----------------------------------------------------------------------
+  // deleteCommentImmediate: Deletes a comment immediately when the delete icon is clicked.
+  // -----------------------------------------------------------------------
   deleteCommentImmediate(comment: any): void {
     if (!this.selectedProjectId) { return; }
     const payload = {
       projectId: this.selectedProjectId,
-      commentId: comment.id, // Assumes each comment object has its document ID as 'id'
+      commentId: comment.id,  // Assumes each comment object includes its document ID as 'id'
       userId: localStorage.getItem('uid')
     };
     this.apiService.deleteComment(payload).subscribe({
