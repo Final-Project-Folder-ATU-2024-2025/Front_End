@@ -1,19 +1,29 @@
+<!-- =======================================================================
+     Public Header Template
+     - Displays the logo on the left and authentication links on the right.
+     - The auth links change based on the current URL.
+======================================================================== -->
 <header>
+  <!-- Logo Section -->
   <div class="logo-container">
-    <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" alt="Collabfy Logo" class="logo">
+    <img src="/assets/images/Collabfy_Project_Management_Logo.jpg" 
+         alt="Collabfy Logo" 
+         class="logo">
   </div>
+  
+  <!-- Authentication Links Section -->
   <div class="auth-links-container">
-    <!-- If on the home page ("/") -->
+    <!-- Show these links if the current URL is '/' (home) -->
     <ng-container *ngIf="currentUrl === '/'">
       <a routerLink="/login" class="login-button">&larr; Log in</a>
       <a routerLink="/create-account" class="join-us-button">Join Us &rarr;</a>
     </ng-container>
-    <!-- If on the login page ("/login") -->
+    <!-- Show these links if the current URL is '/login' -->
     <ng-container *ngIf="currentUrl === '/login'">
       <a routerLink="/" class="login-button">Go Back</a>
       <a routerLink="/create-account" class="join-us-button">Join Us &rarr;</a>
     </ng-container>
-    <!-- If on the create account page ("/create-account") -->
+    <!-- Show these links if the current URL is '/create-account' -->
     <ng-container *ngIf="currentUrl === '/create-account'">
       <a routerLink="/login" class="login-button">&larr; Log in </a>
       <a routerLink="/" class="join-us-button">Go Back</a>

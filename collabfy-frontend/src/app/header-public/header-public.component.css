@@ -1,66 +1,86 @@
-/* Overall header styling for public pages */
+/* =======================================================================
+   Global header styling for public pages
+   - Applies a background and basic layout to the header element.
+======================================================================== */
 header {
-  background-color: #313030; /* Light gray background */
-  color: #333;               /* Dark color for contrast */
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 0;                 /* Remove extra margin */
+  background-color: #313030; /* Dark gray background for contrast */
+  color: #333;               /* Dark text color for readability */
+  padding: 10px;             /* Space inside the header */
+  display: flex;             /* Use Flexbox for layout */
+  align-items: center;       /* Vertically center items */
+  width: 100%;               /* Full width */
+  margin: 0;                 /* Remove any default margin */
 }
 
-/* Container for the logo */
+/* =======================================================================
+   Logo Container
+   - Holds and aligns the logo image.
+======================================================================== */
 .logo-container {
-  display: flex;
-  align-items: center;
+  display: flex;             /* Flex container for logo */
+  align-items: center;       /* Center logo vertically */
 }
 
-/* Logo styling: circular image */
+/* =======================================================================
+   Logo Styling
+   - Ensures the logo image is circular and fits within the container.
+======================================================================== */
 .logo {
-  height: 100px;
-  margin-right: 10px;        /* Space between the logo and any adjacent content */
-  max-width: 100%;
-  border-radius: 50%;        /* Make the logo circular */
+  height: 100px;             /* Fixed height for the logo */
+  margin-right: 10px;        /* Space between logo and adjacent content */
+  max-width: 100%;           /* Prevent logo from exceeding container width */
+  border-radius: 50%;        /* Circular shape */
 }
 
-/* Container for authentication links (buttons) */
+/* =======================================================================
+   Authentication Links Container
+   - Positions authentication links (e.g., login, join) on the right.
+======================================================================== */
 .auth-links-container {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
+  margin-left: auto;         /* Pushes this container to the far right */
+  display: flex;             /* Use flex layout for the buttons */
+  align-items: center;       /* Center items vertically */
 }
 
-/* Login button styling */
+/* =======================================================================
+   Login Button Styling
+   - Styles the login button with a border and hover effect.
+======================================================================== */
 .login-button {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  padding: 8px 16px;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
-  margin-right: 10px; /* Space between the buttons */
+  text-decoration: none;     /* Remove underline */
+  color: white;              /* White text */
+  font-weight: bold;         /* Bold text */
+  padding: 8px 16px;         /* Internal padding */
+  background-color: transparent; /* Transparent background */
+  border: 2px solid white;   /* White border */
+  border-radius: 4px;        /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  margin-right: 10px;        /* Space to the right of this button */
 }
 
+/* Hover effect for the login button */
 .login-button:hover {
-  background-color: white;
-  color: #313030;
+  background-color: white;   /* White background on hover */
+  color: #313030;            /* Dark text on hover */
 }
 
-/* Join Us button styling */
+/* =======================================================================
+   Join Us Button Styling
+   - Similar styling to the login button for the Join Us button.
+======================================================================== */
 .join-us-button {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  padding: 8px 16px;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;     /* Remove underline */
+  color: white;              /* White text */
+  font-weight: bold;         /* Bold text */
+  padding: 8px 16px;         /* Internal padding */
+  background-color: transparent; /* Transparent background */
+  border: 2px solid white;   /* White border */
+  border-radius: 4px;        /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
+/* Hover effect for the join us button */
 .join-us-button:hover {
-  background-color: white;
-  color: #313030;
+  background-color: white;   /* White background on hover */
+  color: #313030;            /* Dark text on hover */
 }
