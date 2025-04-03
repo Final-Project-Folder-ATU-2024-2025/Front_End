@@ -1,25 +1,35 @@
+<!-- =======================================================================
+     Main Page Template
+     This page is divided into two main sections that highlight the key
+     messages and visuals for the Collabfy landing page.
+======================================================================== -->
+
 <app-header-public></app-header-public>
 
-<!-- First Section: Welcome + Join Button + Image -->
+<!-- First Main Section: Welcome message, join button, and image -->
 <div class="main-content">
+  <!-- Left Section: Text content with a large title, subtitle, and join button -->
   <div class="left-section">
     <h1 class="title">Welcome to Collabfy</h1>
     <p class="subtitle">
       Dive into a world where innovation meets collaboration. Discover projects that redefine creativity and teamwork.
     </p>
-    <!-- Orange Join button -->
+    <!-- Orange Join Button triggers navigation to the Create Account page -->
     <button class="join-button" (click)="goToCreateAccount()">Join our Community</button>
   </div>
+  <!-- Right Section: Displays an image related to collaboration -->
   <div class="right-section">
     <img src="/assets/images/main_page/mainp_img1.jpg" alt="Collaboration Image" class="image1" />
   </div>
 </div>
 
-<!-- Second Section: The Journey Ahead -->
+<!-- Second Main Section: The journey ahead message with image -->
 <div class="main-content journey-section">
+  <!-- Right Section: Displays an image with different rounding style -->
   <div class="right-section">
     <img src="/assets/images/main_page/mainp_img2.jpg" alt="Journey Image" class="image2" />
   </div>
+  <!-- Left Section: Text content with title and subtitle -->
   <div class="left-section">
     <h2 class="title">The Journey Ahead</h2>
     <p class="subtitle">

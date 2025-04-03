@@ -1,77 +1,112 @@
-/* Main content area */
+/* =======================================================================
+   Global Host Styles: 
+   Ensures the component fills the entire viewport with a flex container.
+======================================================================== */
+:host {
+  display: flex;                   /* Use flex layout */
+  flex-direction: column;          /* Stack children vertically */
+  min-height: 100vh;               /* Occupies full viewport height */
+}
+
+/* =======================================================================
+   Main Content Area:
+   Container that holds the primary content of the page, splitting it
+   into two sections (left and right) with spacing.
+======================================================================== */
 .main-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    min-height: calc(100vh - 140px); /* Adjust if header/footer sizes differ */
-    width: 100%;
-    gap: 40px; /* Consistent spacing between image and text */
-  }
-  
-  /* Add extra spacing between the two main sections */
-  .journey-section {
-    margin-top: 40px;
-  }
-  
-  /* Left section: text content */
-  .left-section {
-    flex: 1;
-    text-align: left;
-    padding-right: 20px;
-  }
-  
-  /* Right section: image */
-  .right-section {
-    flex: 1;
-    text-align: right;
-    padding-left: 20px;
-  }
-  
-  /* Big title styling */
-  .title {
-    font-size: 48px;
-    margin: 0;
-    font-weight: bold;
-  }
-  
-  /* Subtitle styling */
-  .subtitle {
-    font-size: 18px;
-    margin-top: 10px;
-  }
-  
-  /* Image styling with asymmetrical rounding */
-  .image1{
-    max-width: 100%;
-    height: auto;
-    border-top-left-radius: 60px;
-    border-bottom-right-radius: 60px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-  .image2 {
-    max-width: 100%;
-    height: auto;
-    border-top-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-top-right-radius: 60px;
-    border-bottom-left-radius: 60px;
-  }
-  
-  /* Join button styling */
-  .join-button {
-    background-color: rgb(250, 79, 0);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .join-button:hover {
-    background-color: rgb(207, 77, 17);
-  }
-  
+  display: flex;                   /* Flex layout for side-by-side arrangement */
+  justify-content: space-between;  /* Space between the left and right sections */
+  align-items: center;             /* Center items vertically */
+  padding: 20px;                   /* Padding around content */
+  min-height: calc(100vh - 140px);  /* Dynamic height minus header/footer */
+  width: 100%;                     /* Full width */
+  gap: 40px;                       /* Consistent gap between child elements */
+}
+
+/* =======================================================================
+   Journey Section:
+   Adds extra spacing at the top to separate the two main sections.
+======================================================================== */
+.journey-section {
+  margin-top: 40px;                /* Additional top margin */
+}
+
+/* =======================================================================
+   Left Section (Text Content):
+   Styles the left side of each main content section (text content).
+======================================================================== */
+.left-section {
+  flex: 1;                         /* Takes equal space as the right section */
+  text-align: left;                /* Left-align text */
+  padding-right: 20px;             /* Padding to the right */
+}
+
+/* =======================================================================
+   Right Section (Image):
+   Styles the right side of each main content section (image).
+======================================================================== */
+.right-section {
+  flex: 1;                         /* Takes equal space as the left section */
+  text-align: right;               /* Right-align content */
+  padding-left: 20px;              /* Padding to the left */
+}
+
+/* =======================================================================
+   Title Styling:
+   Big title style for headings in sections.
+======================================================================== */
+.title {
+  font-size: 48px;                 /* Large font size for prominence */
+  margin: 0;                       /* Remove default margin */
+  font-weight: bold;               /* Bold text */
+}
+
+/* =======================================================================
+   Subtitle Styling:
+   Style for subtitles beneath titles.
+======================================================================== */
+.subtitle {
+  font-size: 18px;                 /* Smaller font size than title */
+  margin-top: 10px;                /* Space above subtitle */
+}
+
+/* =======================================================================
+   Image Styling for Asymmetrical Rounding:
+   Two classes with different border-radius settings for a unique look.
+======================================================================== */
+.image1 {
+  max-width: 100%;                 /* Responsive width */
+  height: auto;                    /* Maintain aspect ratio */
+  border-top-left-radius: 60px;    /* Rounded top-left corner */
+  border-bottom-right-radius: 60px;/* Rounded bottom-right corner */
+  border-top-right-radius: 15px;   /* Slight rounding on top-right */
+  border-bottom-left-radius: 15px; /* Slight rounding on bottom-left */
+}
+
+.image2 {
+  max-width: 100%;                 /* Responsive width */
+  height: auto;                    /* Maintain aspect ratio */
+  border-top-left-radius: 15px;    /* Slight rounding on top-left */
+  border-bottom-right-radius: 15px;/* Slight rounding on bottom-right */
+  border-top-right-radius: 60px;   /* Rounded top-right corner */
+  border-bottom-left-radius: 60px; /* Rounded bottom-left corner */
+}
+
+/* =======================================================================
+   Join Button Styling:
+   Style for the prominent "Join our Community" button.
+======================================================================== */
+.join-button {
+  background-color: rgb(250, 79, 0); /* Orange background */
+  color: white;                    /* White text */
+  border: none;                    /* No border */
+  border-radius: 4px;              /* Slightly rounded corners */
+  padding: 10px 20px;              /* Padding inside button */
+  font-size: 16px;                 /* Font size */
+  cursor: pointer;                 /* Pointer cursor on hover */
+  margin-top: 20px;                /* Top margin for spacing */
+}
+
+.join-button:hover {
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
+}
