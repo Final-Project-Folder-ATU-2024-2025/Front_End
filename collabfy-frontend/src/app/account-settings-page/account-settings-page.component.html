@@ -1,27 +1,31 @@
 <app-header></app-header>
 
-<!-- Wrapper for the left column (Back Home button and left images), the main container, and right images -->
+<!-- Wrapper for left column, main form container, and right images -->
 <div class="account-settings-wrapper">
-  <!-- Left Column: contains the Back Home button and the left images (stacked vertically) -->
+  <!-- =======================================================
+       Left Column: Back Home button and left images
+       ======================================================= -->
   <div class="side-column">
-    <!-- Back Home button (DO NOT TOUCH this button) -->
+    <!-- Back Home button -->
     <div class="side-button">
       <button class="nav-button" (click)="goHome()">
+        <!-- Back arrow icon from FontAwesome -->
         <fa-icon [icon]="faArrowLeft"></fa-icon> Back Home
       </button>
     </div>
-    <!-- Left Images Container (2 images) placed below the Back Home button -->
+    <!-- Left images container (2 images) -->
     <div class="account-images-left">
       <img src="assets/images/account_settings_page/accountset_img1.jpg" alt="Account Image 1">
       <img src="assets/images/account_settings_page/accountset_img2.jpg" alt="Account Image 2">
     </div>
   </div>
 
-  <!-- Main Container for Account Settings -->
+  <!-- =======================================================
+       Main Container: Account Settings Form
+       ======================================================= -->
   <main>
     <h2>Account Settings</h2>
     <p>Update Name, Surname, Business Telephone and Password</p>
-
     <form (ngSubmit)="updateSettings()" #settingsForm="ngForm">
       <div>
         <label for="firstName">First Name:</label>
@@ -43,6 +47,7 @@
         <label for="newPassword">New Password:</label>
         <div class="password-container">
           <input #newPasswordInput type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword">
+          <!-- Password icon toggles visibility on press -->
           <i class="fa-solid fa-eye-slash password-icon"
              (mousedown)="onPasswordMouseDown($event, newPasswordInput)"
              (mouseup)="onPasswordMouseUp($event, newPasswordInput)"
@@ -53,6 +58,7 @@
         <label for="confirmPassword">Confirm New Password:</label>
         <div class="password-container">
           <input #confirmPasswordInput type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword">
+          <!-- Confirm password visibility icon -->
           <i class="fa-solid fa-eye-slash password-icon"
              (mousedown)="onPasswordMouseDown($event, confirmPasswordInput)"
              (mouseup)="onPasswordMouseUp($event, confirmPasswordInput)"
@@ -61,14 +67,15 @@
       </div>
       <button type="submit" [disabled]="!settingsForm.form.valid">Update Settings</button>
     </form>
-
+    <!-- Display message after settings update -->
     <p *ngIf="message">{{ message }}</p>
-
-    <!-- Cancel button inside the main container -->
+    <!-- Cancel button to navigate back home -->
     <button class="back-home-button" (click)="goHome()">Cancel</button>
   </main>
 
-  <!-- Right Images Container (3 images) -->
+  <!-- =======================================================
+       Right Column: Right images (3 images)
+       ======================================================= -->
   <div class="account-images-right">
     <img src="assets/images/account_settings_page/accountset_img3.jpg" alt="Account Image 3">
     <img src="assets/images/account_settings_page/accountset_img4.jpg" alt="Account Image 4">
