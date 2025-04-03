@@ -226,7 +226,6 @@ export class CreateProjectPageComponent implements OnInit {
       this.http.post('http://127.0.0.1:5000/api/remove-collaborator', payload)
         .subscribe({
           next: (response: any) => {
-            alert('Collaborator removed successfully.');
             // Update currentTeamIds by removing the removed collaborator
             this.currentTeamIds = this.currentTeamIds.filter(uid => uid !== this.pendingRemovalCollaborator.uid);
             this.pendingRemovalCollaborator = null;
