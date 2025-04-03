@@ -187,7 +187,6 @@ export class CreateProjectPageComponent implements OnInit {
       this.http.post('http://127.0.0.1:5000/api/update-project', projectData)
         .subscribe({
           next: (response: any) => {
-            alert('Project updated successfully!');
             // For each invited collaborator, send an invitation request
             this.invitedCollaborators.forEach(member => {
               const invitationData = {
@@ -207,7 +206,7 @@ export class CreateProjectPageComponent implements OnInit {
                   }
                 });
             });
-            this.router.navigate(['/home-page']);
+            this.router.navigate(['/my-projects-page']);
           },
           error: (error) => {
             // Check for deadline format error and display modal if needed
