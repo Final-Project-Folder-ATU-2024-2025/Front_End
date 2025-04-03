@@ -35,31 +35,26 @@ export class LoginPageComponent {
   }
 
   onSubmit(): void {
-    // Clear previous error message.
     this.errorMessage = '';
-
     if (this.form.invalid) {
       this.errorMessage = "Please enter a valid email and password.";
       return;
     }
-
     const { email, password } = this.form.value;
     const auth = getAuth(app);
-
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => getIdToken(userCredential.user))
       .then((idToken) => {
-        // Store the token in localStorage.
         localStorage.setItem('idToken', idToken);
-        // Now send the token to your backend login endpoint.
+        // Call the backend login endpoint to retrieve user details
         return this.http.post(`${this.apiUrl}/login`, { idToken }).toPromise();
       })
       .then((response: any) => {
-        // Save user info (firstName, surname, uid) to localStorage for the header.
+        // Store firstName, surname, uid, and email in localStorage
         localStorage.setItem('firstName', response.firstName || '');
         localStorage.setItem('surname', response.surname || '');
         localStorage.setItem('uid', response.uid || '');
-        // Navigate to the home page.
+        localStorage.setItem('email', response.email || '');
         this.router.navigate(['/home-page']);
       })
       .catch((error) => {

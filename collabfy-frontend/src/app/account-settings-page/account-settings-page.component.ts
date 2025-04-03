@@ -7,6 +7,8 @@ import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { ApiService } from '../api.service';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { app } from '../firebase.config';
 
 @Component({
   selector: 'app-account-settings-page',
@@ -69,16 +71,18 @@ export class AccountSettingsPageComponent implements OnInit {
         this.message = 'User email not found.';
         return;
       }
-      this.apiService.login({ email, password: this.oldPassword }).subscribe({
-        next: (res: any) => {
-          // If login is successful, proceed to update settings.
+
+      // Verify current password using Firebase client SDK.
+      const auth = getAuth(app);
+      signInWithEmailAndPassword(auth, email, this.oldPassword)
+        .then(() => {
+          // If verification succeeds, proceed to update settings.
           this.proceedUpdate();
-        },
-        error: (err: any) => {
-          console.error(err);
+        })
+        .catch((error) => {
+          console.error(error);
           this.message = 'Current password is incorrect.';
-        }
-      });
+        });
     } else {
       // No password change; proceed directly.
       this.proceedUpdate();
@@ -117,7 +121,7 @@ export class AccountSettingsPageComponent implements OnInit {
     this.router.navigate(['/home-page']);
   }
 
-  // Added methods for press-and-hold password visibility
+  // Methods for press-and-hold password visibility
   onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
     if (event.button === 0) {
       input.type = 'text';
