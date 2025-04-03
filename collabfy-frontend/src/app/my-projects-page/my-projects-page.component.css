@@ -1,282 +1,340 @@
-/* Overall layout */
+/* =======================================================================
+   Global Layout for My Projects Page
+   Ensures the page uses the full viewport height and sets up basic spacing.
+======================================================================== */
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: flex;               /* Use flex layout for the component */
+  flex-direction: column;      /* Arrange children vertically */
+  min-height: 100vh;           /* Full viewport height */
 }
 
+/* =======================================================================
+   My Projects Container
+   Provides padding and margin around the main content area.
+======================================================================== */
 .my-projects-container {
-  padding: 20px;
-  margin: 20px;
+  padding: 20px;               /* Internal spacing */
+  margin: 20px;                /* External spacing */
 }
 
-/* Page header styling */
+/* =======================================================================
+   Page Header Styling
+   Styles the header title and subtitle for the projects page.
+======================================================================== */
 .page-header h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 10px;
+  font-size: 3rem;             /* Large heading font size */
+  font-weight: bold;           /* Bold text */
+  text-align: center;          /* Centered title */
+  margin-bottom: 10px;         /* Space below the heading */
 }
 
 .page-header .page-subtitle {
-  font-size: 1.5rem;
-  text-align: center;
-  color: #333;
+  font-size: 1.5rem;           /* Subheading font size */
+  text-align: center;          /* Centered text */
+  color: #333;                 /* Dark text color for contrast */
 }
 
+/* Additional subtitle styling for other text elements */
 .page-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-  text-align: left;
+  font-size: 1.2rem;           /* Slightly smaller font size */
+  margin-bottom: 5px;          /* Space below */
+  text-align: left;            /* Left align text */
 }
 
-/* Status text styling */
+/* =======================================================================
+   Status Text Styling
+   Styles for a section showing status information.
+======================================================================== */
 .status-text {
-  text-align: left;
-  margin-bottom: 20px;
+  text-align: left;            /* Left-align status text */
+  margin-bottom: 20px;         /* Space below the status section */
 }
 
 .status-text h2 {
-  margin: 0;
-  font-size: 1.8rem;
-  font-weight: bold;
+  margin: 0;                   /* No margin for heading */
+  font-size: 1.8rem;           /* Heading font size */
+  font-weight: bold;           /* Bold text */
 }
 
 .status-text p {
-  margin: 5px 0 20px;
-  font-size: 1rem;
-  color: #555;
+  margin: 5px 0 20px;          /* Margins around paragraph */
+  font-size: 1rem;             /* Standard text size */
+  color: #555;                 /* Medium gray text */
 }
 
-/* Filter section styling */
+/* =======================================================================
+   Filter Section Styling
+   Displays clickable filter options with images.
+======================================================================== */
 .project-filters {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  display: flex;               /* Arrange filters in a row */
+  justify-content: left;       /* Align filters to the left */
+  align-items: center;         /* Center filters vertically */
+  gap: 20px;                   /* Spacing between filter items */
+  margin-bottom: 20px;         /* Space below filter section */
 }
 
+/* Each filter container */
 .filter-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: #fff;
+  display: flex;               /* Use flex layout */
+  flex-direction: column;      /* Stack image and text vertically */
+  align-items: center;         /* Center align items */
+  cursor: pointer;             /* Change cursor on hover */
+  border: 1px solid #ccc;      /* Light border */
+  padding: 10px;               /* Padding inside the container */
+  border-radius: 8px;          /* Rounded corners */
+  background-color: #fff;      /* White background */
 }
 
+/* Filter image styling */
 .filter-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 5px;
+  width: 100px;                /* Fixed width */
+  height: 100px;               /* Fixed height */
+  border-radius: 50%;          /* Circular shape */
+  margin-bottom: 5px;          /* Space below the image */
 }
 
+/* Styling for text inside the filter container */
 .filter-container p {
-  margin: 0;
-  font-weight: bold;
+  margin: 0;                   /* No margin */
+  font-weight: bold;           /* Bold text */
 }
 
-/* View All Projects button container */
+/* =======================================================================
+   View All Projects Button
+   Container and styling for the "View All Projects" button.
+======================================================================== */
 .view-all-container {
-  display: flex;
-  justify-content: left;
-  margin-bottom: 20px;
+  display: flex;               /* Flex layout for alignment */
+  justify-content: left;       /* Align to the left */
+  margin-bottom: 20px;         /* Space below the container */
 }
 
 .view-all-button {
-  padding: 10px 20px;
-  background-color: rgb(250, 79, 0);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
+  padding: 10px 20px;          /* Button padding */
+  background-color: rgb(250, 79, 0); /* Orange background */
+  color: white;                /* White text */
+  border: none;                /* No border */
+  border-radius: 4px;          /* Rounded corners */
+  font-size: 16px;             /* Font size */
+  cursor: pointer;             /* Pointer cursor on hover */
 }
 
 .view-all-button:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
 }
 
-/* Projects board container styling */
+/* =======================================================================
+   Projects Board Container
+   Styles the main board that lists projects.
+======================================================================== */
 .projects-board {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 10px;
+  background-color: #f9f9f9;     /* Light gray background */
+  border-radius: 8px;            /* Rounded corners */
+  padding: 10px;                /* Internal spacing */
 }
 
-/* Board header row */
+/* =======================================================================
+   Board Header Row
+   Defines the header row for the projects board with columns.
+======================================================================== */
 .board-header {
-  display: flex;
-  font-weight: bold;
-  padding: 10px;
-  border-bottom: 2px solid #ccc;
-  background-color: #f2f2f2;
+  display: flex;                /* Use flex layout for header row */
+  font-weight: bold;            /* Bold text */
+  padding: 10px;                /* Padding around header */
+  border-bottom: 2px solid #ccc;/* Bottom border for separation */
+  background-color: #f2f2f2;      /* Slightly darker background */
 }
 
+/* Each column in the header row */
 .board-header .column {
-  flex: 1;
-  text-align: left;
+  flex: 1;                      /* Each column takes equal width */
+  text-align: left;             /* Left align column text */
 }
 
-/* Project item styling */
+/* =======================================================================
+   Project Item Styling
+   Styles individual project items in the board.
+======================================================================== */
 .project-item {
-  background-color: white;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 10px;
+  background-color: white;      /* White background for clarity */
+  padding: 15px;                /* Internal spacing */
+  border: 1px solid #ccc;       /* Light border */
+  border-radius: 8px;           /* Rounded corners */
+  margin-top: 10px;             /* Space above each project item */
 }
 
-/* Row styling */
+/* =======================================================================
+   Row and Column Styling
+   Sets up the layout for each project row.
+======================================================================== */
 .row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: flex;                /* Use flex layout for rows */
+  align-items: flex-start;      /* Align items to the top */
+  justify-content: space-between;/* Distribute space between columns */
 }
 
-/* Column styling */
 .column {
-  flex: 1;
-  padding: 5px;
-  text-align: left;
+  flex: 1;                      /* Each column takes equal width */
+  padding: 5px;                 /* Padding inside each column */
+  text-align: left;             /* Left align text */
 }
 
-/* Project image styling */
+/* =======================================================================
+   Project Image Styling
+   Styles the project image in the project name column.
+======================================================================== */
 .project-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+  width: 40px;                  /* Fixed width */
+  height: 40px;                 /* Fixed height */
+  border-radius: 50%;           /* Circular image */
+  margin-right: 10px;           /* Space next to the image */
 }
 
-/* Action column styling */
+/* =======================================================================
+   Action Column Styling
+   Styles for the column that contains action buttons.
+======================================================================== */
 .column.action {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  display: flex;                /* Use flex layout for actions */
+  flex-direction: column;       /* Stack buttons vertically */
+  gap: 5px;                     /* Space between buttons */
 }
 
+/* Action buttons styling */
 .column.action button {
-  width: 150px;
-  text-align: center;
-  background-color: rgb(250, 79, 0);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 14px;
-  cursor: pointer;
+  width: 150px;                 /* Fixed button width */
+  text-align: center;           /* Center text inside button */
+  background-color: rgb(250, 79, 0); /* Orange background */
+  color: white;                 /* White text */
+  border: none;                 /* No border */
+  border-radius: 4px;           /* Rounded corners */
+  padding: 5px 10px;            /* Padding inside button */
+  font-size: 14px;              /* Font size */
+  cursor: pointer;              /* Pointer on hover */
 }
 
 .column.action button:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
 }
 
-/* Status label styling */
+/* =======================================================================
+   Status Label Styling
+   Styles labels for project status.
+======================================================================== */
 .in-progress-status {
-  background-color: #fff8a1;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #fff8a1;      /* Light yellow background */
+  padding: 4px 8px;              /* Padding inside label */
+  border-radius: 4px;            /* Rounded corners */
 }
 
 .complete-status {
-  background-color: #c8f7c5;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #c8f7c5;      /* Light green background */
+  padding: 4px 8px;              /* Padding inside label */
+  border-radius: 4px;            /* Rounded corners */
 }
 
-/* Overview container styling */
+/* =======================================================================
+   Overview Container Styling
+   Styles the container that provides an overview header with image and text.
+======================================================================== */
 .overview-container {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 20px 20px 40px 20px;
-  width: calc(100% - 40px);
+  display: flex;                /* Flex layout for image and text side-by-side */
+  align-items: center;          /* Vertically center content */
+  background-color: #fff;       /* White background */
+  border-radius: 8px;           /* Rounded corners */
+  padding: 20px;                /* Internal spacing */
+  margin: 20px 20px 40px 20px;   /* External margins */
+  width: calc(100% - 40px);      /* Full width minus margin */
 }
 
 .overview-image {
-  margin-right: 20px;
+  margin-right: 20px;           /* Space between image and text */
 }
 
 .overview-image img {
-  width: 750px; /* Leave unchanged */
-  height: auto;
+  width: 750px;                 /* Fixed width for image */
+  height: auto;                 /* Responsive height */
 }
 
 .overview-text {
-  text-align: left;
+  text-align: left;             /* Left-align text */
 }
 
 .overview-text .hub-title {
-  font-size: 3rem;
-  font-weight: bold;
-  margin: 0;
+  font-size: 3rem;              /* Large title font size */
+  font-weight: bold;            /* Bold text */
+  margin: 0;                  /* Remove margin */
 }
 
 .overview-text .workflow-title {
-  margin: 5px 0;
-  font-size: 2rem;
-  font-weight: bold;
-  color: rgb(242, 93, 60);
+  margin: 5px 0;              /* Vertical margins */
+  font-size: 2rem;            /* Title font size */
+  font-weight: bold;          /* Bold text */
+  color: rgb(242, 93, 60);     /* Orange color */
 }
 
 .overview-text p {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  color: #333;
+  margin-top: 10px;           /* Space above paragraph */
+  font-size: 1.2rem;          /* Medium font size */
+  color: #333;                /* Dark text */
 }
 
-/* Custom Delete Confirmation Modal */
+/* =======================================================================
+   Custom Delete Confirmation Modal
+   Styles for modal dialogs used for project deletion and leaving.
+======================================================================== */
 .delete-modal {
-  position: fixed;
+  position: fixed;            /* Fixed position over the viewport */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+  width: 100%;                /* Full width */
+  height: 100%;               /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  display: flex;              /* Flex layout to center content */
+  align-items: center;        /* Center vertically */
+  justify-content: center;    /* Center horizontally */
+  z-index: 2000;              /* High z-index */
 }
 
 .delete-modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  background-color: #fff;     /* White background for the modal */
+  padding: 20px;              /* Internal spacing */
+  border-radius: 8px;         /* Rounded corners */
+  text-align: center;         /* Centered text */
 }
 
+/* =======================================================================
+   Modal Icons Container
+   Arranges icons within the modal horizontally.
+======================================================================== */
 .modal-icons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  margin-top: 15px;           /* Space above icons */
+  display: flex;              /* Flex layout */
+  justify-content: center;    /* Center icons horizontally */
+  gap: 20px;                  /* Spacing between icons */
 }
 
+/* General modal icon styling */
 .modal-icon {
-  font-size: 2rem;
-  cursor: pointer;
+  font-size: 2rem;            /* Icon size */
+  cursor: pointer;            /* Pointer cursor on hover */
 }
 
+/* Confirm icon styling */
 .confirm-icon {
-  color: rgb(250, 79, 0);
+  color: rgb(250, 79, 0);      /* Orange color */
 }
 
 .confirm-icon:hover {
-  color: rgb(207, 77, 17);
+  color: rgb(207, 77, 17);     /* Darker orange on hover */
 }
 
+/* Cancel icon styling */
 .cancel-icon {
-  color: #555;
+  color: #555;                /* Gray color */
 }
 
 .cancel-icon:hover {
-  color: #333;
+  color: #333;                /* Darker gray on hover */
 }

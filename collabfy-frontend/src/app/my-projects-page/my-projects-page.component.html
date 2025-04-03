@@ -1,7 +1,13 @@
+/* =======================================================================
+   My Projects Page HTML
+   Defines the structure of the My Projects page, including an overview,
+   filters, the project list, and modals for delete/leave actions.
+======================================================================== */
+
 <app-header></app-header>
 
 <div class="my-projects-container">
-  <!-- Overview section -->
+  <!-- Overview Section: Provides a header with image and text -->
   <div class="overview-container">
     <div class="overview-image">
       <img src="/assets/images/my_projects/myprojects_img5.jpg" alt="Overview Image">
@@ -15,10 +21,10 @@
     </div>
   </div>
 
-  <!-- Extra padding between overview and status-text -->
+  <!-- Spacer between overview and status text -->
   <div style="padding-bottom: 30px;"></div>
 
-  <!-- Centered section for Organized Project status text -->
+  <!-- Status Text Section: Displays category title and description -->
   <div class="status-text">
     <h2>Organized Project Categories</h2>
     <p>
@@ -26,7 +32,7 @@
     </p>
   </div>
 
-  <!-- Filter section -->
+  <!-- Filter Section: Allows users to filter projects by various criteria -->
   <div class="project-filters">
     <div class="filter-container" (click)="filterInProgress()">
       <img class="filter-image" src="/assets/images/my_projects/myprojects_img1.jpg" alt="In Progress">
@@ -46,14 +52,14 @@
     </div>
   </div>
 
-  <!-- View All Projects button -->
+  <!-- View All Projects Button -->
   <div class="view-all-container">
     <button class="view-all-button" (click)="viewAllProjects()">View All Projects &rarr;</button>
   </div>
 
-  <!-- Projects board container -->
+  <!-- Projects Board: Displays a list of projects in a board format -->
   <div class="projects-board">
-    <!-- Board header row -->
+    <!-- Board Header Row: Defines column headings -->
     <div class="board-header">
       <div class="column project-name">Project Name</div>
       <div class="column deadline">Deadline</div>
@@ -62,10 +68,10 @@
       <div class="column action">Actions</div>
     </div>
 
-    <!-- Each project row -->
+    <!-- Loop over each project to create project rows -->
     <div class="project-item" *ngFor="let project of getDisplayedProjects()">
       <div class="row">
-        <!-- Project Name with image -->
+        <!-- Project Name Column: Includes image and name -->
         <div class="column project-name">
           <img
             class="project-image"
@@ -73,11 +79,11 @@
             alt="Project Image">
           <span>{{ project.projectName }}</span>
         </div>
-        <!-- Deadline -->
+        <!-- Deadline Column -->
         <div class="column deadline">
           {{ project.deadline | date }}
         </div>
-        <!-- Collaborators -->
+        <!-- Collaborators Column: List of team members -->
         <div class="column collaborators">
           <ng-container *ngIf="project.team && project.team.length > 0; else noCollaborators">
             <ul>
@@ -90,7 +96,7 @@
             <span>N/A</span>
           </ng-template>
         </div>
-        <!-- Status -->
+        <!-- Status Column: Displays current project status with color labels -->
         <div class="column status">
           <span
             [ngClass]="{
@@ -101,9 +107,9 @@
             {{ project.status || 'In Progress' }}
           </span>
         </div>
-        <!-- Action Buttons -->
+        <!-- Actions Column: Buttons for updating, toggling status, deleting, or leaving a project -->
         <div class="column action">
-          <!-- For owners, enable update, mark complete, and delete buttons -->
+          <!-- Update, Mark Status, and Delete buttons for project owner -->
           <button 
             (click)="currentUserIsOwner(project) ? updateProject(project) : null" 
             [disabled]="!currentUserIsOwner(project)"
@@ -122,7 +128,7 @@
             [ngStyle]="{'background-color': currentUserIsOwner(project) ? 'rgb(250, 79, 0)' : '#ccc'}">
             Delete Project
           </button>
-          <!-- Leave Project button: visible only when current user is NOT the owner -->
+          <!-- Leave Project button for non-owners -->
           <button 
             *ngIf="!currentUserIsOwner(project)" 
             (click)="openLeaveProjectModal(project)"
@@ -135,7 +141,7 @@
   </div>
 </div>
 
-<!-- Custom Delete Confirmation Modal -->
+<!-- Custom Delete Confirmation Modal for Deleting Project -->
 <div class="delete-modal" *ngIf="projectToDelete">
   <div class="delete-modal-content">
     <p>Are you sure you want to delete project <strong>{{ projectToDelete.projectName }}</strong>?</p>
