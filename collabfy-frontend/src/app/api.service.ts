@@ -100,4 +100,8 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/leave-project`, { projectId, userId }, this.httpOptions);
   }
   
+  deleteComment(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/delete-comment`, payload, this.httpOptions);
+  }
+
 }

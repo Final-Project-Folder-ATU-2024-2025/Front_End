@@ -107,6 +107,11 @@
         <i class="fa-solid fa-user comment-icon"></i>
         <span class="comment-username">{{ comment.username }}</span>
         <span class="comment-text"> commented: {{ comment.commentText }}</span>
+        <!-- Show delete icon if the comment belongs to the current user -->
+        <i *ngIf="comment.userId === currentUserId"
+           class="fa-solid fa-xmark"
+           style="cursor:pointer; margin-left:10px;"
+           (click)="deleteCommentImmediate(comment)"></i>
       </div>
     </li>
   </ul>
@@ -115,5 +120,4 @@
 </div>
 
 <app-chat></app-chat>
-
 <app-footer></app-footer>
