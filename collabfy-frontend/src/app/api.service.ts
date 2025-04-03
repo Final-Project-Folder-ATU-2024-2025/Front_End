@@ -67,12 +67,13 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/add-comment`, payload, this.httpOptions);
   }
 
-  // =======================================================================
-  // deleteProject: Sends a request to delete a project identified by its projectId.
-  // =======================================================================
-  deleteProject(projectId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/delete-project`, { projectId }, this.httpOptions);
-  }
+// =======================================================================
+// deleteProject: Sends a request to delete a project.
+// Expects a payload object containing both projectId and requesterId.
+// =======================================================================
+deleteProject(payload: { projectId: string, requesterId: string }): Observable<any> {
+  return this.http.post(`${this.apiUrl}/delete-project`, payload, this.httpOptions);
+}
 
   // =======================================================================
   // updateProject: Updates project details.
