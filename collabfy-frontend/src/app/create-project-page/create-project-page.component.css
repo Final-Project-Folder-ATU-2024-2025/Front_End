@@ -1,146 +1,174 @@
-/* Ensure the entire component fills the viewport and the footer remains at the bottom */
+/* =======================================================================
+   Global host styles:
+   Ensure the entire component fills the viewport and the footer remains at the bottom.
+======================================================================== */
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: flex;               /* Use Flexbox layout */
+  flex-direction: column;      /* Stack children vertically */
+  min-height: 100vh;           /* Full viewport height */
 }
 
-/* Main content container */
+/* =======================================================================
+   Main content container:
+   Provides overall padding, margin, and left text alignment for the page.
+======================================================================== */
 .create-project-container {
-  flex: 1;
-  padding: 20px;
-  margin: 20px;
-  text-align: left;
+  flex: 1;                     /* Allow container to grow */
+  padding: 20px;               /* Space inside the container */
+  margin: 20px;                /* External spacing */
+  text-align: left;            /* Left-align text */
 }
 
-/* Header section for the page title and subtitle */
+/* =======================================================================
+   Header Section:
+   Contains the page title and subtitle, centered with vertical spacing.
+======================================================================== */
 .project-hub-header {
-  text-align: center;
-  margin-top: 40px;   /* Space from the app header */
-  margin-bottom: 20px;
+  text-align: center;          /* Center align text */
+  margin-top: 40px;            /* Space from the app header */
+  margin-bottom: 20px;         /* Space below the header */
 }
 
 .project-hub-header h1 {
-  font-weight: bold;
-  margin: 0;
-  font-size: 3rem;
+  font-weight: bold;           /* Bold title */
+  margin: 0;                   /* Remove default margin */
+  font-size: 3rem;             /* Large font size */
 }
 
 .project-hub-header p {
-  font-weight: normal;
-  font-size: 1.5rem;
-  margin: 5px 0 0 0;
+  font-weight: normal;         /* Normal font weight */
+  font-size: 1.5rem;           /* Subheading size */
+  margin: 5px 0 0 0;           /* Top margin only */
 }
 
-/* White container wrapping the info sections, now centered with a max-width */
+/* =======================================================================
+   Info Container:
+   White container wrapping the info sections (objectives, milestones, tracking, team).
+   It is centered with a maximum width and styled with a shadow.
+======================================================================== */
 .info-container {
-  width: 100%;
-  margin: 0;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  width: 100%;                 /* Full width */
+  margin: 0;                   /* No margin */
+  background-color: #ffffff;   /* White background */
+  padding: 20px;               /* Internal spacing */
+  border-radius: 8px;          /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+  margin-bottom: 30px;         /* Space below the container */
 }
 
-/* Info Sections container for objectives, milestones, tracking, and team */
+/* =======================================================================
+   Info Sections Container:
+   Arranges the individual info sections (objectives, milestones, tracking, team) in a row.
+======================================================================== */
 .info-sections {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 40px;
-  margin-bottom: 30px;
+  display: flex;               /* Use Flexbox for layout */
+  flex-direction: row;         /* Arrange children horizontally */
+  justify-content: center;     /* Center children horizontally */
+  gap: 40px;                   /* Gap between each section */
+  margin-bottom: 30px;         /* Bottom margin */
 }
 
-/* Define Objectives Section */
+/* =======================================================================
+   Objectives Section:
+   Displays the project objectives with a target icon and text.
+======================================================================== */
 .objectives-section {
-  text-align: center;
+  text-align: center;          /* Center align content */
 }
 
 .target-symbol {
-  margin-bottom: 5px;
+  margin-bottom: 5px;          /* Space below the symbol */
 }
 
 .target-icon {
-  width: 3em;    
-  height: 3em;   
-  display: inline-block;
+  width: 3em;                  /* Icon width */
+  height: 3em;                 /* Icon height */
+  display: inline-block;       /* Keep icon inline */
 }
 
 .objectives-title {
-  font-weight: bold;
-  font-size: 2rem;
-  margin: 0 0 5px 0;
+  font-weight: bold;           /* Bold text */
+  font-size: 2rem;             /* Large title size */
+  margin: 0 0 5px 0;           /* Bottom margin */
 }
 
 .objectives-description {
-  font-size: 1.25rem;
-  margin: 0;
+  font-size: 1.25rem;          /* Description text size */
+  margin: 0;                   /* No margin */
 }
 
-/* Set Milestones Section */
+/* =======================================================================
+   Milestones Section:
+   Displays the milestones section with a flag icon.
+======================================================================== */
 .milestones-section {
-  text-align: center;
+  text-align: center;          /* Center align content */
 }
 
 .flag-symbol {
-  margin-bottom: 5px;
+  margin-bottom: 5px;          /* Space below the symbol */
 }
 
 .flag-icon {
-  width: 3em;
-  height: 3em;
-  display: inline-block;
+  width: 3em;                  /* Icon width */
+  height: 3em;                 /* Icon height */
+  display: inline-block;       /* Inline icon */
 }
 
 .milestones-title {
-  font-weight: bold;
-  font-size: 2rem;
-  margin: 0 0 5px 0;
+  font-weight: bold;           /* Bold title */
+  font-size: 2rem;             /* Title size */
+  margin: 0 0 5px 0;           /* Bottom margin */
 }
 
 .milestones-description {
-  font-size: 1.25rem;
-  margin: 0;
+  font-size: 1.25rem;          /* Description size */
+  margin: 0;                   /* No margin */
 }
 
-/* Keep Track Section */
+/* =======================================================================
+   Tracking Section:
+   Displays the tracking section with an upward trend icon.
+======================================================================== */
 .tracking-section {
-  text-align: center;
+  text-align: center;          /* Center align content */
 }
 
 .tracking-symbol {
-  margin-bottom: 5px;
+  margin-bottom: 5px;          /* Space below the symbol */
 }
 
 .tracking-icon {
-  width: 3em;
-  height: 3em;
-  display: inline-block;
+  width: 3em;                  /* Icon width */
+  height: 3em;                 /* Icon height */
+  display: inline-block;       /* Inline icon */
 }
 
 .tracking-title {
-  font-weight: bold;
-  font-size: 2rem;
-  margin: 0 0 5px 0;
+  font-weight: bold;           /* Bold title */
+  font-size: 2rem;             /* Title size */
+  margin: 0 0 5px 0;           /* Bottom margin */
 }
 
 .tracking-description {
-  font-size: 1.25rem;
-  margin: 0;
+  font-size: 1.25rem;          /* Description text size */
+  margin: 0;                   /* No margin */
 }
 
-/* Assemble Team Section */
+/* =======================================================================
+   Team Section:
+   Displays the team section with a user group icon.
+======================================================================== */
 .team-section {
-  text-align: center;
+  text-align: center;          /* Center align content */
 }
 
 .team-icon-container {
-  position: relative;
-  display: inline-block;
-  width: 3em;
-  height: 3em;
-  margin-bottom: 5px;
+  position: relative;          /* For layered icon positioning */
+  display: inline-block;       /* Inline container */
+  width: 3em;                  /* Container width */
+  height: 3em;                 /* Container height */
+  margin-bottom: 5px;          /* Space below the icon */
 }
 
 /* Legacy layered icon styles */
@@ -152,98 +180,117 @@
 }
 
 .team-title {
-  font-weight: bold;
-  font-size: 2rem;
-  margin: 0 0 5px 0;
+  font-weight: bold;           /* Bold title */
+  font-size: 2rem;             /* Title size */
+  margin: 0 0 5px 0;           /* Bottom margin */
 }
 
 .team-description {
-  font-size: 1.25rem;
-  margin: 0;
+  font-size: 1.25rem;          /* Description size */
+  margin: 0;                   /* No margin */
 }
 
-/* Form and Image Container */
+/* =======================================================================
+   Form and Image Container:
+   Holds the project creation form and a side image.
+======================================================================== */
 .form-image-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 40px;
-  margin-top: 20px;
+  display: flex;               /* Flexbox for horizontal layout */
+  flex-direction: row;         /* Arrange children in a row */
+  align-items: flex-start;     /* Align children at the top */
+  justify-content: space-between;  /* Space between form and image */
+  gap: 40px;                   /* Gap between elements */
+  margin-top: 20px;            /* Top margin */
 }
 
-/* Style the Form */
+/* =======================================================================
+   Project Creation Form:
+   Styles the form within the container.
+======================================================================== */
 .project-form {
-  flex: 1;
-  max-width: 60%;
+  flex: 1;                     /* Grow to fill available space */
+  max-width: 60%;              /* Limit form width */
 }
 
-/* Style the Image Section */
+/* =======================================================================
+   Project Side Image Section:
+   Styles the image container next to the form.
+======================================================================== */
 .project-side-image {
-  flex: 0.4;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex: 0.4;                   /* Fixed portion of container */
+  display: flex;               /* Flexbox for centering */
+  justify-content: center;     /* Center horizontally */
+  align-items: flex-start;     /* Align at top */
 }
 
 .project-side-image img {
-  width: 150%;
-  height: auto;
-  margin-right: 250px;
-  border-top-left-radius: 60px;
+  width: 150%;                 /* Larger than container for effect */
+  height: auto;                /* Auto height */
+  margin-right: 250px;         /* Right margin for spacing */
+  border-top-left-radius: 60px; /* Custom rounded corners */
   border-bottom-right-radius: 60px;
   border-top-right-radius: 15px;
   border-bottom-left-radius: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);  /* Shadow effect */
 }
 
-/* Style form elements */
+/* =======================================================================
+   Form Elements:
+   Style individual form groups, labels, and inputs.
+======================================================================== */
 form div {
-  margin-bottom: 15px;
+  margin-bottom: 15px;         /* Space between fields */
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  display: block;              /* Block-level labels */
+  margin-bottom: 5px;          /* Spacing below label */
+  font-weight: bold;           /* Bold text */
 }
 
 input[type="text"],
 input[type="date"],
 textarea {
-  width: 70%;
-  padding: 8px;
-  box-sizing: border-box;
-  resize: none;
+  width: 70%;                  /* 70% width */
+  padding: 8px;                /* Padding inside input */
+  box-sizing: border-box;      /* Include padding in width */
+  resize: none;                /* Disable resizing for textarea */
 }
 
+/* =======================================================================
+   Task Row:
+   Styles each task block in the form.
+======================================================================== */
 .task-row {
-  border: 2px solid #ccc;
-  padding: 15px;
-  width: 70%;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ccc;      /* Border around task block */
+  padding: 15px;               /* Internal spacing */
+  width: 70%;                  /* Fixed width */
+  margin-bottom: 15px;         /* Bottom margin */
+  border-radius: 8px;          /* Rounded corners */
+  background-color: #ffffff;   /* White background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
 }
 
-/* Buttons */
+/* =======================================================================
+   Button Styling:
+   General button styles for form and other buttons.
+======================================================================== */
 button {
-  padding: 8px 12px;
-  background-color: rgb(250, 79, 0);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
+  padding: 8px 12px;           /* Padding inside button */
+  background-color: rgb(250, 79, 0);  /* Orange background */
+  color: white;                /* White text */
+  border: none;                /* No border */
+  border-radius: 4px;          /* Rounded corners */
+  font-size: 14px;             /* Font size */
+  cursor: pointer;             /* Pointer on hover */
 }
 
 button:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17);  /* Darker on hover */
 }
 
 button[type="submit"] {
-  background-color: rgb(250, 79, 0);
+  background-color: rgb(250, 79, 0);  /* Submit button styling */
   color: white;
   border: none;
   border-radius: 4px;
@@ -253,107 +300,118 @@ button[type="submit"]:hover {
   background-color: rgb(207, 77, 17);
 }
 
-/* New styles for the collaborators list section */
+/* =======================================================================
+   Collaborators List:
+   Styles the container and individual collaborator cards.
+======================================================================== */
 .collaborators-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 10px;
-  justify-content: flex-start;
+  display: flex;               /* Flex layout */
+  flex-wrap: wrap;             /* Allow wrapping */
+  gap: 20px;                   /* Gap between items */
+  margin-top: 10px;            /* Top margin */
+  justify-content: flex-start; /* Align items to start */
 }
 
 .collaborator-item {
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  flex: 0 1 calc(33.33% - 20px);
-  max-width: calc(33.33% - 20px);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  background: white;           /* White background */
+  border: 1px solid #ccc;      /* Border around card */
+  border-radius: 8px;          /* Rounded corners */
+  padding: 10px;               /* Internal spacing */
+  flex: 0 1 calc(33.33% - 20px);/* Flexible width */
+  max-width: calc(33.33% - 20px);/* Maximum width */
+  display: flex;               /* Flex container */
+  flex-direction: column;      /* Stack items vertically */
+  align-items: flex-start;     /* Align items to start */
+  text-align: left;            /* Left-align text */
 }
 
 .collaborator-details {
-  margin-bottom: 10px;
-  width: 100%;
+  margin-bottom: 10px;         /* Space below details */
+  width: 100%;                 /* Full width */
 }
 
 .collaborator-details div {
-  margin: 5px 0;
-  text-align: left;
+  margin: 5px 0;               /* Vertical spacing */
+  text-align: left;            /* Left align text */
 }
 
 .collaborator-details i {
-  margin-right: 5px;
+  margin-right: 5px;           /* Space between icon and text */
 }
 
-/* Invite/Cancel button styling for collaborator cards */
+/* Styling for the Invite/Cancel buttons on collaborator cards */
 .collaborator-item button {
-  padding: 5px 10px;
-  background-color: rgb(250, 79, 0);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  align-self: flex-start;
+  padding: 5px 10px;           /* Button padding */
+  background-color: rgb(250, 79, 0);  /* Orange background */
+  color: white;                /* White text */
+  border: none;                /* No border */
+  border-radius: 4px;          /* Rounded corners */
+  cursor: pointer;             /* Pointer on hover */
+  align-self: flex-start;      /* Align button to start */
 }
 
 .collaborator-item button:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17);  /* Darker on hover */
 }
 
+/* =======================================================================
+   Submit Button Container:
+   Provides top margin for the submit button.
+======================================================================== */
 .submit-button-container {
   margin-top: 20px;
 }
 
-/* Custom Delete Confirmation Modal (used for both deadline error and remove collaborator) */
+/* =======================================================================
+   Custom Delete Confirmation Modal:
+   Styles for the modal used for deadline errors and collaborator removal.
+======================================================================== */
 .delete-modal {
-  position: fixed;
+  position: fixed;             /* Fixed position over viewport */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+  width: 100%;                 /* Full width */
+  height: 100%;                /* Full height */
+  background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+  display: flex;               /* Flex layout for centering */
+  align-items: center;         /* Center vertically */
+  justify-content: center;     /* Center horizontally */
+  z-index: 2000;               /* On top of other elements */
 }
 
 .delete-modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  background-color: #fff;      /* White background */
+  padding: 20px;               /* Padding inside modal */
+  border-radius: 8px;          /* Rounded corners */
+  text-align: center;          /* Centered text */
 }
 
 .modal-icons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  margin-top: 15px;            /* Space above icons */
+  display: flex;               /* Flex layout for icons */
+  justify-content: center;     /* Center icons horizontally */
+  gap: 20px;                   /* Gap between icons */
 }
 
 .modal-icon {
-  font-size: 2rem;
-  cursor: pointer;
+  font-size: 2rem;             /* Large icon size */
+  cursor: pointer;             /* Pointer cursor */
 }
 
-/* For the deadline error modal, the confirm icon is green */
+/* Confirm icon styling for deadline error or collaborator removal modals */
 .confirm-icon {
-  color: rgb(61, 213, 10);
+  color: rgb(61, 213, 10);   /* Green color */
 }
 
 .confirm-icon:hover {
-  color: rgb(54, 161, 18);
+  color: rgb(54, 161, 18);    /* Darker green on hover */
 }
 
+/* Cancel icon styling */
 .cancel-icon {
-  color: #555;
+  color: #555;                 /* Gray color */
 }
 
 .cancel-icon:hover {
-  color: #333;
+  color: #333;                 /* Darker gray on hover */
 }

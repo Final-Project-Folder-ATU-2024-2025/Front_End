@@ -1,5 +1,9 @@
 <app-header></app-header>
 
+<!-- =======================================================================
+     Main container for the Create Project page.
+     Contains header, info sections, form/image container, and collaborators list.
+======================================================================== -->
 <div class="create-project-container">
   <!-- Header Section for Page Title and Subtitle -->
   <div class="project-hub-header">
@@ -9,10 +13,10 @@
     </p>
   </div>
   
-  <!-- White Container wrapping the Info Sections -->
+  <!-- White container wrapping the Info Sections -->
   <div class="info-container">
     <div class="info-sections">
-      <!-- Define Objectives Section -->
+      <!-- Objectives Section -->
       <div class="objectives-section">
         <div class="target-symbol">
           <i class="fa-solid fa-bullseye target-icon"></i>
@@ -22,7 +26,7 @@
           Clearly outline your project goals to ensure all team members are aligned.
         </p>
       </div>
-      <!-- Set Milestones Section -->
+      <!-- Milestones Section -->
       <div class="milestones-section">
         <div class="flag-symbol">
           <i class="fa-solid fa-flag-checkered flag-icon"></i>
@@ -32,7 +36,7 @@
           Plan and track key milestones to measure progress.
         </p>
       </div>
-      <!-- Assemble Team Section -->
+      <!-- Team Section -->
       <div class="team-section">
         <div class="team-icon-container">
           <i class="fa-solid fa-users team-icon"></i>
@@ -42,7 +46,7 @@
           Select team members to drive your project.
         </p>
       </div>
-      <!-- Keep Track Section -->
+      <!-- Tracking Section -->
       <div class="tracking-section">
         <div class="tracking-symbol">
           <i class="fa-solid fa-arrow-trend-up tracking-icon"></i>
@@ -59,21 +63,26 @@
   <div class="form-image-container">
     <!-- Project Creation Form -->
     <form id="projectForm" class="project-form" (ngSubmit)="createProject()">
+      <!-- Project Name Field -->
       <div>
         <label for="projectName">Project Name:</label>
         <input type="text" id="projectName" [(ngModel)]="projectName" name="projectName" required />
       </div>
+      <!-- Project Description Field -->
       <div>
         <label for="description">Project Description:</label>
         <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
       </div>
+      <!-- Project Deadline Field -->
       <div>
         <label for="deadline">Project Deadline:</label>
-        <!-- Deadline input remains type="date" for calendar selection -->
+        <!-- Input type "date" provides a calendar selection -->
         <input type="date" id="deadline" [(ngModel)]="deadline" name="deadline" required />
       </div>
+      <!-- Dynamic Task Fields -->
       <div>
         <h3>Set project main tasks:</h3>
+        <!-- Loop over tasks array; each task has name and description -->
         <div *ngFor="let task of tasks; let i = index" class="task-row">
           <label>Task {{ i + 1 }}</label>
           <div>
@@ -82,13 +91,15 @@
           <div>
             <textarea placeholder="Task Description" [(ngModel)]="tasks[i].taskDescription" name="taskDescription{{i}}" required></textarea>
           </div>
+          <!-- Remove Task button (if more than one task) -->
           <button type="button" (click)="removeTask(i)" *ngIf="tasks.length > 1">Remove Task</button>
         </div>
+        <!-- Add Task button -->
         <button type="button" (click)="addTask()">Add Task</button>
       </div>
     </form>
 
-    <!-- Image Section -->
+    <!-- Image Section beside the form -->
     <div class="project-side-image">
       <img src="assets/images/create_project_page/create_project_img2.jpg" alt="Project Creation Guide" />
     </div>
@@ -98,6 +109,7 @@
   <div>
     <h3>Invite collaborators</h3>
     <div class="collaborators-list">
+      <!-- Loop over connections; display collaborator info and invite/remove button -->
       <div *ngFor="let member of connections" class="collaborator-item">
         <div class="collaborator-details">
           <div class="collaborator-name">
@@ -114,6 +126,7 @@
           </div>
         </div>
         <div class="result-extra">
+          <!-- If member is already in the team, show Remove button; otherwise, Invite/Cancel -->
           <ng-container *ngIf="currentTeamIds.includes(member.uid); else inviteBlock">
             <button class="reject-button" (click)="openRemoveCollaboratorModal(member)">Remove</button>
           </ng-container>
@@ -127,7 +140,7 @@
     </div>
   </div>
 
-  <!-- Submit Button Section -->
+  <!-- Submit Button Section for the Project Form -->
   <div class="submit-button-container">
     <button type="submit" form="projectForm" class="button">
       {{ projectId ? 'Update Project' : 'Create Project' }}
