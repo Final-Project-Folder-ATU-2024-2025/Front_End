@@ -1,13 +1,21 @@
+<!-- Public header component (for users not logged in) -->
 <app-header-public></app-header-public>
 
+<!-- Main container for the create account page layout -->
 <div class="create-account-container">
-  <!-- Left info section -->
+  <!-- =====================================================
+       Left Info Section: Contains promotional info and images.
+       ===================================================== -->
   <div class="info-container">
+    <!-- Small tagline text -->
     <p class="info-small">Collaborate Effectively</p>
+    <!-- Main heading text -->
     <h2 class="info-large">Empower Your Projects</h2>
+    <!-- Descriptive text -->
     <p class="info-description">
       Harness the power of teamwork with our tools designed to streamline collaboration and boost productivity.
     </p>
+    <!-- Container for a set of images, arranged horizontally -->
     <div class="images-container">
       <img src="/assets/images/create_account_page/creatacc_img1.jpg" alt="Create Account Image 1">
       <img src="/assets/images/create_account_page/creatacc_img2.jpg" alt="Create Account Image 2">
@@ -15,36 +23,61 @@
     </div>
   </div>
 
-  <!-- Right form section -->
+  <!-- =====================================================
+       Right Form Section: Contains the sign-up form.
+       ===================================================== -->
   <div class="form-container">
+    <!-- Form heading -->
     <h2>Create Account</h2>
+    <!-- Reactive form binding using formGroup and ngSubmit -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- ==============================
+           First Name Field
+           ============================== -->
       <div class="form-group">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" formControlName="firstName" required>
       </div>
+      <!-- ==============================
+           Surname Field
+           ============================== -->
       <div class="form-group">
         <label for="surname">Surname</label>
         <input type="text" id="surname" formControlName="surname" required>
       </div>
+      <!-- ==============================
+           Business Telephone Field (optional)
+           ============================== -->
       <div class="form-group">
         <label for="telephone">Business Telephone (optional)</label>
         <input type="text" id="telephone" formControlName="telephone">
       </div>
+      <!-- ==============================
+           Email Field
+           ============================== -->
       <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
+      <!-- ==============================
+           Password Field with Toggle Icon
+           ============================== -->
       <div class="form-group">
         <label for="password">Password</label>
+        <!-- Container for password input and its visibility toggle icon -->
         <div class="password-container">
+          <!-- Password input with a template reference variable -->
           <input #passwordInput type="password" id="password" formControlName="password" required>
+          <!-- FontAwesome icon for toggling password visibility -->
           <i class="fa-solid fa-eye-slash password-icon"
              (mousedown)="onPasswordMouseDown($event, passwordInput)"
              (mouseup)="onPasswordMouseUp($event, passwordInput)"
              (mouseleave)="onPasswordMouseUp($event, passwordInput)"></i>
         </div>
       </div>
+      <!-- ==============================
+           Confirm Password Field with Toggle Icon
+           ============================== -->
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <div class="password-container">
@@ -54,30 +87,41 @@
              (mouseup)="onPasswordMouseUp($event, confirmPasswordInput)"
              (mouseleave)="onPasswordMouseUp($event, confirmPasswordInput)"></i>
         </div>
+        <!-- Small text describing the password requirements -->
         <small class="password-specs">
           Password must be at least 10 characters long, include one capital letter, one number, and one special character.
         </small>
-        <!-- Inline error message for password mismatch -->
+        <!-- Inline error message if passwords do not match -->
         <div *ngIf="passwordMismatch" class="error-message">
           Passwords must match.
         </div>
       </div>
-      <!-- Inline error message for any other form errors -->
+      <!-- ==============================
+           Inline error message for any other form errors.
+           ============================== -->
       <div *ngIf="formError" class="error-message">
         {{ formError }}
       </div>
+      <!-- ==============================
+           Submit Button for Sign Up.
+           ============================== -->
       <button type="submit">Sign Up</button>
     </form>
   </div>
 </div>
 
+<!-- Public footer component -->
 <app-footer></app-footer>
 
-<!-- Custom Modal for Account Created -->
+<!-- =====================================================
+     Custom Modal for Account Created
+     This modal appears when the account is created successfully.
+     ===================================================== -->
 <div class="custom-modal" *ngIf="showAccountCreatedModal">
   <div class="custom-modal-content">
     <p>Account created successfully!</p>
     <div class="modal-icons">
+      <!-- Confirmation icon inside the modal -->
       <fa-icon [icon]="faCheck" class="modal-icon confirm-icon" (click)="confirmAccountCreated()"></fa-icon>
     </div>
   </div>

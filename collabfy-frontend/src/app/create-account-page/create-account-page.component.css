@@ -1,181 +1,229 @@
-/* Ensure the page occupies the full viewport height */
+/* =======================================================================
+   Global host styles: Ensure the component occupies the full viewport height
+======================================================================== */
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: flex;               /* Use Flexbox layout */
+  flex-direction: column;      /* Stack children vertically */
+  min-height: 100vh;           /* Full viewport height */
 }
 
-/* Container styles for the create account page */
+/* =======================================================================
+   Container for the entire Create Account page
+   Aligns the left info section and right form section side-by-side.
+======================================================================== */
 .create-account-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  display: flex;                  /* Use Flexbox for horizontal layout */
+  flex-direction: row;            /* Arrange children in a row */
+  justify-content: center;        /* Center horizontally */
+  align-items: center;            /* Center vertically */
+  flex: 1;                        /* Allow container to grow */
+  padding: 20px;                  /* Padding around the container */
+  width: 100%;                    /* Full width */
+  box-sizing: border-box;         /* Include padding in width calculation */
+  overflow-x: hidden;             /* Prevent horizontal overflow */
 }
 
+/* =======================================================================
+   Left Info Section: Provides promotional text and images.
+======================================================================== */
 .info-container {
-  flex: 1;
-  padding: 20px;
-  text-align: left;
+  flex: 1;                        /* Take up available space */
+  padding: 20px;                  /* Padding inside the container */
+  text-align: left;               /* Left-align text */
 }
 
+/* Styling for a small piece of info text */
 .info-small {
-  font-size: 16px;
-  color: rgb(242, 93, 60);
-  margin: 0;
-  font-weight: bold;
+  font-size: 16px;                /* Font size */
+  color: rgb(242, 93, 60);        /* Text color (orange tone) */
+  margin: 0;                      /* No margin */
+  font-weight: bold;              /* Bold text */
 }
 
+/* Styling for the large heading text */
 .info-large {
-  font-size: 32px;
-  font-weight: bold;
-  margin: 10px 0;
+  font-size: 32px;                /* Large font size */
+  font-weight: bold;              /* Bold text */
+  margin: 10px 0;                /* Vertical margins */
 }
 
+/* Styling for descriptive text */
 .info-description {
-  font-size: 20px;
-  color: #333;
-  margin: 10px 0;
+  font-size: 20px;                /* Medium-large font size */
+  color: #333;                    /* Dark gray text color */
+  margin: 10px 0;                /* Vertical margins */
 }
 
+/* =======================================================================
+   Images Container in the Info Section
+   Arranges images horizontally with a gap.
+======================================================================== */
 .images-container {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  margin-top: 20px;
+  display: flex;                  /* Use Flexbox layout */
+  justify-content: flex-start;    /* Align images to the left */
+  gap: 10px;                      /* Gap between images */
+  margin-top: 20px;               /* Top margin */
 }
 
+/* Uniform styling for images inside the images container */
 .images-container img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 100px;                   /* Fixed width */
+  height: 100px;                  /* Fixed height */
+  border-radius: 50%;             /* Circular shape */
+  object-fit: cover;              /* Cover the container */
 }
 
+/* =======================================================================
+   Right Form Section: Contains the sign-up form.
+   Styled with a semi-transparent background, padding, and shadow.
+======================================================================== */
 .form-container {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-  margin-right: 90px;
+  background-color: rgba(255, 255, 255, 0.8);  /* Semi-transparent white */
+  padding: 20px;                               /* Internal spacing */
+  border-radius: 8px;                          /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);       /* Light shadow */
+  width: 100%;                                 /* Full width within container */
+  max-width: 500px;                            /* Maximum width constraint */
+  margin-right: 90px;                          /* Right margin from info section */
 }
 
+/* =======================================================================
+   Form Group Styling: Spacing and label formatting for each form field.
+======================================================================== */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 15px;         /* Space between form groups */
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  display: block;              /* Block-level label */
+  margin-bottom: 5px;          /* Margin below the label */
+  font-weight: bold;           /* Bold text for labels */
 }
 
 .form-group input,
 .form-group textarea {
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
-  font-size: 14px;
+  width: 100%;                 /* Full width input fields */
+  padding: 6px;                /* Padding inside input fields */
+  box-sizing: border-box;      /* Padding included in width */
+  font-size: 14px;             /* Font size */
 }
 
+/* =======================================================================
+   Button Styling: For the Sign Up button.
+======================================================================== */
 button {
-  width: 100%;
-  padding: 10px 20px;
-  background-color: rgb(250, 79, 0);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
+  width: 100%;                 /* Full width button */
+  padding: 10px 20px;          /* Padding */
+  background-color: rgb(250, 79, 0); /* Orange background */
+  color: white;                /* White text */
+  border: none;                /* No border */
+  border-radius: 4px;          /* Rounded corners */
+  cursor: pointer;             /* Pointer cursor on hover */
+  margin-top: 10px;            /* Top margin */
 }
 
+/* Hover effect for buttons */
 button:hover {
-  background-color: rgb(207, 77, 17);
+  background-color: rgb(207, 77, 17); /* Darker orange on hover */
 }
 
+/* =======================================================================
+   Back Button Styling: (Currently hidden)
+======================================================================== */
 .back-button {
-  display: none;
+  display: none;               /* Hidden by default */
 }
 
+/* =======================================================================
+   Password Specs Text: Explains password requirements.
+======================================================================== */
 .password-specs {
-  display: block;
-  font-size: 12px;
-  color: #555;
-  margin-top: 5px;
+  display: block;              /* Display as block-level element */
+  font-size: 12px;             /* Small font size */
+  color: #555;                 /* Gray text */
+  margin-top: 5px;             /* Top margin */
 }
 
+/* =======================================================================
+   Password Container: Holds the password input and its toggle icon.
+======================================================================== */
 .password-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+  position: relative;          /* Relative positioning for absolute child */
+  display: flex;               /* Flexbox for alignment */
+  align-items: center;         /* Vertically center the input and icon */
 }
 
 .password-container input {
   width: 100%;
-  padding-right: 40px;
+  padding-right: 40px;         /* Extra padding for the toggle icon */
 }
 
+/* Icon for toggling password visibility */
 .password-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  cursor: pointer;
+  position: absolute;          /* Absolute positioning inside container */
+  right: 10px;                 /* 10px from right edge */
+  top: 50%;                    /* Vertically centered */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+  color: #999;                 /* Gray color */
+  cursor: pointer;             /* Pointer on hover */
 }
 
-/* Inline error message styling for password mismatch */
+/* =======================================================================
+   Error Message Styling: For inline error messages.
+======================================================================== */
 .error-message {
-  color: red;
-  font-weight: bold;
-  margin-top: 5px;
-  font-size: 15px;
+  color: red;                  /* Red text color */
+  font-weight: bold;           /* Bold text */
+  margin-top: 5px;             /* Top margin */
+  font-size: 15px;             /* Font size */
 }
 
-/* Custom Modal styling */
+/* =======================================================================
+   Custom Modal Styling: For the account created modal overlay.
+======================================================================== */
 .custom-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+  position: fixed;             /* Fixed position covering the viewport */
+  top: 0;                      /* Top edge */
+  left: 0;                     /* Left edge */
+  width: 100%;                 /* Full width */
+  height: 100%;                /* Full height */
+  background-color: rgba(0,0,0,0.5); /* Semi-transparent black overlay */
+  display: flex;               /* Flexbox to center content */
+  align-items: center;         /* Vertically center content */
+  justify-content: center;     /* Horizontally center content */
+  z-index: 2000;               /* High z-index to overlay other elements */
 }
 
+/* Styling for the modal content box */
 .custom-modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  background-color: #fff;      /* White background */
+  padding: 20px;               /* Padding inside modal */
+  border-radius: 8px;          /* Rounded corners */
+  text-align: center;          /* Centered text */
 }
 
+/* =======================================================================
+   Modal Icons Container: Layout for icons inside the modal.
+======================================================================== */
 .modal-icons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  margin-top: 15px;            /* Margin above the icons */
+  display: flex;               /* Flexbox for horizontal layout */
+  justify-content: center;     /* Center icons */
+  gap: 20px;                   /* Space between icons */
 }
 
+/* General modal icon styling */
 .modal-icon {
-  font-size: 2rem;
-  cursor: pointer;
+  font-size: 2rem;             /* Large icon size */
+  cursor: pointer;             /* Pointer on hover */
 }
 
+/* Specific styling for the confirm icon */
 .confirm-icon {
-  color: rgb(250, 79, 0);
+  color: rgb(250, 79, 0);       /* Orange color */
 }
 
+/* Hover effect for the confirm icon */
 .confirm-icon:hover {
-  color: rgb(207, 77, 17);
+  color: rgb(207, 77, 17);      /* Darker orange on hover */
 }
