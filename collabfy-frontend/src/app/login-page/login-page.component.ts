@@ -1,36 +1,33 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // Needed for ngModel
 import { Router } from '@angular/router';
 import { HeaderPublicComponent } from '../header-public/header-public.component';
 import { FooterComponent } from '../footer/footer.component';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, getIdToken, sendPasswordResetEmail } from 'firebase/auth';
 import { app } from '../firebase.config';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HeaderPublicComponent,
-    FooterComponent
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, HeaderPublicComponent, FooterComponent],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
   form: FormGroup;
-  errorMessage: string = '';  // New property for error messages
+  errorMessage: string = '';
+  // Properties for the forgot password flow
+  showResetPasswordForm: boolean = false;
+  resetPasswordMessage: string = '';
+  resetEmail: string = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router
-  ) {
-    // Initialize the login form with email and password.
+  // Update with your backend API URL if needed
+  private apiUrl = 'http://127.0.0.1:5000/api';
+
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -40,45 +37,38 @@ export class LoginPageComponent {
   onSubmit(): void {
     // Clear previous error message.
     this.errorMessage = '';
-  
-    const passwordValue = this.form.get('password')?.value;
-    
-    // Check if password field is empty.
-    if (!passwordValue) {
-      this.errorMessage = "Password must be entered";
+
+    if (this.form.invalid) {
+      this.errorMessage = "Please enter a valid email and password.";
       return;
     }
-    
-    // Check if password is too short.
-    if (passwordValue.length < 6) {
-      this.errorMessage = "Password incorrect";
-      return;
-    }
-    
-    if (this.form.valid) {
-      const { email, password } = this.form.value;
-      
-      // Call the login endpoint.
-      this.http.post('http://127.0.0.1:5000/api/login', { email, password })
-        .subscribe({
-          next: (response: any) => {
-            localStorage.setItem('token', response.token || 'dummy-token');
-            localStorage.setItem('firstName', response.firstName || 'John');
-            localStorage.setItem('surname', response.surname || 'Doe');
-            localStorage.setItem('uid', response.uid || 'user1');
-            // On success, navigate without showing a pop-up.
-            this.router.navigate(['/home-page']);
-          },
-          error: (error) => {
-            // Instead of an alert, set errorMessage to show on the page.
-            this.errorMessage = "Password incorrect";
-          }
-        });
-    }
-  }  
+
+    const { email, password } = this.form.value;
+    const auth = getAuth(app);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => getIdToken(userCredential.user))
+      .then((idToken) => {
+        // Store the token in localStorage.
+        localStorage.setItem('idToken', idToken);
+        // Now send the token to your backend login endpoint.
+        return this.http.post(`${this.apiUrl}/login`, { idToken }).toPromise();
+      })
+      .then((response: any) => {
+        // Save user info (firstName, surname, uid) to localStorage for the header.
+        localStorage.setItem('firstName', response.firstName || '');
+        localStorage.setItem('surname', response.surname || '');
+        localStorage.setItem('uid', response.uid || '');
+        // Navigate to the home page.
+        this.router.navigate(['/home-page']);
+      })
+      .catch((error) => {
+        console.error(error);
+        this.errorMessage = error.message;
+      });
+  }
 
   onPasswordMouseDown(event: MouseEvent, input: HTMLInputElement): void {
-    // Show password when left-click (button 0) is pressed
     if (event.button === 0) {
       input.type = 'text';
       event.preventDefault();
@@ -86,29 +76,33 @@ export class LoginPageComponent {
   }
 
   onPasswordMouseUp(event: MouseEvent, input: HTMLInputElement): void {
-    // Hide password when left-click is released or mouse leaves the icon
     if (event.button === 0) {
       input.type = 'password';
       event.preventDefault();
     }
   }
 
-  // NEW: Reset password function using Firebase client SDK.
+  toggleResetPasswordForm(): void {
+    this.showResetPasswordForm = !this.showResetPasswordForm;
+    this.resetPasswordMessage = '';
+  }
+
   resetPassword(): void {
     const auth = getAuth(app);
-    const email = prompt("Please enter your registered email address:");
-    if (email) {
-      sendPasswordResetEmail(auth, email)
-        .then(() => {
-          alert("Check your email to reset your password.");
-        })
-        .catch((error) => {
-          if (error.code === 'auth/user-not-found') {
-            alert("Email address not registered.");
-          } else {
-            alert("Error: " + error.message);
-          }
-        });
+    if (!this.resetEmail) {
+      this.resetPasswordMessage = "Please enter your registered email address.";
+      return;
     }
+    sendPasswordResetEmail(auth, this.resetEmail)
+      .then(() => {
+        this.resetPasswordMessage = "Check your email to reset your password.";
+      })
+      .catch((error) => {
+        if (error.code === 'auth/user-not-found') {
+          this.resetPasswordMessage = "Email address not registered.";
+        } else {
+          this.resetPasswordMessage = "Error: " + error.message;
+        }
+      });
   }
 }

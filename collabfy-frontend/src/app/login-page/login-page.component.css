@@ -108,7 +108,7 @@ button:hover {
 }
 .password-container input {
   width: 100%;
-  padding-right: 40px; /* space for icon */
+  padding-right: 40px;
 }
 
 /* Password icon styling */
@@ -135,6 +135,7 @@ button:hover {
   text-decoration: underline;
 }
 
+/* Error message styling */
 .error-message {
   color: red;
   font-size: 14px;

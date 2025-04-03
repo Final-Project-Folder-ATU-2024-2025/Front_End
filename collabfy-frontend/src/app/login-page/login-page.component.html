@@ -9,7 +9,6 @@
         <label for="email">Email Address</label>
         <input type="email" id="email" formControlName="email" required>
       </div>
-      <!-- Password group with eye-slash icon -->
       <div class="form-group password-group">
         <label for="password">Password</label>
         <div class="password-container">
@@ -22,11 +21,22 @@
       </div>
       <button type="submit">Log In</button>
     </form>
-    <!-- Error message displayed below the form -->
+    <!-- Inline error message displayed below the form -->
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    
     <!-- Forgot Password Link -->
     <div class="forgot-password">
-      <a (click)="resetPassword()">Forgot password?</a>
+      <a (click)="toggleResetPasswordForm()">
+        {{ showResetPasswordForm ? 'Cancel Reset' : 'Forgot password?' }}
+      </a>
+    </div>
+    
+    <!-- Inline Forgot Password Form -->
+    <div *ngIf="showResetPasswordForm" class="form-group">
+      <label for="resetEmail">Enter your registered email address</label>
+      <input type="email" id="resetEmail" [(ngModel)]="resetEmail" name="resetEmail" required>
+      <button type="button" (click)="resetPassword()" style="margin-top:10px;">Reset Password</button>
+      <p *ngIf="resetPasswordMessage" class="error-message">{{ resetPasswordMessage }}</p>
     </div>
   </div>
 
