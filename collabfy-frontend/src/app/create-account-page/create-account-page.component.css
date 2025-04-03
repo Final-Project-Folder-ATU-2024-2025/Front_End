@@ -131,6 +131,13 @@ button:hover {
   cursor: pointer;
 }
 
+/* Inline error message styling for password mismatch */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
 /* Custom Modal styling */
 .custom-modal {
   position: fixed;

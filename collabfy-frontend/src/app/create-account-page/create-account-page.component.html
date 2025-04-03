@@ -57,6 +57,10 @@
         <small class="password-specs">
           Password must be at least 10 characters long, include one capital letter, one number, and one special character.
         </small>
+        <!-- Inline error message for password mismatch -->
+        <div *ngIf="passwordMismatch" class="error-message">
+          Passwords must match.
+        </div>
       </div>
       <button type="submit">Sign Up</button>
     </form>

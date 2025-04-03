@@ -17,10 +17,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 })
 export class CreateAccountPageComponent {
   form: FormGroup;
-  // New property to control display of our custom modal
   showAccountCreatedModal: boolean = false;
-  // FontAwesome icon for the modal
   faCheck = faCheck;
+  passwordMismatch: boolean = false; // Flag to control inline error display
 
   constructor(
     private fb: FormBuilder,
@@ -47,6 +46,9 @@ export class CreateAccountPageComponent {
 
   onSubmit() {
     console.log('onSubmit called');
+    // Clear previous inline error
+    this.passwordMismatch = false;
+
     if (this.form.invalid) {
       console.error('Form is invalid:', this.form.value);
       const passwordControl = this.form.get('password');
@@ -64,7 +66,8 @@ export class CreateAccountPageComponent {
     const { firstName, surname, telephone, email, password, confirmPassword } = this.form.value;
     console.log('Form values:', this.form.value);
     if (password !== confirmPassword) {
-      alert('Passwords do not match!');
+      // Instead of an alert, set the inline error flag.
+      this.passwordMismatch = true;
       return;
     }
     console.log('Sending POST request to create user at http://127.0.0.1:5000/api/create-user');
@@ -77,7 +80,6 @@ export class CreateAccountPageComponent {
     }).subscribe({
       next: (response) => {
         console.log('Response from create-user:', response);
-        // Instead of an alert, show our custom modal
         this.showAccountCreatedModal = true;
       },
       error: (error) => {
