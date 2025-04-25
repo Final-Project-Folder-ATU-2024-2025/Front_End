@@ -1,4 +1,4 @@
-# Front-End README
+# Front-End
 
 This front-end is an Angular-based single-page application that serves as the user interface for the Final Year Project. It communicates with the Collabfy API to display and manage conversations in real time, offering a clean and responsive experience.
 
